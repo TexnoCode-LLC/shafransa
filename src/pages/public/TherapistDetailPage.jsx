@@ -8,6 +8,7 @@ import { getAvailabilitySummary, createSession } from "../../services/therapySes
 import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import { safeGet } from "../../lib/safeData"
+import { safeExternalUrl } from "../../lib/utils"
 import SEO from "../../components/common/SEO"
 import { getTherapistSchema } from "../../utils/seoSchemas"
 import { BASE_URL } from "../../utils/seoTranslations"
@@ -493,11 +494,11 @@ export default function TherapistDetailPage() {
 
             {profile.certificates.length > 0 || profile.cv ? (
               <div className="grid gap-3 sm:grid-cols-2">
-                {profile.cv && (
+                {safeExternalUrl(profile.cv) && (
                   <a
-                    href={profile.cv}
+                    href={safeExternalUrl(profile.cv)}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 rounded-md border border-stone-200 bg-stone-50 p-4 text-sm font-medium text-stone-700 transition hover:border-emerald-400 hover:bg-emerald-50"
                   >
                     <FileText className="h-4 w-4 text-emerald-700" />
@@ -506,7 +507,8 @@ export default function TherapistDetailPage() {
                 )}
 
                 {profile.certificates.map((certificate, index) => {
-                  const url = certificate.fileUrl || certificate.FileUrl
+                  const url = safeExternalUrl(certificate.fileUrl || certificate.FileUrl)
+                  if (!url) return null
                   const name = certificate.name || certificate.Name || `${t('therapists.certificate_prefix', 'Sertifikat')} ${index + 1}`
 
                   return (
@@ -514,7 +516,7 @@ export default function TherapistDetailPage() {
                       key={certificate.id || certificate.Id || name}
                       href={url}
                       target="_blank"
-                      rel="noreferrer"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-3 rounded-md border border-stone-200 bg-stone-50 p-4 text-sm font-medium text-stone-700 transition hover:border-emerald-400 hover:bg-emerald-50"
                     >
                       <FileText className="h-4 w-4 text-emerald-700" />

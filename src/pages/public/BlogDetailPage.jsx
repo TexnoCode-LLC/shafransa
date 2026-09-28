@@ -2,6 +2,8 @@ import React from "react"
 import { useQuery } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import { useParams, Link } from "react-router-dom"
+import DOMPurify from "dompurify"
+import { toYouTubeEmbedUrl } from "../../lib/utils"
 import { getBlog } from "../../services/blog.service"
 import { Badge } from "../../components/ui/Badge"
 import { Calendar, Clock, User, Share2, ArrowLeft, Loader2, BookOpen, Play } from "lucide-react"
@@ -156,13 +158,16 @@ export default function BlogDetailPage() {
       <div className="container mx-auto px-6">
         <div className="max-w-3xl mx-auto">
           {/* Video Section if available */}
-          {blog.videoUrl && (
+          {toYouTubeEmbedUrl(blog.videoUrl) && (
             <div className="mb-16 aspect-video rounded-[40px] overflow-hidden bg-black shadow-2xl relative group">
-              <iframe 
-                src={blog.videoUrl.replace('watch?v=', 'embed/')} 
+              <iframe
+                src={toYouTubeEmbedUrl(blog.videoUrl)}
                 className="w-full h-full"
                 allowFullScreen
-                title="Video Content"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                referrerPolicy="strict-origin-when-cross-origin"
+                title={blog.title || "Video"}
               />
             </div>
           )}
@@ -173,7 +178,7 @@ export default function BlogDetailPage() {
               prose-p:text-neutral-600 prose-p:leading-relaxed prose-p:mb-8
               prose-strong:text-[#1a1c1e] prose-strong:font-bold
               prose-img:rounded-3xl prose-img:shadow-lg"
-            dangerouslySetInnerHTML={{ __html: blog.description }}
+            dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.description || "", { USE_PROFILES: { html: true } }) }}
           />
           
           {/* Footer of article */}

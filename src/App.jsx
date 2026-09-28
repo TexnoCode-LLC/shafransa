@@ -5,7 +5,7 @@ import { RouterProvider } from "react-router-dom";
 import { Suspense } from "react";
 import { PulseLoader } from "react-spinners";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Toaster from "./components/ui/Toaster.jsx";
+import { Toaster } from "@/components/admin/ui/sonner";
 import ErrorBoundary from "./components/ErrorBoundary.jsx";
 
 const queryClient = new QueryClient({
@@ -33,7 +33,8 @@ function App() {
         }>
           <RouterProvider router={routes} />
         </Suspense>
-        <Toaster />
+        {/* Bütün tətbiq üçün vahid bildirişlər (sayt, istifadəçi paneli, admin) */}
+        <Toaster richColors closeButton position="top-right" />
       </QueryClientProvider>
     </ErrorBoundary>
   )

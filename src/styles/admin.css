@@ -1,0 +1,66 @@
+/*
+ * Admin paneli teması (shadcn/ui tokenləri).
+ * Yalnız .admin-theme daxilində işləyir — public sayta təsir etmir.
+ * AdminLayout bu class-ı <body>-yə də əlavə edir ki, Radix portalları (dialog, menu, select) eyni temada olsun.
+ * Həmişə light rejim; əsas rəng Shafransa yaşılıdır.
+ */
+/* Adi CSS (ayrıca import olunur — Tailwind @layer/@apply burada işləmir) */
+.admin-theme {
+    color-scheme: light;
+
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 142 72% 29%;
+    --primary-foreground: 144 100% 97%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142 72% 29%;
+    --radius: 0.625rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 142 72% 29%;
+    --sidebar-primary-foreground: 144 100% 97%;
+    --sidebar-accent: 142 50% 94%;
+    --sidebar-accent-foreground: 142 72% 22%;
+    --sidebar-border: 240 5.9% 90%;
+    --sidebar-ring: 142 72% 29%;
+}
+
+body.admin-theme {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: 'Poppins', 'Montserrat', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Blog redaktoru (Tiptap) məzmunu */
+.admin-rich-text { font-size: 0.9375rem; line-height: 1.7; color: hsl(var(--foreground)); }
+.admin-rich-text > * + * { margin-top: 0.75em; }
+.admin-rich-text h2 { font-size: 1.375rem; font-weight: 600; line-height: 1.3; margin-top: 1.25em; }
+.admin-rich-text h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.35; margin-top: 1em; }
+.admin-rich-text ul { list-style: disc; padding-left: 1.5rem; }
+.admin-rich-text ol { list-style: decimal; padding-left: 1.5rem; }
+.admin-rich-text li > p { margin: 0; }
+.admin-rich-text blockquote { border-left: 3px solid hsl(var(--primary) / 0.4); padding-left: 1rem; color: hsl(var(--muted-foreground)); font-style: italic; }
+.admin-rich-text a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 3px; }
+.admin-rich-text p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: hsl(var(--muted-foreground));
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

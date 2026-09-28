@@ -36,15 +36,11 @@ export function getOrganizationSchema() {
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+994-12-345-6789",
+      telephone: "+994-50-806-00-93",
+      email: "shafranssa@gmail.com",
       contactType: "customer service",
       availableLanguage: ["Azerbaijani", "English", "Russian", "Turkish"],
     },
-    sameAs: [
-      "https://facebook.com/shafransa",
-      "https://instagram.com/shafransa",
-      "https://twitter.com/shafransa",
-    ],
   };
 }
 
@@ -83,9 +79,10 @@ export function getProductSchema(product, currentUrl) {
   const description = stripHtml(rawDesc);
   const image = product.image || (Array.isArray(product.images) && product.images[0]) || `${BASE_URL}/assets/favicon.png`;
   const price = product.price ? Number(product.price) : 0;
-  const ratingValue = product.avgRating ? Number(product.avgRating) : 5;
-  const reviewCount = product._count?.reviews || product.reviewsCount || product.reviewCount || 10;
-  const brandName = product.seller?.fullName || product.sellerName || "Shafransa Botanicals";
+  // Yalnız real rəylər (əvvəl rəysiz məhsula "5 ulduz, 10 rəy" yazılırdı — Google qaydalarını pozur)
+  const ratingValue = Number(product.avgRating) || 0;
+  const reviewCount = Number(product.reviewsCount) || 0;
+  const brandName = "Shafransa";
 
   const schema = {
     "@context": "https://schema.org",
@@ -104,7 +101,7 @@ export function getProductSchema(product, currentUrl) {
     offers: {
       "@type": "Offer",
       url: currentUrl || BASE_URL,
-      priceCurrency: "AZN",
+      priceCurrency: "USD", // saytda qiymətlər dollarla göstərilir
       price: price.toFixed(2),
       priceValidUntil: "2027-12-31",
       itemCondition: "https://schema.org/NewCondition",

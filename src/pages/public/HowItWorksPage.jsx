@@ -62,7 +62,7 @@ const HowItWorksPage = () => {
               <FaCheckCircle className="w-3 h-3" />
               {t('how_it_works.badge', 'Verified Process')}
             </div>
-            <h1 className="text-5xl md:text-7xl font-display font-bold text-[#1a1c1e] tracking-tight mb-8 leading-[0.9]">
+            <h1 className="text-5xl md:text-6xl font-display font-bold text-[#1a1c1e] tracking-tight mb-8 leading-[0.9]">
               {t('how_it_works.hero_title', 'A Simple Path to Personalized Wellness.')}
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">

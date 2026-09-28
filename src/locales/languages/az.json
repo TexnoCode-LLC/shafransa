@@ -46,90 +46,159 @@
     "view_source": "Mənbəyə Bax"
   },
   "landing": {
-    "version": "Shafransa: Dəqiq Botanika İntellekti",
     "hero": {
-      "title_part1": "Botanika Tibbində",
-      "title_part2": "Unikal",
-      "title_part3": "Həll.",
-      "subtitle": "Botanik sağlamlıq yolunda Sizin ən etibarlı tərəfdaşınız. Biz qədim bilikləri müasir elmlə birləşdirərək sədəcə təhlükəsiz və peşəkar bitki rəhbərliyi təqdim edirik."
+      "kicker": "Bitki ensiklopediyası · Market · Fizioterapevtlər",
+      "title_1": "Süni intellekt və botanikanın",
+      "title_2": "kəsişdiyi yer.",
+      "subtitle": "Shafransa bitki elmini süni intellektlə birləşdirir: mənbəli ensiklopediya, laboratoriya göstəriciləri açıq olan məhsullar və lisenziyalı fizioterapevtlər — hamısı bir platformada.",
+      "cta_primary": "Marketə keç",
+      "cta_secondary": "Ensiklopediyanı oxu",
+      "scroll": "Aşağı keç"
     },
-    "cta": {
-      "protocol": "Protokoluma başla",
-      "marketplace": "Marketi kəşf et",
-      "explore_inventory": "Təsdiqlənmiş məhsulları kəşf et"
+    "facts": {
+      "sources_title": "Mənbəli məqalələr",
+      "sources_text": "Hər bitki məqaləsi elmi mənbələrə əsaslanır",
+      "lab_title": "Laboratoriya göstəriciləri",
+      "lab_text": "Ağır metal və pestisid testləri məhsul kartında",
+      "cod_title": "Qapıda ödəniş",
+      "cod_text": "Sifarişi təhvil alanda ödəyirsiniz",
+      "lang_title": "Dörd dildə",
+      "lang_text": "Azərbaycan, ingilis, rus və türk dillərində"
     },
-    "social": {
-      "trusted": "Qlobal klinik tədqiqatçılar tərəfindən etibar edilir",
-      "title": "Sağlamlıq yeni sərvətdir. Dəqiqliyə investisiya edin."
-    },
-    "value": {
-      "title": "Dəqiqlik üçün qurulub, elm tərəfindən idarə olunur.",
-      "subtitle": "Ümumi bitki mənşəli tövsiyələr təhlükəlidir. Shafransa müasir sağlamlıq idarəetməsi üçün lazım olan klinik ciddiliyi təmin edir."
-    },
-    "links": {
-      "whitepaper": "Elmi sənədi nəzərdən keçirin"
-    },
-    "ai": {
-      "title": "Sizin üçün Düşünən Ağıllı Sistem",
-      "text": "Bizim sistemimiz sağlamlıq keçmişinizi, simptomlarınızı və hazırda qəbul etdiyiniz dərmanları diqqətlə nəzərdən keçirir. Beləliklə, sizə şablon yox, məhz sizin üçün təhlükəsiz olan fərdi bitki tövsiyələri hazırlayırıq."
-    },
-    "verify": {
-      "title": "Hər Addımda Tam Şəffaflıq",
-      "text": "Aldığınız hər bir məhsulun tərkibi laboratoriya sertifikatları ilə təsdiqlənir. Bizim üçün saflıq sadəcə söz deyil, hər partiya üçün rəsmi sübutdur.",
-      "batch": "Partiya #SH-{{id}} - YOXLANILDI"
-    },
-    "marketplace": {
-      "badge": "Klinik Market",
-      "title": "Doğma torpaqdan klinik rifaha qədər tam şəffaf tədarük."
-    },
-    "features": {
-      "global": {
-        "title": "Qlobal Təminat",
-        "text": "Aralıq dənizi, Amazon və Qafqaz dağlarında üzvi yetişdiricilələ birbaşa əlaqələr."
+    "intro": {
+      "label": "Shafransa nədir",
+      "statement": "Bitki mənşəli vasitələr haqqında internetdə məlumat çoxdur, yoxlanılanı isə azdır. Biz üç şeyi bir yerə topladıq: etibarlı bilik, şəffaf məhsul və mütəxəssis rəyi.",
+      "encyclopedia": {
+        "title": "Bitki ensiklopediyası",
+        "text": "Faydalar, doza, yan təsirlər, əks-göstərişlər və dərmanlarla qarşılıqlı təsir — hər bitki üçün mənbələri ilə birlikdə.",
+        "link": "Ensiklopediyaya keç"
       },
-      "escrow": {
-        "title": "Escrow Saflıq Zəmanəti",
-        "text": "Ödənişiniz partiyanın saflığı 3-cü tərəf laboratoriyası tərəfindən təsdiqlənənə qədər smart-kontraktda qalır."
+      "market": {
+        "title": "Market",
+        "text": "Hər məhsulun partiya nömrəsi, ağır metal və pestisid testləri, aktiv maddə faizi və mənşəyi kartında göstərilir.",
+        "link": "Məhsullara bax"
       },
-      "extraction": {
-        "title": "Standartlaşdırılmış Ekstraksiya",
-        "text": "Maksimum biomənimsənilmə üçün CO2-kritik ekstraksiya üsullarını tələb edirik."
+      "therapists": {
+        "title": "Fizioterapevtlər",
+        "text": "Lisenziyalı fizioterapevtlə onlayn video və ya əyani seansa yazılın. Qiyməti və müddəti əvvəlcədən görürsünüz.",
+        "link": "Terapevt seç"
       }
     },
-    "card": {
-      "verified": "Təsdiqlənmiş Mənşə",
-      "location": "Qafqaz Dağları",
-      "product": "Yabanı Zəfəran Ekstraktı",
-      "rating_info": "4.9 Reytinq • Klinik Partiya #AF-201"
+    "categories": {
+      "label": "Kateqoriyalar",
+      "title": "Nə axtarırsınız?",
+      "products": "{{count}} məhsul",
+      "view_all": "Bütün məhsullar"
     },
-    "floating": {
-      "ai": "AI Protokolu Yaradıldı",
-      "dose": "Fərdi Doza: 500mq"
+    "market": {
+      "label": "Market",
+      "title": "Nə aldığınızı bilin.",
+      "text": "Məhsul səhifəsində reklam ifadələri yox, yoxlanıla bilən məlumat var. «Təsdiqlənib» nişanı yalnız komandamızın yoxladığı məhsullara verilir.",
+      "point_1": "Hər partiyanın öz nömrəsi var",
+      "point_2": "Test nəticələri alışdan əvvəl görünür",
+      "point_3": "Mənşə ölkəsi və regionu göstərilir",
+      "sample_badge": "Nümunə",
+      "sample_title": "Məhsul kartında gördükləriniz",
+      "row_batch": "Partiya nömrəsi",
+      "row_heavy_metal": "Ağır metal testi",
+      "row_pesticide": "Pestisid testi",
+      "row_active": "Aktiv maddə",
+      "row_origin": "Mənşə",
+      "row_status": "Status",
+      "value_passed": "Keçib",
+      "value_origin": "Abşeron",
+      "value_verified": "Təsdiqlənib",
+      "latest": "Yeni məhsullar",
+      "view_all": "Bütün məhsullar",
+      "verified": "Təsdiqlənib"
     },
-    "testimonials": {
-      "1": {
-        "text": "Dərmanlarım və Aşvaqanda arasındakı qarşılıqlı təsir yoxlanışı bir kəşf idi. Digər platformaların gözündən qaçan hər şeyi Shafransa tutdu.",
-        "role": "Klinik İmmunoloq"
-      },
-      "2": {
-        "text": "Təsdiqlənmiş COA-lar bizim kimi satıcılar üçün oyunu dəyişir. Nəhayət bahalı marketinq olmadan saflığımızı sübut edə bilərik.",
-        "role": "Sertifikatlı Üzvi Satıcı"
-      }
+    "encyclopedia": {
+      "label": "Ensiklopediya",
+      "title": "Bir bitki haqqında bilməli olduğunuz hər şey",
+      "text": "Bütün məqalələr eyni quruluşda yazılır ki, bitkiləri bir-biri ilə rahat müqayisə edə biləsiniz.",
+      "basic_title": "Əsas məlumat",
+      "basic_text": "Təsvir, faydalar, yerli və elmi adları",
+      "usage_title": "İstifadə",
+      "usage_text": "İstifadə qaydası, doza və istifadə formaları",
+      "safety_title": "Təhlükəsizlik",
+      "safety_text": "Yan təsirlər, əks-göstərişlər və dərmanlarla qarşılıqlı təsir",
+      "origin_title": "Mənşə",
+      "origin_text": "Ölkə, region, iqlim, yabanı və ya becərilmiş olması",
+      "science_title": "Elmi məlumat",
+      "science_text": "Sübut dərəcəsi, aktiv birləşmələr və mənbələr",
+      "view_all": "Ensiklopediyaya keç"
     },
-    "cta_final": {
-      "title": "Sağalmanız sıfır təxminlə başlayır.",
-      "subtitle": "Botanika elminin gələcəyinə qoşulun. Fərdi protokolunuzu dəqiqələr ərzində qurun.",
-      "user": "Gözləmə siyahısına qoşul",
-      "seller": "Tərəfdaş ol"
+    "plants": {
+      "title": "Oxumağa dəyər bitkilər",
+      "view_all": "Bütün bitkilər",
+      "grade": "Sübut dərəcəsi {{grade}}"
+    },
+    "safety": {
+      "label": "Təhlükəsizlik",
+      "title": "Təbii olması təhlükəsiz olması demək deyil.",
+      "text": "Bir çox bitki dərmanların təsirini gücləndirə və ya zəiflədə bilər, bəziləri hamiləlik dövründə və bəzi xəstəliklərdə qəbul edilmir. Buna görə ensiklopediyadakı hər məqalədə ayrıca təhlükəsizlik bölməsi var.",
+      "point_1": "Dərmanlarla qarşılıqlı təsir ayrıca göstərilir",
+      "point_2": "Hamiləlik və allergiya xəbərdarlıqları qeyd olunur",
+      "point_3": "Doza ilə bağlı ehtiyat tədbirləri yazılır",
+      "note": "Hər hansı bitki vasitəsinə başlamazdan əvvəl həkiminizlə məsləhətləşin."
+    },
+    "therapists": {
+      "label": "Fizioterapevtlər",
+      "title": "Mütəxəssislə danışın.",
+      "text": "Sualınız bərpa, ağrı və ya bitki vasitələri ilə bağlıdırsa, fizioterapevtlə görüş təyin edin.",
+      "step_1_title": "Terapevt seçin",
+      "step_1_text": "Profilində ixtisası, özü haqqında məlumat və seans qiymətləri var.",
+      "step_2_title": "Vaxtı rezerv edin",
+      "step_2_text": "Boş saatlardan birini seçin — ən tezi 24 saat sonrası üçün.",
+      "step_3_title": "Görüşə qoşulun",
+      "step_3_text": "Terapevt təsdiqlədikdən sonra onlayn seansın video linki hesabınızda görünür.",
+      "view_all": "Bütün terapevtlər",
+      "from_price": "Onlayn seans {{price}}"
+    },
+    "audience": {
+      "label": "Kimlər üçün",
+      "title": "Shafransa kimə kömək edir",
+      "a1_title": "Təbii vasitələri şüurlu seçənlərə",
+      "a1_text": "Bitki çayı və ya əlavə almazdan əvvəl onun təsirini, dozasını və risklərini öyrənmək istəyənlər üçün.",
+      "a1_link": "Ensiklopediyaya keç",
+      "a2_title": "Bərpa dövründə olanlara",
+      "a2_text": "Zədə, əməliyyat və ya xroniki ağrıdan sonra fizioterapevtlə plan qurmaq istəyənlər üçün.",
+      "a2_link": "Terapevt seç",
+      "a3_title": "Mütəxəssislərə",
+      "a3_text": "Profil yaradıb onlayn və əyani seanslar üçün pasiyent qəbul etmək istəyən fizioterapevtlər üçün.",
+      "a3_link": "Terapevt kimi qoşul"
     },
     "blog": {
-      "badge": "Bilik Mərkəzi",
-      "title": "Bloqlar",
-      "view_all": "Hamısını kəşf et"
-    }
+      "label": "Bloq",
+      "title": "Son yazılar",
+      "view_all": "Bütün yazılar"
+    },
+    "faq": {
+      "label": "Suallar",
+      "title": "Tez-tez verilən suallar",
+      "q1": "Shafransa həkimi əvəz edirmi?",
+      "a1": "Xeyr. Saytdakı məlumatlar maarifləndirmə məqsədi daşıyır. Dərman qəbul edirsinizsə, hamiləsinizsə və ya xroniki xəstəliyiniz varsa, hər hansı bitki vasitəsinə başlamazdan əvvəl həkiminizlə məsləhətləşin.",
+      "q2": "Məhsulların keyfiyyəti necə yoxlanılır?",
+      "a2": "Hər məhsulun kartında partiya nömrəsi, ağır metal və pestisid testlərinin nəticəsi və aktiv maddə faizi göstərilir. «Təsdiqlənib» nişanı komandamız bu məlumatları yoxladıqdan sonra verilir.",
+      "q3": "Sifarişin ödənişi necə edilir?",
+      "a3": "Hazırda ödəniş çatdırılma zamanı, qapıda edilir.",
+      "q4": "Terapevtlə seans necə keçir?",
+      "a4": "Rezerv zamanı onlayn və ya əyani formatı seçirsiniz. Onlayn seans brauzerdə video zənglə keçir, əlavə proqram yükləmək lazım deyil.",
+      "q5": "Mütəxəssisəm. Platformaya necə qoşula bilərəm?",
+      "a5": "Terapevt kimi qeydiyyatdan keçin və profilinizi doldurun. Komandamız müraciətinizi yoxladıqdan sonra profiliniz saytda görünəcək.",
+      "q6": "Saytdan istifadə üçün hesab lazımdırmı?",
+      "a6": "Ensiklopediyanı oxumaq və məhsullara baxmaq üçün hesab lazım deyil. Sifariş vermək və seansa yazılmaq üçün qeydiyyatdan keçmək lazımdır."
+    },
+    "cta": {
+      "title": "Seçməzdən əvvəl oxuyun.",
+      "text": "Hesab yaradın — sifarişləriniz, seanslarınız və seçdiyiniz məhsullar bir yerdə olsun.",
+      "register": "Hesab yarat",
+      "therapist": "Terapevt kimi qoşul"
+    },
+    "disclaimer": "Saytdakı məlumatlar maarifləndirici xarakter daşıyır və həkim məsləhətini, diaqnozu və ya müalicəni əvəz etmir."
   },
   "footer": {
-    "bio": "Süni intellekt və Qafqaz botanika elminin kəsişməsində qabaqcıl.",
+    "bio": "Süni intellekt və botanika elminin kəsişdiyi yer: mənbəli bilik, şəffaf məhsullar və mütəxəssis dəstəyi.",
     "links": {
       "about": "Haqqımızda",
       "help": "Yardım Mərkəzi"
@@ -836,5 +905,385 @@
     "select_all": "Hamısını Seç",
     "clear_all": "Təmizlə",
     "waiting_user_badge": "İstifadəçi təsdiqi"
+  },
+  "layout": {
+    "skip": "Məzmuna keç",
+    "search": "Axtar",
+    "search_title": "Axtarış",
+    "search_placeholder": "Bitki və ya məhsul adı…",
+    "search_hint": "Axtarmaq istədiyiniz sözü yazın və harada axtaracağınızı seçin.",
+    "search_in_herbs": "Ensiklopediyada axtar",
+    "search_in_market": "Marketdə axtar",
+    "menu": "Menyu",
+    "close": "Bağla",
+    "cart": "Səbət",
+    "wishlist": "Seçilmişlər",
+    "account": "Hesab",
+    "language": "Dil",
+    "register": "Qeydiyyat",
+    "role_member": "İstifadəçi",
+    "role_therapist": "Terapevt",
+    "role_admin": "Admin",
+    "role_superadmin": "Super admin",
+    "col_platform": "Platforma",
+    "col_company": "Şirkət",
+    "col_specialists": "Mütəxəssislər",
+    "col_legal": "Hüquqi məlumat",
+    "join_therapist": "Terapevt kimi qoşul",
+    "find_therapist": "Terapevt tap",
+    "blog": "Bloq"
+  },
+  "legal": {
+    "label": "Hüquqi məlumat",
+    "updated": "Son yenilənmə: {{date}}",
+    "date": "28 sentyabr 2026",
+    "contents": "Mündəricat",
+    "contact_note": "Suallarınız üçün bizə yazın:",
+    "see_also": "Həmçinin baxın",
+    "privacy": {
+      "title": "Məxfilik siyasəti",
+      "description": "Shafransa hansı şəxsi məlumatları toplayır, onlardan necə istifadə edir və siz hansı hüquqlara maliksiniz.",
+      "intro": "Bu siyasət Shafransa saytından və xidmətlərindən istifadə etdiyiniz zaman hansı məlumatları topladığımızı, onlardan nə üçün istifadə etdiyimizi və kimlərlə paylaşdığımızı izah edir.",
+      "sections": [
+        {
+          "title": "Topladığımız məlumatlar",
+          "items": [
+            "Hesab məlumatları: ad, soyad, email ünvanı və şifrə. Şifrə yalnız geri qaytarılmayan şifrələnmiş (hash) formada saxlanılır. Profil şəkli və təsvir istəyə bağlıdır.",
+            "Sifariş məlumatları: çatdırılma üçün ad, telefon, ünvan, sifarişə əlavə etdiyiniz qeyd və sifariş olunan məhsullar.",
+            "Seans məlumatları: seçdiyiniz terapevt, seansın tarixi, vaxtı və formatı, rezerv zamanı yazdığınız qeyd, seansdan sonra verdiyiniz reytinq və rəy.",
+            "Terapevtlərin məlumatları: telefon, lisenziya nömrəsi, ixtisas, özü haqqında məlumat, qiymətlər, CV, sertifikatlar və iş saatları.",
+            "Fəaliyyət məlumatları: məhsullara yazdığınız rəylər, səbət və seçilmişlər siyahısı.",
+            "Texniki məlumatlar: təhlükəsizlik məqsədilə server qeydlərində IP ünvanı və sorğunun vaxtı kimi məlumatlar saxlanıla bilər."
+          ]
+        },
+        {
+          "title": "Məlumatlardan necə istifadə edirik",
+          "paragraphs": [
+            "Məlumatlarınızı reklam məqsədilə istifadə etmirik və üçüncü şəxslərə satmırıq. Saytda reklam və ya analitika izləyiciləri yoxdur."
+          ],
+          "items": [
+            "Hesab yaratmaq, emailinizi təsdiqləmək və sistemə girişi təmin etmək.",
+            "Sifarişinizi qəbul edib çatdırmaq.",
+            "Terapiya seansını təşkil etmək və seans barədə bildirişlər göndərmək.",
+            "Terapevt müraciətlərini yoxlamaq və təsdiqlənmiş profilləri saytda göstərmək.",
+            "Hesabları və platformanı sui-istifadədən qorumaq."
+          ]
+        },
+        {
+          "title": "Məlumatları kimlərlə paylaşırıq",
+          "items": [
+            "Terapevt: rezerv etdiyiniz seans üçün adınızı, emailinizi və qeydinizi görür.",
+            "Xidmət təminatçıları: email bildirişləri email xidməti vasitəsilə göndərilir, yüklənən şəkil və sənədlər fayl saxlama xidmətində saxlanılır.",
+            "Video zənglər: onlayn seanslar Jitsi Meet (meet.jit.si) üzərindən keçir və video zəngə Jitsi-nin məxfilik siyasəti tətbiq olunur.",
+            "Səlahiyyətli dövlət orqanları: yalnız qanunun tələb etdiyi hallarda."
+          ]
+        },
+        {
+          "title": "Brauzerdə saxlanılan məlumatlar",
+          "paragraphs": [
+            "Cookie istifadə etmirik. Brauzerinizin yaddaşında (local storage) yalnız giriş sessiyası, seçdiyiniz dil, görünüş ayarı və seçilmişlər siyahısı saxlanılır. Hesabdan çıxdıqda sessiya məlumatı silinir."
+          ]
+        },
+        {
+          "title": "Saxlama müddəti",
+          "paragraphs": [
+            "Məlumatlarınızı hesabınız aktiv olduğu müddətdə saxlayırıq. Hesab silindikdə profil məlumatları, rəylər, səbət və seçilmişlər siyahısı silinir. Sifariş məlumatları mühasibat və hüquqi öhdəliklər üçün saxlanıla bilər. Keçmiş seanslar isə adınız olmadan tarixçədə qalır."
+          ]
+        },
+        {
+          "title": "Təhlükəsizlik",
+          "paragraphs": [
+            "Şifrələr şifrələnmiş formada saxlanılır, məlumatlar şifrələnmiş bağlantı (HTTPS) ilə ötürülür, idarəetmə panelinə isə yalnız səlahiyyətli əməkdaşlar daxil ola bilir. Heç bir sistem tam təhlükəsiz olmasa da, məlumatlarınızı qorumaq üçün lazımi tədbirləri görürük."
+          ]
+        },
+        {
+          "title": "Hüquqlarınız",
+          "paragraphs": [
+            "Məlumatlarınıza baxa və onları profil səhifəsindən düzəldə bilərsiniz. Hesabınızın və məlumatlarınızın silinməsini, həmçinin saxladığımız məlumatların surətini tələb etmək üçün bizə yazın."
+          ]
+        },
+        {
+          "title": "Uşaqlar",
+          "paragraphs": [
+            "Xidmətlərimiz böyüklər üçün nəzərdə tutulub. 18 yaşdan kiçik şəxslər saytdan yalnız valideyn və ya qəyyumun razılığı ilə istifadə edə bilər."
+          ]
+        },
+        {
+          "title": "Siyasətdəki dəyişikliklər",
+          "paragraphs": [
+            "Bu siyasət yenilənə bilər. Son yenilənmə tarixi səhifənin yuxarısında göstərilir. Mühüm dəyişikliklər barədə saytda əvvəlcədən məlumat veririk."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "İstifadə şərtləri",
+      "description": "Shafransa saytından və xidmətlərindən istifadə qaydaları.",
+      "intro": "Bu şərtlər Shafransa saytından və xidmətlərindən istifadə qaydalarını müəyyən edir. Saytdan istifadə etməklə bu şərtləri qəbul etmiş olursunuz.",
+      "sections": [
+        {
+          "title": "Xidmətlər",
+          "paragraphs": [
+            "Shafransa bitki ensiklopediyası, təbii məhsulların satıldığı market, fizioterapevtlərlə onlayn və əyani seanslar, həmçinin süni intellekt köməkçisi təqdim edir. Xidmətlərin tərkibi zamanla dəyişə bilər."
+          ]
+        },
+        {
+          "title": "Tibbi məlumat haqqında",
+          "paragraphs": [
+            "Saytdakı məlumatlar, o cümlədən süni intellekt köməkçisinin cavabları maarifləndirici xarakter daşıyır və həkim məsləhətini, diaqnozu və ya müalicəni əvəz etmir. Dərman qəbul edirsinizsə, hamiləsinizsə və ya xroniki xəstəliyiniz varsa, hər hansı bitki vasitəsinə başlamazdan əvvəl həkiminizlə məsləhətləşin. Təcili hallarda 103 nömrəsinə zəng edin."
+          ]
+        },
+        {
+          "title": "Hesab",
+          "items": [
+            "Qeydiyyat zamanı doğru məlumat verməlisiniz.",
+            "Şifrənizi başqaları ilə paylaşmamalısınız; hesabınızda baş verən fəaliyyətə görə siz məsuliyyət daşıyırsınız.",
+            "Bu şərtləri pozan hesablar bloklana və ya silinə bilər."
+          ]
+        },
+        {
+          "title": "Sifarişlər və ödəniş",
+          "items": [
+            "Qiymətlər saytda göstərilən valyutada, məhsul kartında qeyd olunduğu kimidir.",
+            "Hazırda ödəniş çatdırılma zamanı, qapıda nağd şəkildə edilir.",
+            "Sifariş məhsulun stokda olmasından asılıdır. Məhsul bitərsə, sizinlə əlaqə saxlayırıq.",
+            "Qaytarma və dəyişdirmə ilə bağlı sorğular üçün bizə yazın."
+          ]
+        },
+        {
+          "title": "Terapiya seansları",
+          "items": [
+            "Seans ən azı 24 saat əvvəlcədən rezerv edilir və terapevt tərəfindən təsdiqlənir və ya rədd edilir.",
+            "Onlayn seanslar brauzerdə Jitsi Meet vasitəsilə keçirilir. Video link terapevt təsdiqlədikdən sonra hesabınızda görünür.",
+            "Zərurət olduqda platforma seansı ləğv edə bilər; bu barədə hər iki tərəfə email göndərilir.",
+            "Terapevtlər müstəqil lisenziyalı mütəxəssislərdir və göstərdikləri xidmətə görə özləri məsuliyyət daşıyırlar. Shafransa görüşün təşkilinə kömək edir."
+          ]
+        },
+        {
+          "title": "Terapevtlər üçün",
+          "items": [
+            "Profildə verilən məlumatlar, lisenziya və sertifikatlar doğru olmalıdır.",
+            "Müraciət komandamız tərəfindən yoxlanılır; profil yalnız təsdiqdən sonra saytda görünür.",
+            "Şərtlərin pozulması halında profil saytdan gizlədilə və ya hesab bloklana bilər."
+          ]
+        },
+        {
+          "title": "İstifadəçi məzmunu",
+          "paragraphs": [
+            "Rəy və reytinqlər şəxsi təcrübənizə əsaslanmalıdır. Təhqiramiz, yanıltıcı və ya reklam xarakterli məzmun xəbərdarlıq edilmədən silinə bilər."
+          ]
+        },
+        {
+          "title": "Əqli mülkiyyət",
+          "paragraphs": [
+            "Saytdakı mətnlər, dizayn və loqo Shafransa-ya məxsusdur. Onları yazılı icazə olmadan kommersiya məqsədilə kopyalamaq və yaymaq olmaz."
+          ]
+        },
+        {
+          "title": "Məsuliyyətin məhdudlaşdırılması",
+          "paragraphs": [
+            "Məlumatların doğru və aktual olması üçün çalışırıq, lakin onların tam və səhvsiz olmasına zəmanət vermirik. Qanunvericiliyin icazə verdiyi həddə Shafransa saytdakı məlumatlardan istifadə nəticəsində yaranan dolayı zərərə görə məsuliyyət daşımır."
+          ]
+        },
+        {
+          "title": "Şərtlərdəki dəyişikliklər və tətbiq olunan hüquq",
+          "paragraphs": [
+            "Şərtlər yenilənə bilər; son yenilənmə tarixi səhifənin yuxarısında göstərilir. Bu şərtlərə Azərbaycan Respublikasının qanunvericiliyi tətbiq olunur."
+          ]
+        }
+      ]
+    },
+    "email": "shafranssa@gmail.com"
+  },
+  "not_found": {
+    "code": "404",
+    "title": "Səhifə tapılmadı",
+    "text": "Axtardığınız səhifə silinib, köçürülüb və ya ünvan səhv yazılıb.",
+    "home": "Ana səhifəyə qayıt",
+    "market": "Marketə keç"
+  },
+  "shop": {
+    "label": "Market",
+    "title": "Laboratoriya göstəriciləri açıq olan təbii məhsullar",
+    "subtitle": "Hər məhsulun kartında partiya nömrəsi, ağır metal və pestisid testləri, aktiv maddə faizi və mənşəyi göstərilir.",
+    "search_placeholder": "Məhsul, bitki və ya elmi ad axtarın",
+    "clear_search": "Axtarışı təmizlə",
+    "sort": "Sıralama",
+    "sort_newest": "Ən yenilər",
+    "sort_oldest": "Ən köhnələr",
+    "sort_price_asc": "Əvvəlcə ucuz",
+    "sort_price_desc": "Əvvəlcə bahalı",
+    "filters": "Filtrlər",
+    "categories": "Kateqoriyalar",
+    "all_categories": "Bütün məhsullar",
+    "price": "Qiymət ($)",
+    "min": "Ən az",
+    "max": "Ən çox",
+    "availability": "Göstər",
+    "verified_only": "Yalnız təsdiqlənmiş",
+    "in_stock_only": "Yalnız stokda olanlar",
+    "reset": "Filtrləri təmizlə",
+    "show_results": "Nəticələri göstər",
+    "results": "{{count}} məhsul",
+    "empty_title": "Filtrlərə uyğun məhsul tapılmadı",
+    "empty_text": "Axtarış sözünü və ya filtrləri dəyişib yenidən yoxlayın.",
+    "empty_catalog_title": "Hələ məhsul yoxdur",
+    "empty_catalog_text": "Yeni məhsullar tezliklə əlavə olunacaq. Bu vaxt ensiklopediyada bitkilər haqqında oxuya bilərsiniz.",
+    "go_encyclopedia": "Ensiklopediyaya keç",
+    "error": "Məhsullar yüklənmədi.",
+    "retry": "Yenidən cəhd et",
+    "prev": "Əvvəlki",
+    "next": "Növbəti",
+    "page_of": "Səhifə {{page}} / {{pages}}",
+    "verified": "Təsdiqlənib",
+    "add_to_cart": "Səbətə at",
+    "adding": "Əlavə olunur…",
+    "out_of_stock": "Bitib",
+    "in_stock": "Stokda var",
+    "low_stock": "Son {{count}} ədəd",
+    "save": "Seçilmişlərə əlavə et",
+    "unsave": "Seçilmişlərdən çıxar",
+    "added_to_cart": "«{{title}}» səbətə əlavə olundu",
+    "view_cart": "Səbətə bax",
+    "login_to_buy": "Səbətə əlavə etmək üçün hesabınıza daxil olun",
+    "login_to_save": "Məhsulu yadda saxlamaq üçün hesabınıza daxil olun",
+    "saved": "Seçilmişlərə əlavə olundu",
+    "unsaved": "Seçilmişlərdən çıxarıldı",
+    "action_failed": "Əməliyyat alınmadı. Yenidən cəhd edin.",
+    "product": {
+      "breadcrumb_home": "Ana səhifə",
+      "not_found_title": "Məhsul tapılmadı",
+      "not_found_text": "Bu məhsul silinib və ya ünvan səhvdir.",
+      "back_to_market": "Marketə qayıt",
+      "quantity": "Say",
+      "decrease": "Azalt",
+      "increase": "Artır",
+      "buy_now": "İndi al",
+      "share": "Paylaş",
+      "link_copied": "Link kopyalandı",
+      "discount": "−{{percent}}%",
+      "payment_note": "Ödəniş çatdırılma zamanı, qapıda edilir.",
+      "verified_note": "Keyfiyyət göstəriciləri komandamız tərəfindən yoxlanılıb.",
+      "description": "Təsvir",
+      "no_description": "Bu məhsul üçün təsvir hələ əlavə olunmayıb.",
+      "details": "Keyfiyyət və tərkib",
+      "category": "Kateqoriya",
+      "form": "Forma",
+      "region": "Mənşə regionu",
+      "batch": "Partiya nömrəsi",
+      "heavy_metal": "Ağır metal testi",
+      "pesticide": "Pestisid testi",
+      "passed": "Keçib",
+      "no_data": "Məlumat yoxdur",
+      "active_percent": "Aktiv maddə",
+      "active_compounds": "Aktiv birləşmələr",
+      "quality_tracking": "Keyfiyyət izlənməsi",
+      "scientific_name": "Elmi ad",
+      "plant_link": "Bu bitki haqqında ensiklopediyada oxuyun",
+      "reviews": "Rəylər",
+      "reviews_count": "{{count}} rəy",
+      "no_reviews": "Hələ rəy yoxdur. İlk rəyi siz yazın.",
+      "write_review": "Rəy yazın",
+      "your_rating": "Qiymətiniz",
+      "rate": "{{count}} ulduz",
+      "your_review": "Rəyiniz",
+      "review_placeholder": "Məhsul haqqında təcrübənizi bölüşün",
+      "submit_review": "Rəyi göndər",
+      "review_sent": "Rəyiniz yadda saxlanıldı. Təşəkkür edirik!",
+      "review_hint": "Bir məhsula bir rəy yazılır; yenidən göndərsəniz, əvvəlki rəyiniz yenilənir.",
+      "login_to_review": "Rəy yazmaq üçün hesabınıza daxil olun",
+      "login": "Daxil ol",
+      "related": "Bu kateqoriyadan digər məhsullar"
+    }
+  },
+  "account": {
+    "panel": "Şəxsi kabinet",
+    "nav_group": "Hesabım",
+    "nav_overview": "Ümumi baxış",
+    "nav_orders": "Sifarişlərim",
+    "nav_wishlist": "Seçilmişlər",
+    "nav_sessions": "Seanslarım",
+    "nav_settings": "Parametrlər",
+    "nav_links": "Keçidlər",
+    "back_to_site": "Sayta qayıt",
+    "go_shop": "Marketə keç",
+    "toggle_menu": "Menyunu aç/bağla",
+    "overview": {
+      "greeting": "Xoş gəldiniz, {{name}}",
+      "subtitle": "Sifarişlərinizi, seçdiyiniz məhsulları və seanslarınızı buradan izləyin.",
+      "stat_orders": "Sifariş",
+      "stat_saved": "Seçilmiş məhsul",
+      "stat_sessions": "Qarşıdakı seans",
+      "open": "Aç",
+      "next_session": "Növbəti seans",
+      "no_next_session": "Qarşıda seansınız yoxdur.",
+      "find_therapist": "Terapevt tap",
+      "with": "{{name}} ilə",
+      "online": "Onlayn",
+      "offline": "Əyani",
+      "therapist_title": "Siz terapevtsiniz",
+      "therapist_text": "Seanslarınızı, iş saatlarınızı və terapevt profilinizi terapevt panelindən idarə edin.",
+      "open_expert": "Terapevt panelinə keç"
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Adınız, profil şəkliniz və özünüz haqqında qısa məlumat.",
+      "avatar": "Profil şəkli",
+      "avatar_hint": "JPG, PNG, WEBP və ya GIF · maks. 10 MB",
+      "upload": "Şəkil yüklə",
+      "change": "Dəyiş",
+      "remove": "Sil",
+      "avatar_updated": "Profil şəkli yeniləndi",
+      "avatar_removed": "Profil şəkli silindi",
+      "full_name": "Ad, soyad",
+      "email": "Email",
+      "email_verified": "Təsdiqlənib",
+      "email_hint": "Email hesabınıza giriş üçün istifadə olunur. Dəyişmək üçün bizə yazın.",
+      "about": "Haqqımda",
+      "about_placeholder": "İstəyə bağlı",
+      "save": "Yadda saxla",
+      "saved": "Profil yadda saxlanıldı",
+      "unsaved": "Yadda saxlanmayıb",
+      "name_error": "Ad 2–100 simvol olmalıdır.",
+      "about_error": "Ən çox 2000 simvol ola bilər.",
+      "member_since": "Qeydiyyat tarixi: {{date}}"
+    },
+    "errors": {
+      "generic": "Əməliyyat alınmadı. Yenidən cəhd edin.",
+      "file_type": "Şəkil üçün JPG, PNG, WEBP və ya GIF seçin.",
+      "file_size": "Fayl çox böyükdür (maksimum 10 MB).",
+      "load": "Məlumat yüklənmədi.",
+      "retry": "Yenidən cəhd et"
+    },
+    "orders": {
+      "title": "Sifarişlərim",
+      "description": "Verdiyiniz sifarişlər və çatdırılma məlumatları.",
+      "order_number": "Sifariş №{{id}}",
+      "items_count": "{{count}} məhsul",
+      "total": "Cəmi",
+      "delivery": "Çatdırılma",
+      "recipient": "Alıcı",
+      "phone": "Telefon",
+      "address": "Ünvan",
+      "note": "Qeyd",
+      "payment": "Ödəniş",
+      "payment_cod": "Qapıda nağd",
+      "reorder": "Yenidən səbətə at",
+      "reordered": "Məhsullar səbətə əlavə olundu",
+      "reorder_partial": "Bəzi məhsullar stokda olmadığı üçün əlavə olunmadı",
+      "view_cart": "Səbətə bax",
+      "empty_title": "Hələ sifarişiniz yoxdur",
+      "empty_text": "Marketdəki məhsullara baxın — sifarişləriniz burada görünəcək.",
+      "go_shop": "Marketə keç",
+      "show_details": "Çatdırılma məlumatı"
+    },
+    "wishlist": {
+      "title": "Seçilmişlər",
+      "description": "Bəyəndiyiniz məhsullar — sonra almaq üçün burada saxlanılır.",
+      "count": "{{count}} məhsul",
+      "empty_title": "Seçilmişlər boşdur",
+      "empty_text": "Məhsul kartındakı ürək işarəsi ilə bəyəndiyiniz məhsulları buraya əlavə edin.",
+      "go_shop": "Marketə keç"
+    }
   }
 }

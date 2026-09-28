@@ -34,7 +34,7 @@ const AboutPage = () => {
               <img src={logo} className="w-4 h-auto" alt="" />
               {t('about.badge', 'Our Botanical Legacy')}
             </div>
-            <h1 className="text-5xl md:text-7xl font-display font-bold text-[#1a1c1e] tracking-tight mb-8 leading-[0.9]">
+            <h1 className="text-5xl md:text-6xl font-display font-bold text-[#1a1c1e] tracking-tight mb-8 leading-[0.9]">
               {t('about.hero_title', 'Botanical Science Reimagined.')}
             </h1>
             <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl">

@@ -1,92 +1,30 @@
 import api from "./api"
-import { MOCK_MARKET_PRODUCTS } from "./mockData"
-
-// api.js interceptor already unwraps response.data — do NOT double-unwrap
-
+import { useAuthStore } from "../store/useAuthStore"
+// Yalnız real API datası (əvvəl mockData-dakı uydurma məhsullar siyahıya qarışdırılırdı)
 const normalizeProductsResponse = (response) => {
   if (Array.isArray(response)) {
-    return {
-      data: response,
-      pagination: { total: response.length, pages: 1 },
-    }
+    return { data: response, pagination: { total: response.length, page: 1, pages: 1 } }
   }
-
   return {
-    ...response,
     data: Array.isArray(response?.data) ? response.data : [],
-    pagination: response?.pagination || {},
+    pagination: response?.pagination || { total: 0, page: 1, pages: 0 },
   }
 }
 
-const filterSeedProducts = (products, params = {}) => {
-  const search = String(params.search || "").toLowerCase()
-  const form = String(params.form || "").toLowerCase()
-  const category = String(params.category || "").toLowerCase()
-  const minPrice = params.minPrice ? Number(params.minPrice) : null
-  const maxPrice = params.maxPrice ? Number(params.maxPrice) : null
+export const getProducts = async (params = {}) => normalizeProductsResponse(await api.get("/products", { params }))
 
-  return products.filter((product) => {
-    const matchesSearch =
-      !search ||
-      product.title.toLowerCase().includes(search) ||
-      product.description.toLowerCase().includes(search) ||
-      product.scientificName.toLowerCase().includes(search)
-
-    const matchesForm = !form || product.form.toLowerCase() === form
-    const matchesCategory = !category || product.category?.slug?.toLowerCase() === category
-    const matchesMin = minPrice === null || Number(product.price) >= minPrice
-    const matchesMax = maxPrice === null || Number(product.price) <= maxPrice
-
-    return matchesSearch && matchesForm && matchesCategory && matchesMin && matchesMax
-  })
-}
-
-const mergeSeedProducts = (products, params = {}) => {
-  const seedProducts = filterSeedProducts(MOCK_MARKET_PRODUCTS, params)
-  const existingIds = new Set(products.map((product) => product.id))
-  return [...seedProducts.filter((product) => !existingIds.has(product.id)), ...products]
-}
-
-export const getProducts = async (params = {}) => {
-  try {
-    const response = normalizeProductsResponse(await api.get("/products", { params }))
-    const merged = mergeSeedProducts(response.data, params)
-
-    return {
-      ...response,
-      data: merged,
-      pagination: {
-        ...response.pagination,
-        total: response.pagination?.total ? response.pagination.total + merged.length - response.data.length : merged.length,
-        pages: response.pagination?.pages || 1,
-      },
-    }
-  } catch (error) {
-    console.warn("⚠️ Using seeded marketplace products (API failed)", error?.message)
-    const data = mergeSeedProducts([], params)
-    return {
-      data,
-      pagination: { total: data.length, pages: 1 },
-    }
-  }
-}
-
-export const getProductById = async (id) => {
-  const seedProduct = MOCK_MARKET_PRODUCTS.find((product) => product.id === id)
-  if (seedProduct) return seedProduct
-
-  return await api.get(`/products/${id}`)
-}
+export const getProductById = async (id) => await api.get(`/products/${id}`)
 
 export const getMyProducts = async () => {
-  // Backend has no /my endpoint — returns all products via /products
-  return await api.get("/products")
+  // Yalnız daxil olmuş satıcının öz məhsulları (əvvəl bütün məhsullar gəlirdi)
+  const sellerId = useAuthStore.getState().user?.id
+  if (!sellerId) return []
+  return await api.get("/products", { params: { sellerId, limit: 100 } })
 }
 
-export const getSellerProducts = async () => {
-  // Backend has no /products/seller/{id} endpoint.
-  // Fetch all products with a high limit and filter client-side by sellerId.
-  return await api.get("/products", { params: { limit: 200 } })
+export const getSellerProducts = async (sellerId) => {
+  // Backend satıcıya görə süzür (sellerId); bir sorğuda maksimum 100 məhsul qaytarılır
+  return await api.get("/products", { params: { sellerId, limit: 100 } })
 }
 
 export const createProduct = async (data) => {

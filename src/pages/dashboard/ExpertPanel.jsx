@@ -12,6 +12,7 @@ import { Badge } from "../../components/ui/Badge"
 import { Input } from "../../components/ui/Input"
 import { Calendar, Video, Clock, DollarSign, Loader2, CheckCircle2, XCircle, PlayCircle, Settings, ShieldCheck, CheckCircle, Star } from "lucide-react"
 import { toast } from "../../store/useToastStore"
+import { openExternal, safeExternalUrl } from "../../lib/utils"
 
 export default function ExpertPanel() {
   const { t } = useTranslation()
@@ -42,7 +43,7 @@ export default function ExpertPanel() {
     link: ""
   })
 
-  const duration = profileForm.sessionDurationInMinutes || 60;
+  const duration = Math.max(15, Number(profileForm.sessionDurationInMinutes) || 60);
   const HOURS_OPTIONS = useMemo(() => {
     const slots = [];
     const startHour = 8;
@@ -301,6 +302,7 @@ export default function ExpertPanel() {
                              <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('expert.field.duration', 'Session Duration (Min)')}</label>
                              <Input 
                                 type="number"
+                                min="15"
                                 value={profileForm.sessionDurationInMinutes}
                                 onChange={e => setProfileForm({...profileForm, sessionDurationInMinutes: e.target.value})}
                                 className="h-12 rounded-xl bg-neutral-50/50"
@@ -369,17 +371,17 @@ export default function ExpertPanel() {
                        <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group relative">
                           <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">{t('expert.docs.cv', 'Curriculum Vitae')}</p>
                           <p className="text-xs font-medium text-white/60">{files.cv ? files.cv.name : (therapist.cv ? 'CV_Document.pdf' : 'Not uploaded')}</p>
-                          <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFiles({...files, cv: e.target.files[0]})} />
+                          <input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFiles({...files, cv: e.target.files[0]})} />
                        </div>
                        <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group relative">
                           <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">{t('expert.docs.avatar', 'Profile Media')}</p>
                           <p className="text-xs font-medium text-white/60">{files.avatar ? files.avatar.name : (therapist.user?.avatar ? 'Avatar_Media.jpg' : 'Not uploaded')}</p>
-                          <input type="file" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFiles({...files, avatar: e.target.files[0]})} />
+                          <input type="file" accept=".jpg,.jpeg,.png,.webp,.gif" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFiles({...files, avatar: e.target.files[0]})} />
                        </div>
                        <div className="p-4 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors cursor-pointer group relative">
                           <p className="text-[10px] font-bold uppercase tracking-widest text-primary mb-1">{t('expert.docs.certs', 'Clinical Certificates')}</p>
                           <p className="text-xs font-medium text-white/60">{files.certificates.length > 0 ? `${files.certificates.length} files staged` : `${therapist.certificates?.length || 0} verified assets`}</p>
-                          <input type="file" multiple className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFiles({...files, certificates: Array.from(e.target.files)})} />
+                          <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.webp" className="absolute inset-0 opacity-0 cursor-pointer" onChange={e => setFiles({...files, certificates: Array.from(e.target.files)})} />
                        </div>
                     </div>
                     <p className="text-[9px] text-white/30 italic leading-relaxed">
@@ -485,7 +487,7 @@ export default function ExpertPanel() {
                         {getStatusBadge(s.status)}
                       </div>
                       <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground font-medium">
-                        <div className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {new Date(s.startTime).toLocaleDateString()} {new Date(s.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                        <div className="flex items-center gap-1.5"><Clock className="h-3.5 w-3.5" /> {new Date(s.startTime).toLocaleDateString([], { timeZone: 'Asia/Baku' })} {new Date(s.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Baku' })}</div>
                         <div className="flex items-center gap-1.5"><Video className="h-3.5 w-3.5" /> {s.meetingLink || t('expert.link_pending', 'Link Pending')}</div>
                       </div>
                     </div>
@@ -512,8 +514,8 @@ export default function ExpertPanel() {
                     )}
                     {s.status === SESSION_STATUS.CONFIRMED && (
                       <>
-                        {s.meetingLink && (
-                          <Button variant="outline" className="rounded-xl h-10 px-6 font-bold border-emerald-100 text-emerald-600 hover:bg-emerald-50" onClick={() => window.open(s.meetingLink, '_blank')}>
+                        {safeExternalUrl(s.meetingLink) && (
+                          <Button variant="outline" className="rounded-xl h-10 px-6 font-bold border-emerald-100 text-emerald-600 hover:bg-emerald-50" onClick={() => openExternal(s.meetingLink)}>
                             <Video className="w-4 h-4 mr-2" /> {t('expert.join', 'Join Session')}
                           </Button>
                         )}
@@ -585,9 +587,14 @@ export default function ExpertPanel() {
             className={sessionActionModal.type === 'reject' ? "bg-red-600 hover:bg-red-700 text-white" : "bg-emerald-600 hover:bg-emerald-700 text-white"}
             onClick={() => {
               if (sessionActionModal.type === 'confirm') {
+                const link = sessionActionModal.link?.trim();
+                if (link && !safeExternalUrl(link)?.startsWith("https:")) {
+                  toast.error(t('expert.invalid_meeting_link', 'Meeting link must be a valid https:// URL'));
+                  return;
+                }
                 confirmMutation({ 
                   id: sessionActionModal.session.id, 
-                  meetingLink: sessionActionModal.link || null 
+                  meetingLink: link || null 
                 });
               } else {
                 rejectMutation(sessionActionModal.session.id);

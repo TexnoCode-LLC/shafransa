@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { useTranslation } from "react-i18next"
 import { useAuthStore } from "../../store/useAuthStore"
+import { toast } from "../../store/useToastStore"
+import { openExternal, safeExternalUrl } from "../../lib/utils"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { getMyOrders } from "../../services/order.service"
 import { getWishlist } from "../../services/wishlist.service"
@@ -78,7 +80,7 @@ const fileToDataUrl = (file) =>
     reader.readAsDataURL(file)
   })
 
-export default function UserProfile({ tab = "profile" }) {
+export default function UserProfile({ tab = "profile", embedded = false }) {
   const { t } = useTranslation()
   const { user } = useAuthStore()
   const queryClient = useQueryClient()
@@ -272,8 +274,7 @@ export default function UserProfile({ tab = "profile" }) {
         },
       })
 
-      setSaveMessage(t('user.profile_updated', "Profile updated!"))
-      setTimeout(() => setSaveMessage(""), 3000)
+      toast.success(t('user.profile_updated', "Profile updated!"))
     }
   })
 
@@ -307,8 +308,10 @@ export default function UserProfile({ tab = "profile" }) {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto p-6 md:p-10 space-y-10">
+    <div className={embedded ? "space-y-6" : "max-w-6xl mx-auto p-6 md:p-10 space-y-10"}>
       
+      {/* Yeni panel layout-unda başlıq və tablar sidebar-dadır */}
+      {!embedded && (<>
       <header className="border-b border-neutral-100 pb-8">
         <Badge className="bg-primary/10 text-primary border-primary/20 font-bold uppercase tracking-widest text-[10px] px-3 mb-3">
           {t('user.member_badge', 'Member')}
@@ -338,6 +341,7 @@ export default function UserProfile({ tab = "profile" }) {
           </Link>
         ))}
       </div>
+      </>)}
 
       {/* ── PROFILE ── */}
       {activeTab === "profile" && (
@@ -636,10 +640,10 @@ export default function UserProfile({ tab = "profile" }) {
                         <div className="text-xs font-bold text-emerald-600 uppercase tracking-widest">{session.therapist?.specialization}</div>
                         <div className="flex flex-wrap gap-4 mt-2">
                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
-                              <Calendar className="w-3.5 h-3.5" /> {new Date(session.startTime).toLocaleDateString()}
+                              <Calendar className="w-3.5 h-3.5" /> {new Date(session.startTime).toLocaleDateString([], { timeZone: 'Asia/Baku' })}
                            </div>
                            <div className="flex items-center gap-1.5 text-xs text-muted-foreground font-medium">
-                              <Clock className="w-3.5 h-3.5" /> {new Date(session.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                              <Clock className="w-3.5 h-3.5" /> {new Date(session.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Baku' })}
                            </div>
                         </div>
                       </div>
@@ -705,11 +709,11 @@ export default function UserProfile({ tab = "profile" }) {
                           </div>
                        )}
 
-                       {session.status === SESSION_STATUS.CONFIRMED && session.meetingLink && (
+                       {session.status === SESSION_STATUS.CONFIRMED && safeExternalUrl(session.meetingLink) && (
                           <Button 
                              size="sm" 
                              className="h-9 px-4 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 text-white"
-                             onClick={() => window.open(session.meetingLink, '_blank')}
+                             onClick={() => openExternal(session.meetingLink)}
                           >
                              <Video className="w-4 h-4 mr-2" /> {t('session.join', 'Join')}
                           </Button>

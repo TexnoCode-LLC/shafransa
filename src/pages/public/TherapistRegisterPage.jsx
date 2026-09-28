@@ -50,9 +50,10 @@ export default function TherapistRegisterPage() {
         licenseNumber: data.licenseNumber
       })
     },
-    onSuccess: () => {
-      toast.success(t('therapists.registration_success', 'Application submitted! You will be notified once verified.'))
-      navigate("/login")
+    onSuccess: (_, data) => {
+      // Qeydiyyatdan sonra email OTP ilə təsdiqlənməlidir
+      toast.success(t('auth.otp_sent_msg', "Verification code sent to your email."))
+      navigate("/otp", { state: { email: data.email } })
     },
     onError: (err) => toast.error(err.message || t('therapists.registration_error', 'Failed to submit application'))
   })

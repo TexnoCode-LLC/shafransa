@@ -4,38 +4,88 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+
+# Eyni anda iki deploy getməsin (ikincisi birincinin bitməsini gözləyir)
+concurrency:
+  group: deploy-frontend
+  cancel-in-progress: false
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      # Repo çek
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Node setup
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
+          cache: npm
 
-      # Install & build
+      # package-lock.json ilə eyni versiyalar (npm install lock faylını dəyişə bilər)
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Lint
+        run: npx eslint src --quiet
 
       - name: Build project
         run: npm run build
 
-      # SSH setup
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend
+          path: dist
+          retention-days: 7
+
+  deploy:
+    needs: build
+    # PR-larda yalnız build yoxlanır, deploy yalnız main-ə push olanda
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      STAGING_DIR: /var/www/html.staging
+    steps:
+      - name: Checkout repo (deploy script)
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend
+          path: dist
+
+      # Parol yox, SSH açarı. SERVER_KNOWN_HOSTS verilibsə serverin açarı ona qarşı yoxlanır.
       - name: Setup SSH
+        env:
+          SSH_KEY_B64: ${{ secrets.SERVER_SSH_KEY_BASE64 }}
+          KNOWN_HOSTS: ${{ secrets.SERVER_KNOWN_HOSTS }}
         run: |
           mkdir -p ~/.ssh
-          printf "%s" "${{ secrets.SERVER_SSH_KEY_BASE64 }}" | base64 -d > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+          printf "%s" "$SSH_KEY_B64" | base64 -d > ~/.ssh/id_deploy
+          chmod 600 ~/.ssh/id_deploy
+          if [ -n "$KNOWN_HOSTS" ]; then
+            printf "%s\n" "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+          else
+            echo "::warning::SERVER_KNOWN_HOSTS secret-i yoxdur — serverin açarı ssh-keyscan ilə götürülür"
+            ssh-keyscan -H "$SERVER_HOST" >> ~/.ssh/known_hosts
+          fi
+          printf "Host server\n  HostName %s\n  User %s\n  IdentityFile ~/.ssh/id_deploy\n" "$SERVER_HOST" "$SERVER_USER" > ~/.ssh/config
 
-      # Deploy (DIST GÖNDƏRİLİR)
-      - name: Deploy to Server
+      # Canlı qovluğa toxunmadan əvvəl yeni build ayrıca qovluğa yüklənir
+      - name: Upload to staging
         run: |
-          scp -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/var/www/html/
+          tar -czf release.tgz -C dist .
+          scp release.tgz server:/tmp/shafransa-frontend-release.tgz
+          ssh server "rm -rf $STAGING_DIR && mkdir -p $STAGING_DIR && tar -xzf /tmp/shafransa-frontend-release.tgz -C $STAGING_DIR && rm -f /tmp/shafransa-frontend-release.tgz"
+
+      # Atomik keçid + yoxlama; uğursuz olsa əvvəlki versiya avtomatik geri qayıdır
+      - name: Switch release
+        run: ssh server "STAGING_DIR=$STAGING_DIR bash -s" < deploy/deploy.sh

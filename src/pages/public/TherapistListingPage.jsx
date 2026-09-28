@@ -134,7 +134,7 @@ export default function TherapistListingPage() {
           <Badge className="bg-emerald-500/10 text-emerald-500 border-emerald-500/20 font-bold uppercase tracking-widest text-[10px] px-3 mb-3">
             {t('therapists.badge', 'Verified Professionals')}
           </Badge>
-          <h1 className="text-5xl lg:text-7xl font-display font-bold tracking-tight leading-none">
+          <h1 className="text-5xl lg:text-6xl font-display font-bold tracking-tight leading-none">
             {t('therapists.title_p1', 'Find Your')}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
               {t('therapists.title_p2', 'Physiotherapist')}

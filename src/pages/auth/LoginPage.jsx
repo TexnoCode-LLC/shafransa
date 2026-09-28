@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { Button } from "../../components/ui/Button"
 import { Input } from "../../components/ui/Input"
@@ -8,6 +8,7 @@ import { Leaf, ArrowRight, ShieldCheck, Zap, Globe, Eye, EyeOff } from "lucide-r
 import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import { getRoleName } from "../../constants/roles"
+import { homePathForRole, safeRedirectPath } from "@/lib/utils"
 import SEO from "../../components/common/SEO"
 
 export default function LoginPage() {
@@ -17,18 +18,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  // Məs. məhsulda "Səbətə at" → giriş → həmin məhsula qayıt
+  const redirect = safeRedirectPath(searchParams.get("redirect"))
   const { login, user, isAuthenticated } = useAuthStore()
 
   // Redirect when authentication state changes
   useEffect(() => {
     if (isAuthenticated && user) {
-      const role = getRoleName(user?.role)
-      console.log("🔐 Login successful! User role:", role)
-      if (role === "SUPERADMIN" || role === "ADMIN") navigate("/admin")
-      else if (role === "THERAPIST") navigate("/expert")
-      else navigate("/user")
+      navigate(redirect || homePathForRole(getRoleName(user?.role)), { replace: true })
     }
-  }, [isAuthenticated, user, navigate])
+  }, [isAuthenticated, user, navigate, redirect])
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -37,7 +37,14 @@ export default function LoginPage() {
       await login({ email, password })
       toast.success(t('auth.login_success', "Welcome back! Redirecting..."))
     } catch (err) {
-      toast.error(err?.response?.data?.message || t('auth.login_error', "Invalid credentials. Please try again."))
+      // Təsdiqlənməmiş email: backend yeni kod göndərib — OTP səhifəsinə keçirik
+      if (err?.code === "EMAIL_NOT_VERIFIED") {
+        toast.success(t('auth.otp_sent_msg', "Verification code sent to your email."))
+        navigate("/otp", { state: { email, redirect } })
+        return
+      }
+      // 429 — çox səhv cəhd (bloklanma) mesajını göstər, qalanında ümumi tərcümə olunmuş mətn
+      toast.error(err?.status === 429 ? err.message : t('auth.login_error', "Invalid credentials. Please try again."))
       setIsLoading(false)
     }
   }

@@ -16,4 +16,4 @@ export const userApi = createApi({
     endpoints: (builder) => ({}),
 })
 
-export const {} = userApi
+// Hazırda heç bir endpoint export olunmur

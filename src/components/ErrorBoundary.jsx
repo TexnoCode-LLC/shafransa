@@ -74,7 +74,7 @@ class ErrorBoundary extends React.Component {
             </p>
 
             {/* Error Details (Development only) */}
-            {process.env.NODE_ENV === "development" && this.state.error && (
+            {import.meta.env.DEV && this.state.error && (
               <details className="w-full">
                 <summary className="cursor-pointer text-xs font-mono text-rose-600 font-bold hover:underline">
                   Error Details ({this.state.errorCount} occurrence{this.state.errorCount > 1 ? "s" : ""})

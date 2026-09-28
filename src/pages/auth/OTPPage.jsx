@@ -8,6 +8,7 @@ import { ShieldCheck } from "lucide-react"
 import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import { getRoleName } from "../../constants/roles"
+import { homePathForRole, safeRedirectPath } from "@/lib/utils"
 
 export default function OTPPage() {
   const { t } = useTranslation()
@@ -30,13 +31,9 @@ export default function OTPPage() {
   // Redirect when authentication state changes after OTP verification
   useEffect(() => {
     if (isAuthenticated && user) {
-      const role = getRoleName(user?.role)
-      console.log("✅ OTP verification successful! User role:", role)
-      if (role === "SUPERADMIN" || role === "ADMIN") navigate("/admin")
-      else if (role === "THERAPIST") navigate("/expert")
-      else navigate("/user")
+      navigate(safeRedirectPath(location.state?.redirect) || homePathForRole(getRoleName(user?.role)), { replace: true })
     }
-  }, [isAuthenticated, user, navigate])
+  }, [isAuthenticated, user, navigate, location.state])
 
   useEffect(() => {
     if (timeLeft <= 0) return
@@ -74,9 +71,11 @@ export default function OTPPage() {
             <Input 
               id="otp" 
               type="text" 
-              placeholder="0 0 0 0 0" 
+              placeholder="0 0 0 0 0 0" 
               className="text-center text-2xl tracking-[0.5em]" 
-              maxLength={5} 
+              maxLength={6}
+              inputMode="numeric"
+              autoComplete="one-time-code" 
               required 
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
@@ -94,7 +93,8 @@ export default function OTPPage() {
               ) : (
                 <button 
                   type="button" 
-                  onClick={() => navigate("/register")} 
+                  // Login təsdiqsiz hesaba yeni kod göndərir (həm user, həm terapevt üçün işləyir)
+                  onClick={() => navigate("/login")} 
                   className="font-medium text-primary hover:underline focus:outline-none"
                 >
                   {t('auth.request_new_code', 'Request a new code')}

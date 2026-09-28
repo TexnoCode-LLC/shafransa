@@ -1,8 +1,9 @@
 {
   "welcome": "Welcome",
   "login": "Login",
-  "nav_marketplace": "Market",
+  "nav_marketplace": "Shop",
   "nav_encyclopedia": "Encyclopedia",
+  "nav_therapists": "Physiotherapists",
   "nav_ai_consultant": "AI Consultant",
   "nav_about": "About Us",
   "nav_how_it_works": "How It Works",
@@ -91,90 +92,159 @@
     }
   },
   "landing": {
-    "version": "Shafransa: Precision Botanical Intelligence",
     "hero": {
-      "title_part1": "Botanical Medicine",
-      "title_part2": "Better,",
-      "title_part3": "Together.",
-      "subtitle": "Your trusted partner in botanical wellness. We combine ancient wisdom with modern verification to provide you with safe, professional-grade herbal guidance."
+      "kicker": "Plant encyclopedia · Shop · Physiotherapists",
+      "title_1": "Where artificial intelligence",
+      "title_2": "meets botany.",
+      "subtitle": "Shafransa brings plant science and artificial intelligence together: a sourced encyclopedia, products with published lab results and licensed physiotherapists — all on one platform.",
+      "cta_primary": "Go to the shop",
+      "cta_secondary": "Read the encyclopedia",
+      "scroll": "Scroll down"
     },
-    "cta": {
-      "protocol": "Start My Protocol",
-      "marketplace": "Explore The Marketplace",
-      "explore_inventory": "Explore Verified Inventory"
+    "facts": {
+      "sources_title": "Sourced articles",
+      "sources_text": "Every plant article is based on scientific sources",
+      "lab_title": "Lab results",
+      "lab_text": "Heavy metal and pesticide tests on every product page",
+      "cod_title": "Pay on delivery",
+      "cod_text": "You pay when you receive your order",
+      "lang_title": "Four languages",
+      "lang_text": "Azerbaijani, English, Russian and Turkish"
     },
-    "social": {
-      "trusted": "Trusted by clinical researchers globally",
-      "title": "Health is the new wealth. Invest in precision."
-    },
-    "value": {
-      "title": "Built for precision, driven by science.",
-      "subtitle": "Generic herbal advice is dangerous. Shafransa provides the clinical rigorousness required for modern health management."
-    },
-    "links": {
-      "whitepaper": "View the scientific whitepaper"
-    },
-    "ai": {
-      "title": "A Smart System that Thinks with You",
-      "text": "Our system carefully reviews your health history, symptoms, and any current medications. We don't just give you a template—we build botanical protocols that are safe and specifically suited for you."
-    },
-    "verify": {
-      "title": "Complete Transparency at Every Step",
-      "text": "The contents of every product you buy are confirmed with laboratory certificates. For us, purity isn't just a word—it's an official proof for every batch.",
-      "batch": "Batch #SH-{{id}} - VERIFIED"
-    },
-    "marketplace": {
-      "badge": "Clinical Marketplace",
-      "title": "Verified botanical purity from native soil to clinical wellness."
-    },
-    "features": {
-      "global": {
-        "title": "Global Sourcing",
-        "text": "Direct relationships with organic growers in the Mediterranean, Amazon, and Caucasus mountains."
+    "intro": {
+      "label": "What is Shafransa",
+      "statement": "There is plenty of information about herbal remedies online, and very little of it is checked. We brought three things together: reliable knowledge, transparent products and expert advice.",
+      "encyclopedia": {
+        "title": "Plant encyclopedia",
+        "text": "Benefits, dosage, side effects, contraindications and drug interactions — for every plant, with its sources.",
+        "link": "Open the encyclopedia"
       },
-      "escrow": {
-        "title": "Escrow Purity Guarantee",
-        "text": "Your payment is locked in our smart contract until a 3rd party lab verifies the batch's purity."
+      "market": {
+        "title": "Shop",
+        "text": "Every product page shows the batch number, heavy metal and pesticide tests, active compound content and origin.",
+        "link": "Browse products"
       },
-      "extraction": {
-        "title": "Standardized Extraction",
-        "text": "We require CO2-critical extraction methods for maximum bioavailability and genomic absorption."
+      "therapists": {
+        "title": "Physiotherapists",
+        "text": "Book an online video or in-person session with a licensed physiotherapist. Price and duration are shown up front.",
+        "link": "Choose a therapist"
       }
     },
-    "card": {
-      "verified": "Verified Origin",
-      "location": "Caucasian Mountains",
-      "product": "Wildcrafted Saffron Extract",
-      "rating_info": "4.9 Rating • Clinical Batch #AF-201"
+    "categories": {
+      "label": "Categories",
+      "title": "What are you looking for?",
+      "products": "{{count}} products",
+      "view_all": "All products"
     },
-    "floating": {
-      "ai": "AI Protocol Generated",
-      "dose": "Personalized Dose: 500mg"
+    "market": {
+      "label": "Shop",
+      "title": "Know what you are buying.",
+      "text": "Product pages contain verifiable facts, not marketing copy. The “Verified” badge is given only to products our team has checked.",
+      "point_1": "Every batch has its own number",
+      "point_2": "Test results are visible before you buy",
+      "point_3": "Country and region of origin are listed",
+      "sample_badge": "Example",
+      "sample_title": "What a product page shows",
+      "row_batch": "Batch number",
+      "row_heavy_metal": "Heavy metal test",
+      "row_pesticide": "Pesticide test",
+      "row_active": "Active compound",
+      "row_origin": "Origin",
+      "row_status": "Status",
+      "value_passed": "Passed",
+      "value_origin": "Absheron",
+      "value_verified": "Verified",
+      "latest": "New products",
+      "view_all": "All products",
+      "verified": "Verified"
     },
-    "testimonials": {
-      "1": {
-        "text": "The interaction check between my prescriptions and Ashwagandha was a revelation. Every other platform missed what Shafransa caught.",
-        "role": "Clinical Immunologist"
-      },
-      "2": {
-        "text": "Verified COAs change the game for sellers like us. We can finally prove our purity without expensive middlemen marketing.",
-        "role": "Certified Organic Seller"
-      }
+    "encyclopedia": {
+      "label": "Encyclopedia",
+      "title": "Everything you need to know about a plant",
+      "text": "All articles follow the same structure, so plants are easy to compare with one another.",
+      "basic_title": "Overview",
+      "basic_text": "Description, benefits, common and scientific names",
+      "usage_title": "Use",
+      "usage_text": "How to use it, dosage and available forms",
+      "safety_title": "Safety",
+      "safety_text": "Side effects, contraindications and drug interactions",
+      "origin_title": "Origin",
+      "origin_text": "Country, region, climate, wild or cultivated",
+      "science_title": "Research",
+      "science_text": "Evidence grade, active compounds and sources",
+      "view_all": "Open the encyclopedia"
     },
-    "cta_final": {
-      "title": "Your healing starts with zero guesswork.",
-      "subtitle": "Join the future of botanical science. Deploy your personalized protocol in minutes.",
-      "user": "Join the Waitlist",
-      "seller": "Become a Partner"
+    "plants": {
+      "title": "Plants worth reading about",
+      "view_all": "All plants",
+      "grade": "Evidence grade {{grade}}"
+    },
+    "safety": {
+      "label": "Safety",
+      "title": "Natural does not mean safe.",
+      "text": "Many plants can strengthen or weaken the effect of medication, and some are not suitable during pregnancy or with certain conditions. That is why every article in the encyclopedia has a dedicated safety section.",
+      "point_1": "Drug interactions are listed separately",
+      "point_2": "Pregnancy and allergy warnings are noted",
+      "point_3": "Dosage precautions are spelled out",
+      "note": "Talk to your doctor before starting any herbal remedy."
+    },
+    "therapists": {
+      "label": "Physiotherapists",
+      "title": "Talk to a specialist.",
+      "text": "If your question is about recovery, pain or herbal remedies, book an appointment with a physiotherapist.",
+      "step_1_title": "Choose a therapist",
+      "step_1_text": "Each profile shows the therapist's specialisation, background and session prices.",
+      "step_2_title": "Book a time",
+      "step_2_text": "Pick one of the open slots — the earliest is 24 hours from now.",
+      "step_3_title": "Join the session",
+      "step_3_text": "Once the therapist confirms, the video link for an online session appears in your account.",
+      "view_all": "All therapists",
+      "from_price": "Online session {{price}}"
+    },
+    "audience": {
+      "label": "Who it is for",
+      "title": "Who Shafransa helps",
+      "a1_title": "People choosing natural remedies with care",
+      "a1_text": "For anyone who wants to understand a herbal tea or supplement — its effects, dosage and risks — before buying it.",
+      "a1_link": "Open the encyclopedia",
+      "a2_title": "People in recovery",
+      "a2_text": "For anyone who wants a plan with a physiotherapist after an injury, surgery or long-term pain.",
+      "a2_link": "Choose a therapist",
+      "a3_title": "Specialists",
+      "a3_text": "For physiotherapists who want to create a profile and see patients online or in person.",
+      "a3_link": "Join as a therapist"
     },
     "blog": {
-      "badge": "Knowledge Hub",
-      "title": "Blogs",
-      "view_all": "Explore All"
-    }
+      "label": "Blog",
+      "title": "Latest articles",
+      "view_all": "All articles"
+    },
+    "faq": {
+      "label": "Questions",
+      "title": "Frequently asked questions",
+      "q1": "Does Shafransa replace a doctor?",
+      "a1": "No. The information on this site is for educational purposes. If you take medication, are pregnant or have a chronic condition, talk to your doctor before starting any herbal remedy.",
+      "q2": "How is product quality checked?",
+      "a2": "Every product page shows the batch number, heavy metal and pesticide test results and the active compound content. The “Verified” badge is given after our team has checked this information.",
+      "q3": "How do I pay for an order?",
+      "a3": "At the moment, payment is made in cash on delivery.",
+      "q4": "How does a session with a therapist work?",
+      "a4": "When booking, you choose an online or in-person format. Online sessions run as a video call in your browser — there is nothing to install.",
+      "q5": "I am a specialist. How do I join the platform?",
+      "a5": "Sign up as a therapist and complete your profile. Once our team has reviewed your application, your profile will appear on the site.",
+      "q6": "Do I need an account to use the site?",
+      "a6": "No account is needed to read the encyclopedia or browse products. To place an order or book a session, you need to sign up."
+    },
+    "cta": {
+      "title": "Read before you choose.",
+      "text": "Create an account to keep your orders, sessions and saved products in one place.",
+      "register": "Create an account",
+      "therapist": "Join as a therapist"
+    },
+    "disclaimer": "The information on this site is for educational purposes and does not replace medical advice, diagnosis or treatment."
   },
   "footer": {
-    "bio": "Pioneering the intersection of artificial intelligence and Caucasian botanical science.",
+    "bio": "Where artificial intelligence meets botanical science: sourced knowledge, transparent products and expert support.",
     "links": {
       "about": "About Us",
       "help": "Help Center"
@@ -873,5 +943,385 @@
     "select_all": "Select All",
     "clear_all": "Clear All",
     "waiting_user_badge": "Waiting for patient"
+  },
+  "layout": {
+    "skip": "Skip to content",
+    "search": "Search",
+    "search_title": "Search",
+    "search_placeholder": "Plant or product name…",
+    "search_hint": "Type what you are looking for and choose where to search.",
+    "search_in_herbs": "Search the encyclopedia",
+    "search_in_market": "Search the shop",
+    "menu": "Menu",
+    "close": "Close",
+    "cart": "Cart",
+    "wishlist": "Saved",
+    "account": "Account",
+    "language": "Language",
+    "register": "Sign up",
+    "role_member": "Member",
+    "role_therapist": "Therapist",
+    "role_admin": "Admin",
+    "role_superadmin": "Super admin",
+    "col_platform": "Platform",
+    "col_company": "Company",
+    "col_specialists": "Specialists",
+    "col_legal": "Legal",
+    "join_therapist": "Join as a therapist",
+    "find_therapist": "Find a therapist",
+    "blog": "Blog"
+  },
+  "legal": {
+    "label": "Legal",
+    "updated": "Last updated: {{date}}",
+    "date": "28 September 2026",
+    "contents": "Contents",
+    "contact_note": "Questions? Write to us:",
+    "see_also": "See also",
+    "privacy": {
+      "title": "Privacy policy",
+      "description": "What personal data Shafransa collects, how it is used and what rights you have.",
+      "intro": "This policy explains what information we collect when you use the Shafransa website and services, why we use it and who we share it with.",
+      "sections": [
+        {
+          "title": "Information we collect",
+          "items": [
+            "Account data: first and last name, email address and password. Passwords are stored only in a one-way hashed form. A profile photo and description are optional.",
+            "Order data: the name, phone number, address and note you provide for delivery, and the products ordered.",
+            "Session data: the therapist you choose, the date, time and format of the session, the note you add when booking, and any rating and review you leave afterwards.",
+            "Therapist data: phone number, licence number, specialisation, biography, prices, CV, certificates and working hours.",
+            "Activity data: product reviews, your cart and your saved items.",
+            "Technical data: for security purposes, server logs may record information such as your IP address and the time of a request."
+          ]
+        },
+        {
+          "title": "How we use information",
+          "paragraphs": [
+            "We do not use your data for advertising and we do not sell it to third parties. The site has no advertising or analytics trackers."
+          ],
+          "items": [
+            "To create your account, verify your email and let you sign in.",
+            "To accept and deliver your orders.",
+            "To arrange therapy sessions and send notifications about them.",
+            "To review therapist applications and show approved profiles on the site.",
+            "To protect accounts and the platform from abuse."
+          ]
+        },
+        {
+          "title": "Who we share information with",
+          "items": [
+            "Therapists: for a session you book, the therapist sees your name, email and note.",
+            "Service providers: email notifications are sent through an email service, and uploaded images and documents are kept with a file storage service.",
+            "Video calls: online sessions run on Jitsi Meet (meet.jit.si), and Jitsi's privacy policy applies to the call.",
+            "Public authorities: only where the law requires it."
+          ]
+        },
+        {
+          "title": "Information stored in your browser",
+          "paragraphs": [
+            "We do not use cookies. Your browser's local storage holds only your sign-in session, chosen language, display preference and saved items. The session is removed when you sign out."
+          ]
+        },
+        {
+          "title": "How long we keep information",
+          "paragraphs": [
+            "We keep your data while your account is active. When an account is deleted, profile data, reviews, cart and saved items are deleted. Order records may be kept to meet accounting and legal obligations. Past sessions remain in the history without your name."
+          ]
+        },
+        {
+          "title": "Security",
+          "paragraphs": [
+            "Passwords are stored in hashed form, data is sent over an encrypted connection (HTTPS), and only authorised staff can access the admin panel. No system is completely secure, but we take reasonable measures to protect your data."
+          ]
+        },
+        {
+          "title": "Your rights",
+          "paragraphs": [
+            "You can view and correct your data on your profile page. To have your account and data deleted, or to request a copy of the data we hold, write to us."
+          ]
+        },
+        {
+          "title": "Children",
+          "paragraphs": [
+            "Our services are intended for adults. People under 18 may use the site only with the consent of a parent or guardian."
+          ]
+        },
+        {
+          "title": "Changes to this policy",
+          "paragraphs": [
+            "We may update this policy. The date of the latest update is shown at the top of the page. We give advance notice of significant changes on the site."
+          ]
+        }
+      ]
+    },
+    "terms": {
+      "title": "Terms of use",
+      "description": "The rules for using the Shafransa website and services.",
+      "intro": "These terms set out the rules for using the Shafransa website and services. By using the site, you accept these terms.",
+      "sections": [
+        {
+          "title": "Services",
+          "paragraphs": [
+            "Shafransa offers a plant encyclopedia, a shop for natural products, online and in-person sessions with physiotherapists, and an AI assistant. The range of services may change over time."
+          ]
+        },
+        {
+          "title": "About medical information",
+          "paragraphs": [
+            "Information on the site, including answers from the AI assistant, is for educational purposes and does not replace medical advice, diagnosis or treatment. If you take medication, are pregnant or have a chronic condition, talk to your doctor before starting any herbal remedy. In an emergency, call 103."
+          ]
+        },
+        {
+          "title": "Your account",
+          "items": [
+            "You must provide accurate information when signing up.",
+            "Do not share your password with anyone; you are responsible for activity on your account.",
+            "Accounts that break these terms may be blocked or deleted."
+          ]
+        },
+        {
+          "title": "Orders and payment",
+          "items": [
+            "Prices are shown in the currency displayed on the site, as stated on each product page.",
+            "At the moment, payment is made in cash on delivery.",
+            "Orders depend on stock availability. If a product runs out, we will contact you.",
+            "For returns and exchanges, please write to us."
+          ]
+        },
+        {
+          "title": "Therapy sessions",
+          "items": [
+            "Sessions are booked at least 24 hours in advance and are confirmed or declined by the therapist.",
+            "Online sessions take place in the browser via Jitsi Meet. The video link appears in your account once the therapist confirms.",
+            "The platform may cancel a session when necessary; both parties are notified by email.",
+            "Therapists are independent licensed professionals and are responsible for the services they provide. Shafransa helps arrange the appointment."
+          ]
+        },
+        {
+          "title": "For therapists",
+          "items": [
+            "The information, licence and certificates in your profile must be accurate.",
+            "Applications are reviewed by our team; a profile appears on the site only after approval.",
+            "If these terms are broken, the profile may be hidden from the site or the account blocked."
+          ]
+        },
+        {
+          "title": "User content",
+          "paragraphs": [
+            "Reviews and ratings should reflect your own experience. Offensive, misleading or promotional content may be removed without notice."
+          ]
+        },
+        {
+          "title": "Intellectual property",
+          "paragraphs": [
+            "The text, design and logo on the site belong to Shafransa. They may not be copied or distributed for commercial purposes without written permission."
+          ]
+        },
+        {
+          "title": "Limitation of liability",
+          "paragraphs": [
+            "We work to keep information accurate and up to date, but we do not guarantee that it is complete or error-free. To the extent permitted by law, Shafransa is not liable for indirect loss arising from the use of information on the site."
+          ]
+        },
+        {
+          "title": "Changes and governing law",
+          "paragraphs": [
+            "These terms may be updated; the date of the latest update is shown at the top of the page. These terms are governed by the laws of the Republic of Azerbaijan."
+          ]
+        }
+      ]
+    },
+    "email": "shafranssa@gmail.com"
+  },
+  "not_found": {
+    "code": "404",
+    "title": "Page not found",
+    "text": "The page you are looking for has been removed, moved, or the address is mistyped.",
+    "home": "Back to home",
+    "market": "Go to the shop"
+  },
+  "shop": {
+    "label": "Shop",
+    "title": "Natural products with published lab results",
+    "subtitle": "Every product page shows the batch number, heavy metal and pesticide tests, active compound content and origin.",
+    "search_placeholder": "Search products, plants or scientific names",
+    "clear_search": "Clear search",
+    "sort": "Sort",
+    "sort_newest": "Newest",
+    "sort_oldest": "Oldest",
+    "sort_price_asc": "Price: low to high",
+    "sort_price_desc": "Price: high to low",
+    "filters": "Filters",
+    "categories": "Categories",
+    "all_categories": "All products",
+    "price": "Price ($)",
+    "min": "Min",
+    "max": "Max",
+    "availability": "Show",
+    "verified_only": "Verified only",
+    "in_stock_only": "In stock only",
+    "reset": "Clear filters",
+    "show_results": "Show results",
+    "results": "{{count}} products",
+    "empty_title": "No products match your filters",
+    "empty_text": "Try a different search term or change the filters.",
+    "empty_catalog_title": "No products yet",
+    "empty_catalog_text": "New products will be added soon. In the meantime, you can read about plants in the encyclopedia.",
+    "go_encyclopedia": "Open the encyclopedia",
+    "error": "Products could not be loaded.",
+    "retry": "Try again",
+    "prev": "Previous",
+    "next": "Next",
+    "page_of": "Page {{page}} of {{pages}}",
+    "verified": "Verified",
+    "add_to_cart": "Add to cart",
+    "adding": "Adding…",
+    "out_of_stock": "Out of stock",
+    "in_stock": "In stock",
+    "low_stock": "Only {{count}} left",
+    "save": "Save",
+    "unsave": "Remove from saved",
+    "added_to_cart": "“{{title}}” was added to your cart",
+    "view_cart": "View cart",
+    "login_to_buy": "Sign in to add items to your cart",
+    "login_to_save": "Sign in to save products",
+    "saved": "Added to saved",
+    "unsaved": "Removed from saved",
+    "action_failed": "Something went wrong. Please try again.",
+    "product": {
+      "breadcrumb_home": "Home",
+      "not_found_title": "Product not found",
+      "not_found_text": "This product has been removed or the address is incorrect.",
+      "back_to_market": "Back to the shop",
+      "quantity": "Quantity",
+      "decrease": "Decrease",
+      "increase": "Increase",
+      "buy_now": "Buy now",
+      "share": "Share",
+      "link_copied": "Link copied",
+      "discount": "−{{percent}}%",
+      "payment_note": "Payment is made in cash on delivery.",
+      "verified_note": "Quality data has been checked by our team.",
+      "description": "Description",
+      "no_description": "No description has been added for this product yet.",
+      "details": "Quality and composition",
+      "category": "Category",
+      "form": "Form",
+      "region": "Region of origin",
+      "batch": "Batch number",
+      "heavy_metal": "Heavy metal test",
+      "pesticide": "Pesticide test",
+      "passed": "Passed",
+      "no_data": "No data",
+      "active_percent": "Active compound",
+      "active_compounds": "Active compounds",
+      "quality_tracking": "Quality tracking",
+      "scientific_name": "Scientific name",
+      "plant_link": "Read about this plant in the encyclopedia",
+      "reviews": "Reviews",
+      "reviews_count": "{{count}} reviews",
+      "no_reviews": "No reviews yet. Be the first to write one.",
+      "write_review": "Write a review",
+      "your_rating": "Your rating",
+      "rate": "{{count}} stars",
+      "your_review": "Your review",
+      "review_placeholder": "Share your experience with this product",
+      "submit_review": "Submit review",
+      "review_sent": "Your review has been saved. Thank you!",
+      "review_hint": "You can leave one review per product; submitting again updates your earlier review.",
+      "login_to_review": "Sign in to write a review",
+      "login": "Sign in",
+      "related": "More from this category"
+    }
+  },
+  "account": {
+    "panel": "My account",
+    "nav_group": "Account",
+    "nav_overview": "Overview",
+    "nav_orders": "My orders",
+    "nav_wishlist": "Saved",
+    "nav_sessions": "My sessions",
+    "nav_settings": "Settings",
+    "nav_links": "Links",
+    "back_to_site": "Back to the site",
+    "go_shop": "Go to the shop",
+    "toggle_menu": "Toggle menu",
+    "overview": {
+      "greeting": "Welcome, {{name}}",
+      "subtitle": "Keep track of your orders, saved products and sessions here.",
+      "stat_orders": "Orders",
+      "stat_saved": "Saved products",
+      "stat_sessions": "Upcoming sessions",
+      "open": "Open",
+      "next_session": "Next session",
+      "no_next_session": "You have no upcoming sessions.",
+      "find_therapist": "Find a therapist",
+      "with": "with {{name}}",
+      "online": "Online",
+      "offline": "In person",
+      "therapist_title": "You are a therapist",
+      "therapist_text": "Manage your sessions, working hours and therapist profile in the therapist panel.",
+      "open_expert": "Open the therapist panel"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "Your name, profile photo and a short description about you.",
+      "avatar": "Profile photo",
+      "avatar_hint": "JPG, PNG, WEBP or GIF · max 10 MB",
+      "upload": "Upload photo",
+      "change": "Change",
+      "remove": "Remove",
+      "avatar_updated": "Profile photo updated",
+      "avatar_removed": "Profile photo removed",
+      "full_name": "Full name",
+      "email": "Email",
+      "email_verified": "Verified",
+      "email_hint": "Your email is used to sign in. To change it, write to us.",
+      "about": "About me",
+      "about_placeholder": "Optional",
+      "save": "Save",
+      "saved": "Profile saved",
+      "unsaved": "Unsaved",
+      "name_error": "Name must be 2–100 characters.",
+      "about_error": "Up to 2000 characters.",
+      "member_since": "Member since {{date}}"
+    },
+    "errors": {
+      "generic": "Something went wrong. Please try again.",
+      "file_type": "Choose a JPG, PNG, WEBP or GIF image.",
+      "file_size": "The file is too large (max 10 MB).",
+      "load": "Data could not be loaded.",
+      "retry": "Try again"
+    },
+    "orders": {
+      "title": "My orders",
+      "description": "Orders you have placed and their delivery details.",
+      "order_number": "Order #{{id}}",
+      "items_count": "{{count}} items",
+      "total": "Total",
+      "delivery": "Delivery",
+      "recipient": "Recipient",
+      "phone": "Phone",
+      "address": "Address",
+      "note": "Note",
+      "payment": "Payment",
+      "payment_cod": "Cash on delivery",
+      "reorder": "Add to cart again",
+      "reordered": "Items were added to your cart",
+      "reorder_partial": "Some items were not added because they are out of stock",
+      "view_cart": "View cart",
+      "empty_title": "You have no orders yet",
+      "empty_text": "Browse the shop — your orders will appear here.",
+      "go_shop": "Go to the shop",
+      "show_details": "Delivery details"
+    },
+    "wishlist": {
+      "title": "Saved",
+      "description": "Products you like, kept here to buy later.",
+      "count": "{{count}} products",
+      "empty_title": "Nothing saved yet",
+      "empty_text": "Use the heart icon on a product card to save products here.",
+      "go_shop": "Go to the shop"
+    }
   }
 }

@@ -1,54 +1,13 @@
-import { create } from "zustand"
+import { toast as sonner } from "sonner"
 
-let toastId = 0
+// Köhnə toast API-si saxlanılır, göstərmə isə sonner-dədir (admin və sayt eyni bildirişlərdən istifadə edir).
+// İkinci arqument (başlıq) verilibsə başlıq kimi, mesaj isə açıqlama kimi göstərilir.
+const show = (kind) => (message, title) =>
+  title ? sonner[kind](title, { description: message }) : sonner[kind](message)
 
-export const useToastStore = create((set) => ({
-  toasts: [],
-  
-  toast: ({ type = "info", title, message, duration = 4000 }) => {
-    const id = toastId++
-    set((state) => ({
-      toasts: [...state.toasts, { id, type, title, message }]
-    }))
-    setTimeout(() => {
-      set((state) => ({
-        toasts: state.toasts.filter((t) => t.id !== id)
-      }))
-    }, duration)
-    return id
-  },
-
-  success: (message, title = "Success") => {
-    const store = useToastStore.getState()
-    return store.toast({ type: "success", title, message })
-  },
-
-  error: (message, title = "Error") => {
-    const store = useToastStore.getState()
-    return store.toast({ type: "error", title, message })
-  },
-
-  warning: (message, title = "Warning") => {
-    const store = useToastStore.getState()
-    return store.toast({ type: "warning", title, message })
-  },
-
-  info: (message, title = "Info") => {
-    const store = useToastStore.getState()
-    return store.toast({ type: "info", title, message })
-  },
-
-  dismiss: (id) => {
-    set((state) => ({
-      toasts: state.toasts.filter((t) => t.id !== id)
-    }))
-  },
-}))
-
-// Convenience export for usage outside React components
 export const toast = {
-  success: (msg, title) => useToastStore.getState().success(msg, title),
-  error: (msg, title) => useToastStore.getState().error(msg, title),
-  warning: (msg, title) => useToastStore.getState().warning(msg, title),
-  info: (msg, title) => useToastStore.getState().info(msg, title),
+  success: show("success"),
+  error: show("error"),
+  warning: show("warning"),
+  info: show("info"),
 }

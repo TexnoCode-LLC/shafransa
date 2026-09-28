@@ -39,7 +39,7 @@ const ContactPage = () => {
             <FaEnvelope className="w-3 h-3" />
             {t('contact.badge', 'Global Support')}
           </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-[#1a1c1e] tracking-tight mb-8">
+          <h1 className="text-5xl md:text-6xl font-display font-bold text-[#1a1c1e] tracking-tight mb-8">
             {t('contact.hero_title', 'Connect with our Specialists.')}
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl leading-relaxed">
@@ -154,7 +154,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#1a1c1e] mb-1">{t('contact.email_title', 'Email')}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">info@shafransa.com</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">shafranssa@gmail.com</p>
                   </div>
                 </div>
 
@@ -164,7 +164,7 @@ const ContactPage = () => {
                   </div>
                   <div>
                     <h4 className="font-bold text-[#1a1c1e] mb-1">{t('contact.phone_title', 'Phone')}</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">+994 (55) 000 00 00</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed">+994 50 806 00 93</p>
                   </div>
                 </div>
 

@@ -1,130 +1,286 @@
-import React from "react";
-import { Link, Outlet, Navigate, useLocation } from "react-router-dom";
-import { useAuthStore } from "../../store/useAuthStore";
-import { useQueryClient } from "@tanstack/react-query";
-import { getRoleName } from "../../constants/roles";
-import { 
-  User, 
-  ShoppingBag, 
-  Bookmark, 
-  LogOut, 
-  Home, 
-  LayoutDashboard, 
-  Settings,
-  Bell,
-  Search,
+import { useEffect } from "react"
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom"
+import { useQueryClient } from "@tanstack/react-query"
+import { useTranslation } from "react-i18next"
+import {
+  ArrowLeft,
+  CalendarClock,
+  ChevronsUpDown,
+  Heart,
+  LayoutDashboard,
   Leaf,
-  Activity
-} from "lucide-react";
-import { Button } from "../ui/Button";
+  LogOut,
+  Package,
+  Settings,
+  ShieldCheck,
+  ShoppingBag,
+  Stethoscope,
+} from "lucide-react"
 
-export default function UserLayout() {
-  const { user, logout } = useAuthStore();
-  const location = useLocation();
-  const queryClient = useQueryClient();
+import "@/styles/admin.css"
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/admin/ui/breadcrumb"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/admin/ui/avatar"
+import { Button } from "@/components/admin/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/admin/ui/dropdown-menu"
+import { Separator } from "@/components/admin/ui/separator"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "@/components/admin/ui/sidebar"
+import { TooltipProvider } from "@/components/admin/ui/tooltip"
+import { getInitials } from "@/lib/admin"
+import { getRoleName } from "../../constants/roles"
+import { useAuthStore } from "../../store/useAuthStore"
+import LanguageSwitcher from "../LanguageSwitcher"
+import { useWishlistSync } from "../../hooks/use-wishlist-sync"
+
+const ACCOUNT_NAV = [
+  { key: "account.nav_overview", to: "/user", icon: LayoutDashboard, exact: true },
+  { key: "account.nav_orders", to: "/user/orders", icon: Package },
+  { key: "account.nav_wishlist", to: "/user/wishlist", icon: Heart },
+  { key: "account.nav_sessions", to: "/user/sessions", icon: CalendarClock },
+  { key: "account.nav_settings", to: "/user/settings", icon: Settings },
+]
+
+const isActive = (item, pathname) => (item.exact ? pathname === item.to : pathname === item.to || pathname.startsWith(`${item.to}/`))
+
+const ROLE_LABEL_KEYS = {
+  MEMBER: "layout.role_member",
+  THERAPIST: "layout.role_therapist",
+  ADMIN: "layout.role_admin",
+  SUPERADMIN: "layout.role_superadmin",
+}
+
+function NavUser() {
+  const { t } = useTranslation()
+  const user = useAuthStore((state) => state.user)
+  const logout = useAuthStore((state) => state.logout)
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const { isMobile } = useSidebar()
+  const role = getRoleName(user?.role)
 
   const handleLogout = () => {
-    logout();
-    queryClient.clear();
-  };
-
-  const userRole = getRoleName(user?.role);
-  const isTherapist = userRole === "THERAPIST";
-  const basePath = isTherapist ? "/expert" : "/user";
-
-  const links = isTherapist ? [
-    { name: "Expert Overview", to: "/expert", icon: Activity },
-    { name: "Clinical Settings", to: "/expert/settings", icon: Settings },
-  ] : [
-    { name: "Overview", to: "/user", icon: LayoutDashboard },
-    { name: "Order History", to: "/user/orders", icon: ShoppingBag },
-    { name: "Saved Protocols", to: "/user/saved", icon: Bookmark },
-    { name: "Account Settings", to: "/user/settings", icon: Settings },
-  ];
+    logout({ toHome: true })
+    queryClient.clear()
+    navigate("/", { replace: true })
+  }
 
   return (
-    <div className="flex min-h-screen bg-[#fafafa] text-foreground font-sans">
-      {/* Sidebar */}
-      <aside className="hidden w-72 flex-col border-r border-neutral-200/50 bg-white lg:flex sticky top-0 h-screen">
-        <div className="flex h-20 items-center px-8 border-b border-neutral-100">
-          <Link to="/" className="flex items-center space-x-2.5 transition-all duration-300">
-            <div className="bg-primary text-white p-1.5 rounded-lg shadow-lg rotate-12">
-              <Leaf className="w-5 h-5 fill-current" />
-            </div>
-            <span className="font-display text-2xl font-bold tracking-tighter text-[#1a1c1e]">Shafransa</span>
-          </Link>
-        </div>
-
-        <nav className="flex-1 space-y-1 p-6">
-          <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mb-4 px-3">
-            Main Menu
-          </div>
-          {links.map((link) => {
-            const isActive = location.pathname === link.to;
-            return (
-              <Link
-                key={link.to}
-                to={link.to}
-                className={`flex items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold transition-all duration-200 ${
-                  isActive 
-                    ? "bg-primary/10 text-primary shadow-sm shadow-primary/5" 
-                    : "text-muted-foreground hover:bg-neutral-50 hover:text-[#1a1c1e]"
-                }`}
-              >
-                <link.icon className={`h-5 w-5 ${isActive ? "text-primary" : "opacity-60"}`} />
-                <span>{link.name}</span>
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={user?.avatar || undefined} alt={user?.fullName} />
+                <AvatarFallback className="rounded-lg bg-primary/10 text-xs font-semibold text-primary">{getInitials(user?.fullName)}</AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-semibold">{user?.fullName}</span>
+                <span className="truncate text-xs text-muted-foreground">{t(ROLE_LABEL_KEYS[role] || "layout.role_member")}</span>
+              </div>
+              <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg" side={isMobile ? "bottom" : "right"} align="end" sideOffset={4}>
+            <DropdownMenuLabel className="font-normal">
+              <div className="grid text-sm leading-tight">
+                <span className="truncate font-semibold">{user?.fullName}</span>
+                <span className="truncate text-xs text-muted-foreground">{user?.email}</span>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link to="/user/settings">
+                <Settings />
+                {t("account.nav_settings")}
               </Link>
-            );
-          })}
-        </nav>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onSelect={handleLogout} className="text-destructive focus:text-destructive">
+              <LogOut />
+              {t("sign_out")}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  )
+}
 
-        <div className="p-6 mt-auto border-t border-neutral-100 space-y-4">
-           <div className="flex items-center gap-3 px-2">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary border border-primary/20">
-                 {user?.fullName?.charAt(0)}
+function AccountSidebar() {
+  const { t } = useTranslation()
+  const { pathname } = useLocation()
+  const { isMobile, setOpenMobile } = useSidebar()
+  const role = getRoleName(useAuthStore((state) => state.user)?.role)
+  const closeOnMobile = () => isMobile && setOpenMobile(false)
+
+  const links = [
+    { key: "account.back_to_site", to: "/", icon: ArrowLeft },
+    { key: "account.go_shop", to: "/marketplace", icon: ShoppingBag },
+    ...(role === "THERAPIST" ? [{ key: "expert_panel", to: "/expert", icon: Stethoscope }] : []),
+    ...(role === "ADMIN" || role === "SUPERADMIN" ? [{ key: "admin_panel", to: "/admin", icon: ShieldCheck }] : []),
+  ]
+
+  return (
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton size="lg" asChild>
+              <Link to="/user" onClick={closeOnMobile}>
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Leaf className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">Shafransa</span>
+                  <span className="truncate text-xs text-muted-foreground">{t("account.panel")}</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>{t("account.nav_group")}</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {ACCOUNT_NAV.map((item) => (
+                <SidebarMenuItem key={item.to}>
+                  <SidebarMenuButton asChild isActive={isActive(item, pathname)} tooltip={t(item.key)}>
+                    <Link to={item.to} onClick={closeOnMobile}>
+                      <item.icon />
+                      <span>{t(item.key)}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>{t("account.nav_links")}</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {links.map((item) => (
+                <SidebarMenuItem key={item.to}>
+                  <SidebarMenuButton asChild tooltip={t(item.key)}>
+                    <Link to={item.to} onClick={closeOnMobile}>
+                      <item.icon />
+                      <span>{t(item.key)}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
+  )
+}
+
+export default function UserLayout() {
+  const { t } = useTranslation()
+  const { pathname } = useLocation()
+  const current = ACCOUNT_NAV.find((item) => isActive(item, pathname))
+  const isOverview = current?.to === "/user"
+  useWishlistSync()
+
+  // Tema class-ı body-yə də verilir ki, Radix portalları (dialog, dropdown, select) eyni temada açılsın
+  useEffect(() => {
+    document.body.classList.add("admin-theme")
+    return () => document.body.classList.remove("admin-theme")
+  }, [])
+
+  useEffect(() => {
+    document.title = current ? `${t(current.key)} · Shafransa` : "Shafransa"
+  }, [current, t])
+
+  return (
+    <div className="admin-theme">
+      <TooltipProvider delayDuration={200}>
+        <SidebarProvider>
+          <AccountSidebar />
+          <SidebarInset className="min-w-0">
+            <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center gap-2 border-b bg-background/95 px-4 backdrop-blur supports-[backdrop-filter]:bg-background/80">
+              <SidebarTrigger className="-ml-1" aria-label={t("account.toggle_menu")} />
+              <Separator orientation="vertical" className="mr-2 h-4" />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className={isOverview ? undefined : "hidden md:block"}>
+                    {isOverview ? (
+                      <BreadcrumbPage>{t("account.panel")}</BreadcrumbPage>
+                    ) : (
+                      <BreadcrumbLink asChild>
+                        <Link to="/user">{t("account.panel")}</Link>
+                      </BreadcrumbLink>
+                    )}
+                  </BreadcrumbItem>
+                  {!isOverview && current && (
+                    <>
+                      <BreadcrumbSeparator className="hidden md:block" />
+                      <BreadcrumbItem>
+                        <BreadcrumbPage>{t(current.key)}</BreadcrumbPage>
+                      </BreadcrumbItem>
+                    </>
+                  )}
+                </BreadcrumbList>
+              </Breadcrumb>
+              <div className="ml-auto flex items-center gap-1">
+                <LanguageSwitcher />
+                <Button variant="outline" size="sm" asChild>
+                  <Link to="/">
+                    <ArrowLeft />
+                    <span className="hidden sm:inline">{t("account.back_to_site")}</span>
+                  </Link>
+                </Button>
               </div>
-              <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-[#1a1c1e] truncate">{user?.fullName}</p>
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">{isTherapist ? "Verified Therapist" : "Verified Member"}</p>
+            </header>
+
+            <main className="flex-1 p-4 md:p-6 lg:p-8">
+              <div className="mx-auto w-full max-w-6xl">
+                <Outlet />
               </div>
-           </div>
-           <button
-             onClick={handleLogout}
-             className="flex w-full items-center space-x-3 rounded-xl px-4 py-3 text-sm font-bold text-red-500 hover:bg-red-50 transition-colors"
-           >
-             <LogOut className="h-5 w-5" />
-             <span>Sign Out</span>
-           </button>
-        </div>
-      </aside>
-
-      {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-20 border-b border-neutral-200/50 bg-white/70 backdrop-blur-xl sticky top-0 z-30 px-8 flex items-center justify-between">
-           <div className="flex-1 max-w-md relative group hidden md:block">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input 
-                type="text" 
-                placeholder="Search your collection..." 
-                className="w-full h-10 pl-10 pr-4 bg-neutral-100 border-none rounded-full text-sm font-medium focus:ring-2 focus:ring-primary/20 transition-all"
-              />
-           </div>
-           <div className="flex items-center gap-4">
-              <Button variant="ghost" size="icon" className="rounded-full hover:bg-neutral-100 relative">
-                 <Bell className="w-5 h-5 text-muted-foreground" />
-                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-              </Button>
-              <div className="h-6 w-[1px] bg-neutral-200 mx-2"></div>
-              <p className="text-sm font-bold text-[#1a1c1e] hidden sm:block">Welcome, {user?.fullName?.split(' ')[0]}</p>
-           </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto bg-[#fafafa]">
-           <div className="animate-fade-in-up">
-              <Outlet />
-           </div>
-        </main>
-      </div>
+            </main>
+          </SidebarInset>
+        </SidebarProvider>
+      </TooltipProvider>
     </div>
-  );
+  )
 }

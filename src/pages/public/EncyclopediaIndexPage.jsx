@@ -215,7 +215,7 @@ export default function EncyclopediaIndexPage() {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/5 text-xs font-bold uppercase tracking-widest text-white/60 mb-2">
             <Leaf className="w-3.5 h-3.5" /> {t('encyclopedia.badge', 'Botanical Encyclopedia')}
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold tracking-tight leading-none">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display font-bold tracking-tight leading-none">
             {t('encyclopedia.title_p1', 'Herbal')}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">{t('encyclopedia.title_p2', 'Knowledge Base')}</span>
           </h1>

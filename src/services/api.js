@@ -1,8 +1,14 @@
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 
+// Dev (npm run dev) → lokal backend, prod build → canlı API.
+// Lazım olsa VITE_API_URL ilə override etmək olar.
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "http://localhost:5276/api" : "https://api.shafransa.com/api");
+
 const api = axios.create({
-  baseURL: "https://api.shafransa.com/api",  // ✅ ALWAYS production API
+  baseURL: API_URL,
 
   headers: {
     "Content-Type": "application/json",
@@ -68,6 +74,14 @@ api.interceptors.response.use(
     console.error(`❌ API Error [${status}]:`, message);
 
     // 🔐 Handle 401 Unauthorized
+    // Wrong credentials / OTP on auth endpoints — let the page show the error instead of reloading.
+    if (status === 401 && error.config?.url?.startsWith("/auth/")) {
+      return Promise.reject({
+        status: 401,
+        message: errorData?.message || "Invalid credentials.",
+      });
+    }
+
     if (status === 401) {
       console.warn("🔐 Unauthorized - Logging out user");
       useAuthStore.getState().logout();
@@ -91,6 +105,7 @@ api.interceptors.response.use(
     if (status === 404) {
       return Promise.reject({
         status: 404,
+        code: errorData?.error || null,
         message: errorData?.message || "Resource not found.",
       });
     }
@@ -99,6 +114,7 @@ api.interceptors.response.use(
     if (status === 400 || status === 422) {
       return Promise.reject({
         status: status,
+        code: errorData?.error || null, // backend xəta kodu, məs. EMAIL_NOT_VERIFIED
         message: errorData?.message || "Invalid request data.",
         errors: errorData?.errors || null,
       });

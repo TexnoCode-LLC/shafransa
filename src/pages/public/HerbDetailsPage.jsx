@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import { getPlant } from "../../services/plant.service"
 import { safeGet } from "../../lib/safeData"
+import { safeExternalUrl } from "../../lib/utils"
 import { Badge } from "../../components/ui/Badge"
 import SEO from "../../components/common/SEO"
 import { getHerbSchema } from "../../utils/seoSchemas"
@@ -35,7 +36,7 @@ const renderFormattedText = (text) => {
   // Split by newlines
   if (text.includes('\n')) {
     const parts = text.split('\n')
-      .map(p => p.replace(/^[•\-\*]\s*/, '').trim())
+      .map(p => p.replace(/^[•*-]\s*/, '').trim())
       .filter(Boolean);
     if (parts.length > 1) {
       return (
@@ -612,8 +613,8 @@ export default function HerbDetailsPage() {
                   <p className="text-sm text-muted-foreground leading-relaxed italic">
                     {typeof ref === 'string' ? ref : (ref?.description || ref?.link || t('herb.reference.untitled', 'Scientific Reference'))}
                   </p>
-                  {ref?.link && (
-                    <a href={ref.link} target="_blank" rel="noopener noreferrer" className="text-[10px] font-semibold text-primary hover:underline mt-2 inline-block uppercase tracking-widest">
+                  {safeExternalUrl(ref?.link) && (
+                    <a href={safeExternalUrl(ref.link)} target="_blank" rel="noopener noreferrer" className="text-[10px] font-semibold text-primary hover:underline mt-2 inline-block uppercase tracking-widest">
                       {t('common.view_source', 'View Source')} →
                     </a>
                   )}

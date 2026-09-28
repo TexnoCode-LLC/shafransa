@@ -9,6 +9,8 @@ export const useAuthStore = create(
       token: null,
       isAuthenticated: false,
       isLoading: false,
+      // Qəsdən çıxış: qorunan səhifədə AuthGuard /login əvəzinə ana səhifəyə yönləndirir (yaddaşda saxlanmır)
+      signedOutToHome: false,
 
       login: async (credentials) => {
         set({ isLoading: true });
@@ -18,7 +20,7 @@ export const useAuthStore = create(
           set({ 
             user: data.user, 
             token: data.token, 
-            isAuthenticated: true, 
+            isAuthenticated: true, signedOutToHome: false, 
             isLoading: false 
           });
           return data;
@@ -49,7 +51,7 @@ export const useAuthStore = create(
           set({ 
             user: data.user, 
             token: data.token, 
-            isAuthenticated: true, 
+            isAuthenticated: true, signedOutToHome: false, 
             isLoading: false 
           });
           return data;
@@ -95,19 +97,20 @@ export const useAuthStore = create(
         if (!token) return;
         try {
           const user = await api.get("/user/me");
-          set({ user, isAuthenticated: true });
+          set({ user, isAuthenticated: true, signedOutToHome: false });
         } catch (error) {
           set({ user: null, token: null, isAuthenticated: false });
           throw error;
         }
       },
 
-      logout: () => {
-        set({ user: null, token: null, isAuthenticated: false });
+      logout: ({ toHome = false } = {}) => {
+        set({ user: null, token: null, isAuthenticated: false, signedOutToHome: toHome });
       },
     }),
     {
       name: "auth-storage",
+      partialize: ({ signedOutToHome, isLoading, ...rest }) => rest, // eslint-disable-line no-unused-vars
     }
   )
 );

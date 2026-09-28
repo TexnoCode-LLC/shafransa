@@ -1,75 +1,73 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Globe, Check, ChevronDown } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { Check, ChevronDown, Globe } from "lucide-react"
+import { useTranslation } from "react-i18next"
 
-const languages = [
-  { code: 'az', name: 'Azərbaycanca', flag: '🇦🇿' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
-  { code: 'tr', name: 'Türkçe', flag: '🇹🇷' },
-];
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/admin/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
+import { useLanguage } from "../context/LanguageContext"
 
-export default function LanguageSwitcher({ isTransparent }) {
-  const { t, i18n } = useTranslation();
-  const { language, changeLanguage } = useLanguage();
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef(null);
+const LANGUAGES = [
+  { code: "az", name: "Azərbaycanca" },
+  { code: "en", name: "English" },
+  { code: "ru", name: "Русский" },
+  { code: "tr", name: "Türkçe" },
+]
 
-  const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
+// variant="menu": header üçün açılan menyu; variant="list": mobil menyu və footer üçün düymələr sırası
+export default function LanguageSwitcher({ variant = "menu", isTransparent = false, className }) {
+  const { t } = useTranslation()
+  const { language, changeLanguage } = useLanguage()
+  const current = LANGUAGES.find((lang) => lang.code === language) || LANGUAGES[0]
 
-  const handleLanguageChange = (lng) => {
-    changeLanguage(lng);
-    setIsOpen(false);
-  };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+  if (variant === "list") {
+    return (
+      <div className={cn("grid grid-cols-4 gap-1 rounded-[10px] border bg-neutral-50 p-1", className)} role="group" aria-label={t("layout.language")}>
+        {LANGUAGES.map((lang) => (
+          <button
+            key={lang.code}
+            type="button"
+            lang={lang.code}
+            title={lang.name}
+            aria-pressed={language === lang.code}
+            onClick={() => changeLanguage(lang.code)}
+            className={cn(
+              "h-8 rounded-[8px] text-xs font-semibold uppercase transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+              language === lang.code ? "bg-white text-[#1a1c1e] shadow-sm" : "text-neutral-500 hover:text-[#1a1c1e]"
+            )}
+          >
+            {lang.code}
+          </button>
+        ))}
+      </div>
+    )
+  }
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`flex items-center gap-2 px-3 py-2 rounded-full transition-colors text-sm font-medium ${
-          isTransparent
-            ? 'bg-white/10 hover:bg-white/20 text-white'
-            : 'bg-neutral-100 hover:bg-neutral-200 text-muted-foreground hover:text-[#1a1c1e]'
-        }`}
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger
+        className={cn(
+          "inline-flex h-9 items-center gap-1.5 rounded-[10px] px-2.5 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+          isTransparent ? "text-white/85 hover:bg-white/10 hover:text-white" : "text-neutral-600 hover:bg-neutral-100 hover:text-[#1a1c1e]",
+          className
+        )}
+        aria-label={`${t("layout.language")}: ${current.name}`}
       >
-        <Globe className="w-4 h-4" />
-        <span className="hidden sm:inline">{currentLanguage.name}</span>
-        <span className="sm:hidden">{currentLanguage.code.toUpperCase()}</span>
-        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
-      </button>
-
-      {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-white border border-neutral-100 shadow-2xl shadow-black/10 rounded-2xl py-2 z-[110] animate-fade-in-up">
-          {languages.map((lang) => (
-            <button
-              key={lang.code}
-              onClick={() => handleLanguageChange(lang.code)}
-              className={`w-full flex items-center justify-between px-4 py-2.5 text-sm font-medium transition-colors ${
-                language === lang.code
-                  ? 'text-primary bg-primary/5'
-                  : 'text-muted-foreground hover:text-[#1a1c1e] hover:bg-neutral-50'
-              }`}
-            >
-              <div className="flex items-center gap-3">
-                <span>{lang.flag}</span>
-                <span>{lang.name}</span>
-              </div>
-              {language === lang.code && <Check className="w-4 h-4" />}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+        <Globe className="h-4 w-4" />
+        <span className="uppercase">{current.code}</span>
+        <ChevronDown className="h-3.5 w-3.5 opacity-60" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-44">
+        {LANGUAGES.map((lang) => (
+          <DropdownMenuItem key={lang.code} lang={lang.code} onSelect={() => changeLanguage(lang.code)} className="justify-between">
+            {lang.name}
+            {language === lang.code && <Check className="h-4 w-4 text-primary" />}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
 }

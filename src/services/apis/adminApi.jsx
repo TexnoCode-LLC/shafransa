@@ -16,4 +16,4 @@ export const adminApi = createApi({
     endpoints: (builder) => ({}),
 });
 
-export const {} = adminApi;
+// Hazırda heç bir endpoint export olunmur

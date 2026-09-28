@@ -1,481 +1,609 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import { Button } from "../../components/ui/Button";
-import zafaran from "/src/assets/zafaran.png"
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { useTranslation } from "react-i18next"
+import { useQuery } from "@tanstack/react-query"
 import {
-  Leaf,
-  BrainCircuit,
-  ShieldCheck,
-  Microscope,
-  Star,
+  ArrowDown,
   ArrowRight,
-  Zap,
-  RefreshCw,
-  Search,
-  CheckCircle2,
-  Globe,
-  Lock,
-  ArrowUpRight
-} from "lucide-react";
-import { Badge } from "../../components/ui/Badge";
-import { useQuery } from "@tanstack/react-query";
-import { MOCK_BLOGS } from "../../data/mockBlogs";
-import { getPlants } from "../../services/plant.service";
+  ArrowUpRight,
+  BadgeCheck,
+  BookOpenCheck,
+  Check,
+  FileText,
+  FlaskConical,
+  HeartPulse,
+  Languages,
+  Leaf,
+  MapPin,
+  Microscope,
+  Package,
+  Plus,
+  ShieldAlert,
+  Sprout,
+  Stethoscope,
+  Truck,
+  UserRound,
+} from "lucide-react"
 
+import api from "../../services/api"
+import { getPlants } from "../../services/plant.service"
+import { formatDate, formatPrice } from "@/lib/format"
 import heroVideo from "../../assets/heroVideo.mp4"
+import SEO from "../../components/common/SEO"
+import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
 
-import SEO from "../../components/common/SEO";
-import { STATIC_PAGE_SEO } from "../../utils/seoTranslations";
+// Canlı bölmələr real datadan qurulur; data yoxdursa bölmə göstərilmir (boş "skelet" qalmasın)
+const asList = (value) => (Array.isArray(value) ? value : Array.isArray(value?.data) ? value.data : [])
+const stripHtml = (html) => (html || "").replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+const LIVE = { staleTime: 5 * 60_000 }
+
+function useLandingData(lang) {
+  const categories = useQuery({
+    queryKey: ["landing", "categories", lang],
+    queryFn: async () => asList(await api.get("/categories")),
+    ...LIVE,
+  })
+  const products = useQuery({
+    queryKey: ["landing", "products", lang],
+    queryFn: async () => asList(await api.get("/products", { params: { limit: 4, sort: "newest" } })),
+    ...LIVE,
+  })
+  const plants = useQuery({
+    queryKey: ["landing", "plants", lang],
+    queryFn: () => getPlants({ random: true, limit: 4 }),
+    ...LIVE,
+  })
+  const therapists = useQuery({
+    queryKey: ["landing", "therapists", lang],
+    queryFn: async () => asList(await api.get("/therapists/verified")).slice(0, 3),
+    ...LIVE,
+  })
+  const blogs = useQuery({
+    queryKey: ["landing", "blogs", lang],
+    queryFn: async () => asList(await api.get("/blogs", { params: { page: 1, limit: 3 } })),
+    ...LIVE,
+  })
+  return {
+    categories: categories.data || [],
+    products: products.data || [],
+    plants: plants.data || [],
+    therapists: therapists.data || [],
+    blogs: blogs.data || [],
+  }
+}
+
+function Container({ className = "", children }) {
+  return <div className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>{children}</div>
+}
+
+function Section({ id, tone = "white", children }) {
+  const tones = { white: "bg-white", muted: "bg-[#fafafa]" }
+  return (
+    <section id={id} className={`scroll-mt-20 border-t border-neutral-200 py-16 md:py-20 ${tones[tone]}`}>
+      <Container>{children}</Container>
+    </section>
+  )
+}
+
+function SectionLabel({ children }) {
+  return <p className="text-xs font-medium uppercase tracking-[0.16em] text-primary">{children}</p>
+}
+
+function SectionHeading({ label, title, text, action }) {
+  return (
+    <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+      <div className="max-w-2xl space-y-3">
+        <SectionLabel>{label}</SectionLabel>
+        <h2 className="text-balance text-3xl font-semibold tracking-tight md:text-4xl">{title}</h2>
+        {text && <p className="text-base leading-relaxed text-neutral-600">{text}</p>}
+      </div>
+      {action && <div className="shrink-0">{action}</div>}
+    </div>
+  )
+}
+
+function TextLink({ to, children, className = "" }) {
+  return (
+    <Link
+      to={to}
+      className={`group inline-flex items-center gap-1.5 text-sm font-medium text-[#1a1c1e] underline decoration-neutral-300 underline-offset-4 transition-colors hover:decoration-primary ${className}`}
+    >
+      {children}
+      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+    </Link>
+  )
+}
+
+// Radius maksimum 16px: düymələr rounded-xl (12px)
+const buttonBase =
+  "inline-flex h-12 items-center justify-center gap-2 rounded-xl px-6 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+
+// Şəkil yüklənməsə neytral yer tutucu (sındırılmış şəkil ikonu görünməsin)
+function Photo({ src, alt, fallback: Fallback, className = "" }) {
+  const [failed, setFailed] = useState(false)
+  if (!src || failed) {
+    return (
+      <div className={`flex items-center justify-center bg-neutral-100 ${className}`}>
+        <Fallback className="h-8 w-8 text-neutral-300" strokeWidth={1.25} />
+      </div>
+    )
+  }
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onError={() => setFailed(true)}
+      className={`object-cover transition-transform duration-700 group-hover:scale-[1.03] ${className}`}
+    />
+  )
+}
+
+function CheckList({ items, className = "" }) {
+  return (
+    <ul className={`space-y-3 ${className}`}>
+      {items.map((item) => (
+        <li key={item} className="flex items-start gap-3 text-[0.95rem] leading-relaxed">
+          <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-primary/10 text-primary">
+            <Check className="h-3.5 w-3.5" strokeWidth={2.5} />
+          </span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
 
 export default function LandingPage() {
-  const { t, i18n } = useTranslation();
-  const currentLang = (i18n.language || 'az').toLowerCase().slice(0, 2);
-  const seoData = STATIC_PAGE_SEO.home[currentLang] || STATIC_PAGE_SEO.home.az;
+  const { t, i18n } = useTranslation()
+  const lang = (i18n.language || "az").toLowerCase().slice(0, 2)
+  const seo = STATIC_PAGE_SEO.home[lang] || STATIC_PAGE_SEO.home.az
+  const { categories, products, plants, therapists, blogs } = useLandingData(lang)
 
-  const isLoading = false;
-
-  const [isLargeScreen, setIsLargeScreen] = React.useState(
-    typeof window !== "undefined" ? window.innerWidth >= 992 : false
-  );
-
-  React.useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 992);
-    };
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  const { data: rawPlants } = useQuery({
-    queryKey: ["allPlantsLanding"],
-    queryFn: () => getPlants(),
-    enabled: isLargeScreen,
-  });
-
-  const randomPlants = React.useMemo(() => {
-    if (!rawPlants || rawPlants.length === 0) return [];
-    const shuffled = [...rawPlants].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 4);
-    return selected.map(plant => {
-      const translation = plant.translations?.find(t => t.language === currentLang) || plant.translations?.[0];
-      if (!translation) return plant;
-
-      const merged = { ...plant };
-      Object.keys(translation).forEach(key => {
-        const val = translation[key];
-        const isValid = Array.isArray(val) ? val.length > 0 : (val !== null && val !== undefined && val !== "");
-        if (isValid) {
-          merged[key] = val;
-        }
-      });
-      return merged;
-    });
-  }, [rawPlants, currentLang]);
-
-  const blogs = React.useMemo(() => {
-    const allBlogs = MOCK_BLOGS.slice(0, 3);
-    return allBlogs.map(blog => {
-      const trans = blog.translations?.find(t => t.language === currentLang) || blog.translations?.[0];
-      return {
-        ...blog,
-        title: trans?.title || blog.title,
-        description: trans?.description || blog.description,
-        category: trans?.category || blog.category
-      };
-    });
-  }, [currentLang]);
-
-  const stripHtml = (html) => {
-    if (!html) return "";
-    return html.replace(/<[^>]*>/g, "");
-  };
+  const facts = [
+    { key: "sources", icon: BookOpenCheck },
+    { key: "lab", icon: FlaskConical },
+    { key: "cod", icon: Truck },
+    { key: "lang", icon: Languages },
+  ]
+  const pillars = [
+    { key: "encyclopedia", to: "/herbs", icon: Leaf },
+    { key: "market", to: "/marketplace", icon: Package },
+    { key: "therapists", to: "/therapists", icon: Stethoscope },
+  ]
+  const sampleRows = [
+    ["row_batch", "SF-2026-014"],
+    ["row_heavy_metal", t("landing.market.value_passed")],
+    ["row_pesticide", t("landing.market.value_passed")],
+    ["row_active", "2,4 %"],
+    ["row_origin", t("landing.market.value_origin")],
+    ["row_status", t("landing.market.value_verified"), true],
+  ]
+  const anatomy = [
+    { key: "basic", icon: FileText },
+    { key: "usage", icon: Sprout },
+    { key: "safety", icon: ShieldAlert },
+    { key: "origin", icon: MapPin },
+    { key: "science", icon: Microscope },
+  ]
+  const audiences = [
+    { key: "a1", to: "/herbs", icon: Leaf },
+    { key: "a2", to: "/therapists", icon: HeartPulse },
+    { key: "a3", to: "/register-therapist", icon: Stethoscope },
+  ]
+  const topCategories = categories.slice(0, 8)
 
   return (
-    <div className="flex flex-col items-center justify-center w-full selection:bg-primary/20 bg-[#fafafa]">
-      <SEO 
-        title={seoData.title}
-        description={seoData.description}
-        keywords={seoData.keywords}
-        canonical="/"
-      />
+    <div className="w-full bg-white text-[#1a1c1e] selection:bg-primary/20">
+      <SEO title={seo.title} description={seo.description} keywords={seo.keywords} canonical="/" />
 
-      {/* 1. HERO SECTION */}
-      <section className="w-full relative min-h-screen md:h-screen flex flex-col items-center justify-center text-center px-4 pt-24 pb-16 md:py-0 overflow-hidden z-0">
-        {/* Background Video */}
-        <video
-          src={heroVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover -z-20"
-        />
+      {/* 1. HERO — video və overlay dəyişdirilməyib, mətn tam mərkəzdə */}
+      <section className="relative z-0 flex min-h-[100svh] w-full items-center justify-center overflow-hidden pb-16 pt-28">
+        <video src={heroVideo} autoPlay loop muted playsInline className="absolute inset-0 -z-20 h-full w-full object-cover" />
+        <div className="absolute inset-0 -z-10 bg-black/45 backdrop-blur-[1px]" />
 
-        {/* Dark overlay for contrast and premium aesthetic */}
-        <div className="absolute inset-0 bg-black/45 backdrop-blur-[1px] -z-10"></div>
-
-        <div className="max-w-5xl mx-auto space-y-6 md:space-y-10 animate-fade-in-up z-10">
-          <h1 className="text-3xl sm:text-4xl md:text-8xl font-display font-semibold tracking-tight text-white leading-[1.1] md:leading-[1.05]">
-            {t('landing.hero.title_part1', 'Botanical Medicine')} <br />
-            <span className="text-primary italic font-medium">{t('landing.hero.title_part2', 'Reimagined')}</span> {t('landing.hero.title_part3', 'by AI.')}
-          </h1>
-
-          <p className="text-base sm:text-lg md:text-2xl text-white/80 leading-relaxed max-w-2xl mx-auto font-normal">
-            {t('landing.hero.subtitle', "The world's first clinical-grade botanical ecosystem. Real-time safety analysis, lab-verified transparency, and genomic-backed health protocols.")}
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 md:pt-8">
-            <Button size="lg" className="rounded-full h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-semibold shadow-xl shadow-primary/20 btn-hover group shrink-0 whitespace-nowrap bg-primary text-white hover:bg-primary/95" asChild>
-              <Link to="/register" className="flex items-center">
-                {t('landing.cta.protocol', 'Start My Protocol')} <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+        <Container>
+          <div className="mx-auto max-w-5xl text-center motion-safe:animate-fade-in-up">
+            <p className="text-xs font-medium uppercase tracking-[0.16em] text-white/70 sm:text-sm">{t("landing.hero.kicker")}</p>
+            <h1 className="mt-6 text-4xl font-semibold leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-6xl">
+              {/* Hər hissə ayrıca blok: sətirlər balanslı bölünür (tək söz ayrıca sətrə düşmür) */}
+              <span className="block text-balance">{t("landing.hero.title_1")}</span>
+              <span className="block text-balance font-medium italic text-primary">{t("landing.hero.title_2")}</span>
+            </h1>
+            <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80 sm:text-lg">{t("landing.hero.subtitle")}</p>
+            <div className="mt-10 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
+              <Link to="/marketplace" className={`${buttonBase} bg-primary text-white hover:bg-primary/90 focus-visible:ring-white focus-visible:ring-offset-black`}>
+                {t("landing.hero.cta_primary")}
+                <ArrowRight className="h-4 w-4" />
               </Link>
-            </Button>
-            <Button size="lg" variant="ghost" className="rounded-full h-14 sm:h-16 px-8 sm:px-10 text-base sm:text-lg font-semibold text-white hover:bg-white/10 hover:text-white shrink-0 whitespace-nowrap" asChild>
-              <Link to="/marketplace">
-                {t('landing.cta.marketplace', 'Explore The Marketplace')}
+              <Link to="/herbs" className={`${buttonBase} border border-white/40 text-white hover:bg-white/10 focus-visible:ring-white focus-visible:ring-offset-black`}>
+                {t("landing.hero.cta_secondary")}
               </Link>
-            </Button>
-          </div>
-
-          <div className="pt-10 md:pt-20 flex flex-col items-center space-y-4 md:space-y-6">
-            <p className="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-white/60">{t('landing.social.trusted', 'Trusted by clinical researchers globally')}</p>
-            <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-12 text-white opacity-40 grayscale contrast-125">
-              <div className="font-display font-bold text-lg sm:text-2xl tracking-tighter italic">BioNature</div>
-              <div className="font-display font-bold text-lg sm:text-2xl tracking-tighter">GenomicLabs</div>
-              <div className="font-display font-bold text-lg sm:text-2xl tracking-tighter">EuroBotanics</div>
-              <div className="font-display font-bold text-lg sm:text-2xl tracking-tighter italic">HelixHealth</div>
             </div>
           </div>
-        </div>
+        </Container>
+
+        <a
+          href="#facts"
+          className="absolute bottom-6 left-1/2 hidden h-10 w-10 -translate-x-1/2 items-center justify-center rounded-xl border border-white/30 text-white/70 transition-colors hover:border-white hover:text-white md:flex"
+          aria-label={t("landing.hero.scroll")}
+        >
+          <ArrowDown className="h-4 w-4" />
+        </a>
       </section>
 
-      {/* 2. VALUE PROPOSITION */}
-      <section className="w-full py-32 px-4 bg-white border-y border-neutral-100">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
-            <div className="space-y-4 text-left max-w-2xl">
-              <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tight text-[#1a1c1e]">
-                {t('landing.value.title', 'Built for precision, driven by science.')}
-              </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                {t('landing.value.subtitle', 'Generic herbal advice is dangerous. Shafransa provides the clinical rigorousness required for modern health management.')}
-              </p>
-            </div>
-            <Link to="/how-it-works" className="text-primary font-semibold flex items-center group mb-2">
-              {t('landing.links.whitepaper', 'View the scientific whitepaper')} <ArrowUpRight className="ml-1 w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 premium-card p-10 h-[500px] flex flex-col justify-between overflow-hidden relative group">
-              <div className="relative z-10 space-y-4">
-                <div className="bg-primary/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
-                  <BrainCircuit className="h-7 w-7 text-primary" />
+      {/* 2. ƏSAS FAKTLAR */}
+      <section id="facts" className="scroll-mt-20 bg-white">
+        <Container>
+          <ul className="grid grid-cols-2 lg:grid-cols-4">
+            {facts.map(({ key, icon: Icon }, index) => (
+              <li
+                key={key}
+                className={[
+                  "flex items-start gap-3 py-7 sm:gap-4",
+                  index % 2 === 1 ? "border-l border-neutral-200 pl-4 sm:pl-6" : "pr-4",
+                  index > 1 ? "border-t border-neutral-200 lg:border-t-0" : "",
+                  index > 0 ? "lg:border-l lg:pl-6" : "",
+                ].join(" ")}
+              >
+                <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" strokeWidth={1.75} />
+                <div>
+                  <p className="text-sm font-semibold">{t(`landing.facts.${key}_title`)}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-neutral-500 sm:text-sm">{t(`landing.facts.${key}_text`)}</p>
                 </div>
-                <h3 className="text-3xl font-display font-bold">{t('landing.ai.title', 'The Shafransa AI Core™')}</h3>
-                <p className="text-muted-foreground text-lg max-w-md">{t('landing.ai.text', 'Our neural network analyzes your genetics, existing prescriptions, and symptoms to build a protocol that is safe, effective, and deeply personal.')}</p>
-              </div>
-            </div>
-
-            <div className="premium-card p-10 h-[500px] flex flex-col justify-between bg-[#1a1c1e] text-white border-none">
-              <div className="space-y-4">
-                <div className="bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-md">
-                  <ShieldCheck className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-3xl font-display font-bold">{t('landing.verify.title', 'Verification Engine')}</h3>
-                <p className="text-white/60 text-lg">{t('landing.verify.text', 'Blockchain-backed certificates of analysis for every single batch produced.')}</p>
-              </div>
-            </div>
-          </div>
-        </div>
+              </li>
+            ))}
+          </ul>
+        </Container>
       </section>
 
-      {/* 2.2 FEATURED BOTANICAL SPECIMENS (Hidden on viewport < 992px) */}
-      {isLargeScreen && randomPlants && randomPlants.length > 0 && (
-        <section className="hidden min-[992px]:block w-full py-32 px-4 bg-white border-b border-neutral-100">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex justify-between items-end mb-16">
-              <div className="space-y-4">
-                <Badge className="bg-emerald-50 text-emerald-700 border-emerald-200 font-bold uppercase tracking-widest text-[10px] px-3">
-                  {t('landing.plants.badge', 'Botanical Database')}
-                </Badge>
-                <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[#1a1c1e]">
-                  {t('landing.plants.title', 'Specimens of the Day')}
-                </h2>
-                <p className="text-muted-foreground text-sm font-medium">
-                  {t('landing.plants.subtitle', 'A rotating selection of clinical-grade plants, validated for efficacy and safety.')}
-                </p>
-              </div>
-              <Link to="/herbs" className="flex items-center gap-2 text-emerald-700 font-bold group">
-                {t('landing.plants.view_all', 'Explore Encyclopedia')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-
-            <div className="grid grid-cols-4 gap-8">
-              {randomPlants.slice(0, 4).map((herb) => (
-                <Link key={herb.id} to={`/herb/${herb.id}`} className="group block h-full">
-                  <div className="h-full flex flex-col rounded-3xl overflow-hidden border border-neutral-100 bg-white hover:shadow-2xl hover:shadow-black/8 hover:border-emerald-200 transition-all duration-500">
-                    {/* Image */}
-                    <div className="relative aspect-square bg-[#f5f5f7] overflow-hidden flex-shrink-0">
-                      {herb.evidenceGrade && (
-                        <div className="absolute top-3 left-3 z-10">
-                          <Badge className={`font-bold text-[10px] shadow-sm ${
-                            herb.evidenceGrade.startsWith("A") ? "bg-emerald-500 text-white border-none" :
-                            herb.evidenceGrade.startsWith("B") ? "bg-blue-500 text-white border-none" :
-                            "bg-amber-500 text-white border-none"
-                          }`}>
-                            {t('encyclopedia.grade', 'Grade')} {herb.evidenceGrade.trim().charAt(0)}
-                          </Badge>
-                        </div>
-                      )}
-                      {herb.image || herb.images?.[0] ? (
-                        <img
-                          src={herb.image || herb.images[0]}
-                          alt={herb.localName || herb.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center">
-                          <Leaf className="w-14 h-14 text-emerald-200 stroke-1 group-hover:text-emerald-300 transition-colors" />
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Info */}
-                    <div className="p-5 flex flex-col flex-grow justify-between">
-                      <div className="space-y-3">
-                        <div>
-                          <h3 className="font-display font-bold text-lg text-[#1a1c1e] leading-tight group-hover:text-emerald-700 transition-colors">
-                            {herb.localName || herb.name}
-                          </h3>
-                          {herb.localName && (herb.scientificName || herb.name) && (
-                            <p className="text-xs italic text-muted-foreground mt-0.5">{herb.scientificName || herb.name}</p>
-                          )}
-                        </div>
-                        <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                          {herb.shortSummary || herb.description}
-                        </p>
-                      </div>
-                    </div>
+      {/* 3. NƏDİR — bəyanat + üç istiqamət */}
+      <Section id="about" tone="muted">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-16">
+          <div>
+            <SectionLabel>{t("landing.intro.label")}</SectionLabel>
+            <p className="mt-4 text-balance text-2xl font-medium leading-snug tracking-tight md:text-3xl">{t("landing.intro.statement")}</p>
+          </div>
+          <ul className="grid gap-3">
+            {pillars.map(({ key, to, icon: Icon }) => (
+              <li key={key}>
+                <Link
+                  to={to}
+                  className="group flex h-full items-start gap-4 rounded-2xl border border-neutral-200 bg-white p-5 transition-colors hover:border-primary/40 sm:items-center"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <Icon className="h-5 w-5" strokeWidth={1.75} />
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-base font-semibold">{t(`landing.intro.${key}.title`)}</h3>
+                    <p className="mt-1 text-sm leading-relaxed text-neutral-600">{t(`landing.intro.${key}.text`)}</p>
                   </div>
+                  <ArrowUpRight className="hidden h-5 w-5 shrink-0 text-neutral-400 transition-colors group-hover:text-primary sm:block" />
                 </Link>
-              ))}
-            </div>
-          </div>
-        </section>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      {/* 4. KATEQORİYALAR (data yoxdursa göstərilmir) */}
+      {topCategories.length > 0 && (
+        <Section>
+          <SectionHeading
+            label={t("landing.categories.label")}
+            title={t("landing.categories.title")}
+            action={<TextLink to="/marketplace">{t("landing.categories.view_all")}</TextLink>}
+          />
+          <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            {topCategories.map((category) => (
+              <li key={category.id}>
+                <Link
+                  to={`/marketplace?category=${encodeURIComponent(category.slug)}`}
+                  className="group flex items-center gap-3 rounded-2xl border border-neutral-200 p-4 transition-colors hover:border-primary/40 hover:bg-primary/[0.03]"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl bg-neutral-100">
+                    {category.icon ? (
+                      <img src={category.icon} alt="" loading="lazy" className="h-full w-full object-cover" />
+                    ) : (
+                      <Leaf className="h-5 w-5 text-neutral-400" strokeWidth={1.5} />
+                    )}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate text-sm font-semibold">{category.name}</span>
+                    {/* Alt kateqoriyalardakı məhsullar da sayılır (market filtri kimi) */}
+                    {(() => {
+                      const count = (category.productsCount || 0) + (category.children || []).reduce((sum, c) => sum + (c.productsCount || 0), 0)
+                      return count > 0 && <span className="block text-xs text-neutral-500">{t("landing.categories.products", { count })}</span>
+                    })()}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Section>
       )}
 
-      {/* 2.5 LATEST BLOGS */}
-      <section className="w-full py-32 px-4 bg-white overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-16">
-            <div className="space-y-4">
-              <Badge className="bg-primary/10 text-primary border-primary/20 font-bold uppercase tracking-widest text-[10px] px-3">
-                {t('landing.blog.badge', 'Knowledge Hub')}
-              </Badge>
-              <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[#1a1c1e]">
-                {t('landing.blog.title', 'Clinical Blogs & Protocols')}
-              </h2>
-            </div>
-            <Link to="/blogs" className="hidden md:flex items-center gap-2 text-primary font-bold group">
-              {t('landing.blog.view_all', 'Explore All')} <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
+      {/* 5. MARKET — şəffaflıq + yeni məhsullar */}
+      <Section tone={topCategories.length > 0 ? "muted" : "white"}>
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <SectionLabel>{t("landing.market.label")}</SectionLabel>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.market.title")}</h2>
+            <p className="mt-4 text-base leading-relaxed text-neutral-600">{t("landing.market.text")}</p>
+            <CheckList className="mt-6" items={[1, 2, 3].map((n) => t(`landing.market.point_${n}`))} />
           </div>
 
-          <div className="grid md:grid-cols-3 gap-10">
-            {isLoading ? (
-              [1, 2, 3].map((i) => (
-                <div key={i} className="animate-pulse space-y-6">
-                  <div className="aspect-[16/10] rounded-3xl bg-neutral-100"></div>
-                  <div className="h-4 bg-neutral-100 rounded w-1/4"></div>
-                  <div className="h-6 bg-neutral-100 rounded w-3/4"></div>
-                  <div className="h-4 bg-neutral-100 rounded w-full"></div>
+          {/* Məhsul kartındakı sahələrin illüstrasiyası — "Nümunə" kimi işarələnib */}
+          <figure className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-7">
+            <figcaption className="flex items-center justify-between gap-4 border-b border-neutral-200 pb-4">
+              <span className="text-sm font-semibold">{t("landing.market.sample_title")}</span>
+              <span className="rounded-md border border-neutral-200 px-2 py-0.5 text-xs text-neutral-500">{t("landing.market.sample_badge")}</span>
+            </figcaption>
+            <dl className="divide-y divide-dashed divide-neutral-200">
+              {sampleRows.map(([key, value, highlight]) => (
+                <div key={key} className="flex items-center justify-between gap-4 py-3 text-sm">
+                  <dt className="text-neutral-500">{t(`landing.market.${key}`)}</dt>
+                  <dd className={`font-medium tabular-nums ${highlight ? "inline-flex items-center gap-1.5 text-primary" : ""}`}>
+                    {highlight && <BadgeCheck className="h-4 w-4" />}
+                    {value}
+                  </dd>
                 </div>
-              ))
-            ) : blogs.length > 0 ? (
-              blogs.slice(0, 3).map((blog) => (
-                <Link key={blog.id} to={`/blog/${blog.id}`} className="group cursor-pointer">
-                  <div className="aspect-[16/10] rounded-3xl overflow-hidden mb-6 bg-neutral-100 relative">
-                    {blog.images?.[0] ? (
-                      <img
-                        src={blog.images[0]}
-                        alt={blog.title}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <Zap className="w-10 h-10 text-primary opacity-20" />
+              ))}
+            </dl>
+          </figure>
+        </div>
+
+        {products.length > 0 ? (
+          <div className="mt-14">
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <h3 className="text-xl font-semibold tracking-tight">{t("landing.market.latest")}</h3>
+              <TextLink to="/marketplace">{t("landing.market.view_all")}</TextLink>
+            </div>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-5">
+              {products.map((product) => (
+                <li key={product.id}>
+                  <Link to={`/product/${product.id}`} className="group block">
+                    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+                      <Photo src={product.image} alt={product.title} fallback={Package} className="aspect-square w-full" />
+                    </div>
+                    <div className="mt-3 space-y-1">
+                      <p className="line-clamp-2 text-sm font-medium leading-snug group-hover:text-primary">{product.title}</p>
+                      <p className="flex flex-wrap items-center gap-x-2 text-sm">
+                        <span className="font-semibold tabular-nums">{formatPrice(product.price)}</span>
+                        {product.originalPrice > product.price && (
+                          <span className="text-xs text-neutral-400 line-through">{formatPrice(product.originalPrice)}</span>
+                        )}
+                        {product.verified && (
+                          <span className="inline-flex items-center gap-1 text-xs text-primary">
+                            <BadgeCheck className="h-3.5 w-3.5" />
+                            {t("landing.market.verified")}
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div className="mt-10">
+            <TextLink to="/marketplace">{t("landing.market.view_all")}</TextLink>
+          </div>
+        )}
+      </Section>
+
+      {/* 6. ENSİKLOPEDİYA — məqalənin quruluşu + təsadüfi bitkilər */}
+      <Section>
+        <SectionHeading
+          label={t("landing.encyclopedia.label")}
+          title={t("landing.encyclopedia.title")}
+          text={t("landing.encyclopedia.text")}
+          action={<TextLink to="/herbs">{t("landing.encyclopedia.view_all")}</TextLink>}
+        />
+        <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {anatomy.map(({ key, icon: Icon }, index) => (
+            <li key={key} className="rounded-2xl border border-neutral-200 p-5">
+              <div className="flex items-center justify-between">
+                <Icon className="h-5 w-5 text-primary" strokeWidth={1.75} />
+                <span className="text-xs tabular-nums text-neutral-400">0{index + 1}</span>
+              </div>
+              <h3 className="mt-4 text-sm font-semibold">{t(`landing.encyclopedia.${key}_title`)}</h3>
+              <p className="mt-1 text-sm leading-relaxed text-neutral-600">{t(`landing.encyclopedia.${key}_text`)}</p>
+            </li>
+          ))}
+        </ol>
+
+        {plants.length > 0 && (
+          <div className="mt-14">
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <h3 className="text-xl font-semibold tracking-tight">{t("landing.plants.title")}</h3>
+              <TextLink to="/herbs">{t("landing.plants.view_all")}</TextLink>
+            </div>
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-8 lg:grid-cols-4 lg:gap-x-5">
+              {plants.slice(0, 4).map((plant) => {
+                const name = plant.localName || plant.name
+                const grade = plant.evidenceGrade?.trim().charAt(0)
+                return (
+                  <li key={plant.id}>
+                    <Link to={`/herb/${plant.id}`} className="group block">
+                      <div className="relative overflow-hidden rounded-2xl">
+                        <Photo src={plant.image || plant.gallery?.[0]} alt={name} fallback={Leaf} className="aspect-[4/3] w-full" />
+                        {grade && (
+                          <span className="absolute left-3 top-3 rounded-md bg-white/90 px-2 py-0.5 text-xs font-medium backdrop-blur">
+                            {t("landing.plants.grade", { grade })}
+                          </span>
+                        )}
                       </div>
-                    )}
-                    <div className="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                      <div className="mt-3 space-y-0.5">
+                        <p className="font-semibold leading-tight group-hover:text-primary">{name}</p>
+                        {plant.scientificName && <p className="text-sm italic text-neutral-500">{plant.scientificName}</p>}
+                        {plant.shortSummary && <p className="line-clamp-2 pt-1 text-sm leading-relaxed text-neutral-600">{plant.shortSummary}</p>}
+                      </div>
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
+      </Section>
+
+      {/* 7. TƏHLÜKƏSİZLİK */}
+      <Section tone="muted">
+        <div className="grid gap-8 rounded-2xl border border-primary/15 bg-primary/[0.04] p-6 sm:p-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14">
+          <div>
+            <SectionLabel>{t("landing.safety.label")}</SectionLabel>
+            <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.safety.title")}</h2>
+            <p className="mt-4 text-base leading-relaxed text-neutral-700">{t("landing.safety.text")}</p>
+          </div>
+          <div className="flex flex-col justify-center gap-6">
+            <CheckList items={[1, 2, 3].map((n) => t(`landing.safety.point_${n}`))} />
+            <p className="flex items-start gap-3 rounded-xl bg-white p-4 text-sm font-medium leading-relaxed">
+              <ShieldAlert className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" strokeWidth={1.75} />
+              {t("landing.safety.note")}
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      {/* 8. FİZİOTERAPEVTLƏR — necə işləyir + canlı siyahı */}
+      <Section>
+        <SectionHeading
+          label={t("landing.therapists.label")}
+          title={t("landing.therapists.title")}
+          text={t("landing.therapists.text")}
+          action={<TextLink to="/therapists">{t("landing.therapists.view_all")}</TextLink>}
+        />
+        <ol className="grid gap-3 md:grid-cols-3">
+          {[1, 2, 3].map((step) => (
+            <li key={step} className="rounded-2xl border border-neutral-200 p-6">
+              <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#1a1c1e] text-sm font-semibold tabular-nums text-white">{step}</span>
+              <h3 className="mt-5 text-base font-semibold">{t(`landing.therapists.step_${step}_title`)}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-neutral-600">{t(`landing.therapists.step_${step}_text`)}</p>
+            </li>
+          ))}
+        </ol>
+
+        {therapists.length > 0 && (
+          <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {therapists.map((therapist) => {
+              const name = therapist.user?.fullName || ""
+              return (
+                <li key={therapist.id}>
+                  <Link
+                    to={`/therapist/${therapist.id}`}
+                    className="group flex items-center gap-4 rounded-2xl border border-neutral-200 bg-[#fafafa] p-4 transition-colors hover:border-primary/40"
+                  >
+                    <div className="h-14 w-14 shrink-0 overflow-hidden rounded-xl">
+                      <Photo src={therapist.user?.avatar} alt={name} fallback={UserRound} className="h-full w-full" />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-semibold">{name}</p>
+                      {therapist.specialization && <p className="truncate text-sm text-neutral-500">{therapist.specialization}</p>}
+                      {therapist.onlinePrice > 0 && (
+                        <p className="mt-0.5 text-xs font-medium text-primary">
+                          {t("landing.therapists.from_price", { price: formatPrice(therapist.onlinePrice) })}
+                        </p>
+                      )}
+                    </div>
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-neutral-400 transition-colors group-hover:text-primary" />
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </Section>
+
+      {/* 9. KİMLƏR ÜÇÜN */}
+      <Section tone="muted">
+        <SectionHeading label={t("landing.audience.label")} title={t("landing.audience.title")} />
+        <ul className="grid gap-3 md:grid-cols-3">
+          {audiences.map(({ key, to, icon: Icon }) => (
+            <li key={key} className="flex flex-col rounded-2xl border border-neutral-200 bg-white p-6">
+              <Icon className="h-6 w-6 text-primary" strokeWidth={1.75} />
+              <h3 className="mt-5 text-lg font-semibold leading-snug">{t(`landing.audience.${key}_title`)}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-600">{t(`landing.audience.${key}_text`)}</p>
+              <TextLink to={to} className="mt-6">
+                {t(`landing.audience.${key}_link`)}
+              </TextLink>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      {/* 10. BLOQ (data yoxdursa göstərilmir) */}
+      {blogs.length > 0 && (
+        <Section>
+          <SectionHeading
+            label={t("landing.blog.label")}
+            title={t("landing.blog.title")}
+            action={<TextLink to="/blogs">{t("landing.blog.view_all")}</TextLink>}
+          />
+          <ul className="grid gap-8 md:grid-cols-3 md:gap-5">
+            {blogs.map((blog) => (
+              <li key={blog.id}>
+                <Link to={`/blog/${blog.id}`} className="group block">
+                  <div className="overflow-hidden rounded-2xl">
+                    <Photo src={blog.images?.[0]} alt={blog.title} fallback={Leaf} className="aspect-[16/10] w-full" />
                   </div>
-                  <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-primary mb-3">
-                    <span>{t('blog.min_read', { count: 5 })}</span>
-                    <span className="w-1 h-1 rounded-full bg-neutral-200"></span>
-                    <span className="text-muted-foreground">{t('common.protocol', 'PROTOCOL')}</span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-[#1a1c1e] mb-3 group-hover:text-primary transition-colors line-clamp-2 leading-tight">
-                    {blog.title}
-                  </h3>
-                  <p className="text-sm text-muted-foreground line-clamp-2">
-                    {stripHtml(blog.description)}
+                  <p className="mt-4 text-xs text-neutral-500">
+                    {lang === "az" ? formatDate(blog.createdAt) : new Intl.DateTimeFormat(lang, { dateStyle: "medium" }).format(new Date(blog.createdAt))}
                   </p>
+                  <h3 className="mt-1.5 text-lg font-semibold leading-snug group-hover:text-primary">{blog.title}</h3>
+                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-600">{stripHtml(blog.description)}</p>
                 </Link>
-              ))
-            ) : (
-              <div className="col-span-3 text-center py-10 opacity-40 italic">
-                {t('blog.empty')}
-              </div>
-            )}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
+
+      {/* 11. SUALLAR */}
+      <Section tone={blogs.length > 0 ? "muted" : "white"}>
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16">
+          <div>
+            <SectionLabel>{t("landing.faq.label")}</SectionLabel>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">{t("landing.faq.title")}</h2>
           </div>
-
-          <Link to="/blogs" className="md:hidden flex items-center justify-center gap-2 text-primary font-bold mt-12 py-4 border border-primary/20 rounded-2xl">
-            {t('landing.blog.view_all', 'Explore All Blogs')}
-          </Link>
-        </div>
-      </section>
-
-      {/* 3. FEATURE SHOWCASE */}
-      <section className="w-full py-32 px-4 bg-[#fafafa]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-          <div className="space-y-12">
-            <header className="space-y-4">
-              <h4 className="text-primary font-bold uppercase tracking-[0.2em] text-sm">{t('landing.marketplace.badge', 'Clinical Marketplace')}</h4>
-              <h2 className="text-4xl md:text-5xl font-display font-bold tracking-tight text-[#1a1c1e]">{t('landing.marketplace.title', 'Verified botanical purity from native soil to clinical wellness.')}</h2>
-            </header>
-
-            <div className="space-y-10">
-              <div className="flex gap-6 group">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white shadow-sm border border-neutral-100 flex items-center justify-center group-hover:shadow-md transition-shadow">
-                  <Globe className="w-6 h-6 text-primary" />
-                </div>
-                <div className="space-y-2">
-                  <h5 className="text-xl font-bold">{t('landing.features.global.title', 'Global Sourcing')}</h5>
-                  <p className="text-muted-foreground leading-relaxed">{t('landing.features.global.text', 'Direct relationships with organic growers in the Mediterranean, Amazon, and Caucasus mountains.')}</p>
-                </div>
-              </div>
-
-              <div className="flex gap-6 group">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white shadow-sm border border-neutral-100 flex items-center justify-center group-hover:shadow-md transition-shadow">
-                  <Lock className="w-6 h-6 text-primary" />
-                </div>
-                <div className="space-y-2">
-                  <h5 className="text-xl font-bold">{t('landing.features.escrow.title', 'Escrow Purity Guarantee')}</h5>
-                  <p className="text-muted-foreground leading-relaxed">{t('landing.features.escrow.text', "Your payment is locked in our smart contract until a 3rd party lab verifies the batch's purity.")}</p>
-                </div>
-              </div>
-
-              <div className="flex gap-6 group">
-                <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white shadow-sm border border-neutral-100 flex items-center justify-center group-hover:shadow-md transition-shadow">
-                  <Microscope className="w-6 h-6 text-primary" />
-                </div>
-                <div className="space-y-2">
-                  <h5 className="text-xl font-bold">{t('landing.features.extraction.title', 'Standardized Extraction')}</h5>
-                  <p className="text-muted-foreground leading-relaxed">{t('landing.features.extraction.text', 'We require CO2-critical extraction methods for maximum bioavailability and genomic absorption.')}</p>
-                </div>
-              </div>
-            </div>
-
-            <Button size="lg" className="rounded-full h-14 px-8 btn-hover" asChild>
-              <Link to="/marketplace">{t('landing.cta.explore_inventory', 'Explore Verified Inventory')}</Link>
-            </Button>
-          </div>
-
-          <div className="relative">
-            <div className="aspect-[4/5] bg-neutral-200 rounded-[2.5rem] overflow-hidden shadow-2xl relative">
-              <img
-                src={zafaran}
-                alt="Marketplace Interface"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/60 to-transparent"></div>
-              <div className="absolute bottom-10 left-10 right-10 p-8 glass-dark rounded-3xl text-white space-y-2">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-bold uppercase tracking-widest opacity-60">{t('landing.card.verified', 'Verified Origin')}</span>
-                  <Badge className="bg-primary/20 text-primary border-primary/30">{t('landing.card.location', 'Caucasian Mountains')}</Badge>
-                </div>
-                <h6 className="text-2xl font-display font-bold italic">{t('landing.card.product', 'Wildcrafted Saffron Extract')}</h6>
-                <div className="flex items-center text-sm font-medium opacity-80 pt-2 border-t border-white/10 mt-4">
-                  <Star className="w-4 h-4 text-yellow-400 fill-current mr-1" />
-                  {t('landing.card.rating_info', '4.9 Rating • Clinical Batch #AF-201')}
-                </div>
-              </div>
-            </div>
-            <div className="absolute -left-12 top-1/4 p-6 glass rounded-2xl shadow-2xl animate-bounce [animation-duration:4s]">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center font-bold text-primary">A</div>
-                <div>
-                  <div className="text-xs font-bold">{t('landing.floating.ai', 'AI Protocol Generated')}</div>
-                  <div className="text-[10px] text-muted-foreground">{t('landing.floating.dose', 'Personalized Dose: 500mg')}</div>
-                </div>
-              </div>
-            </div>
+          <div className="divide-y divide-neutral-200 border-y border-neutral-200">
+            {[1, 2, 3, 4, 5, 6].map((n) => (
+              <details key={n} className="group">
+                <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-5 text-left font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 [&::-webkit-details-marker]:hidden">
+                  <span>{t(`landing.faq.q${n}`)}</span>
+                  <Plus className="mt-0.5 h-5 w-5 shrink-0 text-neutral-400 transition-transform duration-200 group-open:rotate-45" />
+                </summary>
+                <p className="max-w-2xl pb-5 pr-10 text-[0.95rem] leading-relaxed text-neutral-600">{t(`landing.faq.a${n}`)}</p>
+              </details>
+            ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* 4. THE SOCIAL PROOF */}
-      <section className="w-full py-32 px-4 bg-white">
-        <div className="max-w-4xl mx-auto text-center space-y-20">
-          <h2 className="text-4xl md:text-6xl font-display font-bold tracking-tight">{t('landing.social.title', 'Health is the new wealth. Invest in precision.')}</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div className="text-left space-y-6 p-10 premium-card bg-neutral-50/50">
-              <div className="flex text-yellow-500">
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-              </div>
-              <p className="text-xl font-medium leading-relaxed">"{t('landing.testimonials.1.text', 'The interaction check between my prescriptions and Ashwagandha was a revelation. Every other platform missed what Shafransa caught.')}"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-neutral-200"></div>
-                <div>
-                  <div className="font-bold text-sm">Dr. Marcus Thorne</div>
-                  <div className="text-xs text-muted-foreground">{t('landing.testimonials.1.role', 'Clinical Immunologist')}</div>
-                </div>
-              </div>
+      {/* 12. SON ÇAĞIRIŞ */}
+      <section className="bg-[#1a1c1e] py-16 text-white md:py-20">
+        <Container>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="text-3xl font-semibold tracking-tight md:text-5xl">{t("landing.cta.title")}</h2>
+              <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">{t("landing.cta.text")}</p>
             </div>
-
-            <div className="text-left space-y-6 p-10 premium-card bg-neutral-50/50">
-              <div className="flex text-yellow-500">
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-                <Star className="fill-current w-4 h-4" />
-              </div>
-              <p className="text-xl font-medium leading-relaxed">"{t('landing.testimonials.2.text', 'Verified COAs change the game for sellers like us. We can finally prove our purity without expensive middlemen marketing.')}"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-neutral-200"></div>
-                <div>
-                  <div className="font-bold text-sm">BioNature Georgia</div>
-                  <div className="text-xs text-muted-foreground">{t('landing.testimonials.2.role', 'Certified Organic Seller')}</div>
-                </div>
-              </div>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Link to="/register" className={`${buttonBase} bg-white text-[#1a1c1e] hover:bg-white/90 focus-visible:ring-white focus-visible:ring-offset-[#1a1c1e]`}>
+                {t("landing.cta.register")}
+              </Link>
+              <Link
+                to="/register-therapist"
+                className={`${buttonBase} border border-white/25 text-white hover:bg-white/10 focus-visible:ring-white focus-visible:ring-offset-[#1a1c1e]`}
+              >
+                {t("landing.cta.therapist")}
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* 5. FINAL CALL TO ACTION */}
-      <section className="w-full py-40 px-4 bg-[#1a1c1e] text-center relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/20 opacity-30 mix-blend-overlay"></div>
-        <div className="relative z-10 max-w-4xl mx-auto space-y-12">
-          <h2 className="text-5xl md:text-8xl font-display font-bold tracking-tighter text-white">{t('landing.cta_final.title', 'Your healing starts with zero guesswork.')}</h2>
-          <p className="text-white/60 text-xl md:text-2xl max-w-2xl mx-auto">{t('landing.cta_final.subtitle', 'Join the future of botanical science. Deploy your personalized protocol in minutes.')}</p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center">
-            <Button size="lg" className="rounded-full h-16 px-12 text-lg font-bold bg-white text-black hover:bg-white/90 btn-hover" asChild>
-              <Link to="/register">{t('landing.cta_final.user', 'Join the Waitlist')}</Link>
-            </Button>
-            <Button size="lg" className="rounded-full h-16 px-12 text-lg font-bold bg-white text-black hover:bg-white/90 btn-hover" asChild>
-              <Link to="/register">{t('landing.cta_final.seller', 'Become a Partner')}</Link>
-            </Button>
-          </div>
-        </div>
+          <p className="mt-12 border-t border-white/10 pt-6 text-xs leading-relaxed text-white/40">{t("landing.disclaimer")}</p>
+        </Container>
       </section>
     </div>
-  );
+  )
 }

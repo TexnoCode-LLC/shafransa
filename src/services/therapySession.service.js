@@ -18,8 +18,9 @@ const normalizeSession = (session) => {
         therapistId: data.therapistId || data.TherapistId,
         userId: data.userId || data.UserId,
         status: data.status ?? data.Status ?? SESSION_STATUS.PENDING,
-        startTime: data.startTime || data.StartTime,
-        endTime: data.endTime || data.EndTime,
+        // Backend sahəni sessionStartTime adı ilə qaytarır (həqiqi UTC)
+        startTime: data.startTime || data.StartTime || data.sessionStartTime || data.SessionStartTime,
+        endTime: data.endTime || data.EndTime || data.sessionEndTime || data.SessionEndTime,
         meetingLink: data.meetingLink || data.MeetingLink,
         // Ensure nested user/therapist objects are handled if they exist
         user: data.user || data.User,
@@ -73,7 +74,8 @@ export const rateSession = async (sessionId, rating, review) => {
 
 // Therapist Endpoints
 export const getMyTherapistSessions = async () => {
-    return api.get("/therapy-sessions/my-therapist-sessions");
+    const sessions = await api.get("/therapy-sessions/my-therapist-sessions");
+    return (Array.isArray(sessions) ? sessions : sessions?.data || []).map(normalizeSession);
 };
 
 export const confirmSessionAsTherapist = async (sessionId, data) => {
