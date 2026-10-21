@@ -27,7 +27,7 @@ import {
 
 import api from "../../services/api"
 import { getPlants } from "../../services/plant.service"
-import { formatDateLocale, formatPrice } from "@/lib/format"
+import { formatDateLocale, formatPrice, formatPriceDual } from "@/lib/format"
 import heroVideo from "../../assets/heroVideo.mp4"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
@@ -369,7 +369,7 @@ export default function LandingPage() {
                     <div className="mt-3 space-y-1">
                       <p className="line-clamp-2 text-sm font-medium leading-snug group-hover:text-primary">{product.title}</p>
                       <p className="flex flex-wrap items-center gap-x-2 text-sm">
-                        <span className="font-semibold tabular-nums">{formatPrice(product.price)}</span>
+                        <span className="font-semibold tabular-nums">{formatPriceDual(product.price)}</span>
                         {product.originalPrice > product.price && (
                           <span className="text-xs text-neutral-400 line-through">{formatPrice(product.originalPrice)}</span>
                         )}
@@ -503,7 +503,7 @@ export default function LandingPage() {
                       {therapist.specialization && <p className="truncate text-sm text-neutral-500">{therapist.specialization}</p>}
                       {therapist.onlinePrice > 0 && (
                         <p className="mt-0.5 text-xs font-medium text-primary">
-                          {t("landing.therapists.from_price", { price: formatPrice(therapist.onlinePrice) })}
+                          {t("landing.therapists.from_price", { price: formatPriceDual(therapist.onlinePrice) })}
                         </p>
                       )}
                     </div>

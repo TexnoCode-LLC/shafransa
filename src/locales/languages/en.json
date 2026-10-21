@@ -433,7 +433,7 @@
     "add_to_cart": "Add to Cart",
     "trust": {
       "shipping": "Free Shipping",
-      "shipping_sub": "Orders over $50",
+      "shipping_sub": "Orders over ₼50",
       "returns": "Easy Returns",
       "returns_sub": "30-day policy",
       "lab": "Lab Tested",

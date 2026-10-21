@@ -7,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom"
 import { Button } from "../../components/ui/Button"
 import { Trash2, ArrowRight, Loader2, Minus, Plus, ShoppingBag, ChevronLeft } from "lucide-react"
 import SEO from "../../components/common/SEO"
+import { formatPrice, formatPriceUsd } from "../../lib/format"
 
 export default function CartPage() {
   const { t } = useTranslation()
@@ -114,8 +115,8 @@ export default function CartPage() {
                       </div>
                     </div>
                     <div className="text-xl font-display font-bold text-[#1a1c1e]">
-                      ${(item.product.price * item.quantity).toFixed(2)}
-                      <div className="text-[10px] font-bold text-muted-foreground/50 text-right mt-0.5">${item.product.price} / unit</div>
+                      {formatPrice(item.product.price * item.quantity)}
+                      <div className="text-[10px] font-bold text-muted-foreground/50 text-right mt-0.5">{formatPrice(item.product.price)} / unit</div>
                     </div>
                   </div>
 
@@ -163,7 +164,7 @@ export default function CartPage() {
               <div className="space-y-4 mb-10 relative z-10">
                 <div className="flex justify-between text-sm font-medium">
                   <span className="text-muted-foreground">{t('cart.subtotal', 'Subtotal')}</span>
-                  <span className="text-[#1a1c1e] font-bold">${subtotal.toFixed(2)}</span>
+                  <span className="text-[#1a1c1e] font-bold">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm font-medium">
                   <span className="text-muted-foreground">{t('cart.shipping', 'Shipping')}</span>
@@ -178,7 +179,7 @@ export default function CartPage() {
                 <div className="h-px bg-neutral-50 my-6"></div>
                 <div className="flex justify-between font-display font-bold text-2xl text-[#1a1c1e]">
                   <span>{t('cart.total', 'Total')}</span>
-                  <span className="text-primary">${subtotal.toFixed(2)}</span>
+                  <span className="text-right text-primary">{formatPrice(subtotal)}<span className="block text-sm font-medium text-muted-foreground">≈ {formatPriceUsd(subtotal)}</span></span>
                 </div>
               </div>
 

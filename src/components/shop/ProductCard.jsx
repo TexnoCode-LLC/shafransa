@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 import { useTranslation } from "react-i18next"
 import { BadgeCheck, Heart, Loader2, Package, ShoppingCart, Star } from "lucide-react"
 
-import { formatPrice } from "@/lib/format"
+import { formatPrice, formatPriceDual } from "@/lib/format"
 import { discountPercent } from "@/lib/shop"
 import { cn } from "@/lib/utils"
 
@@ -76,7 +76,7 @@ export function ProductCard({ product, saved, onToggleSave, onAddToCart, adding 
         )}
         <div className="mt-auto flex items-end justify-between gap-2 pt-2">
           <p className="flex flex-wrap items-baseline gap-x-2">
-            <span className="text-base font-semibold tabular-nums">{formatPrice(product.price)}</span>
+            <span className="text-base font-semibold tabular-nums">{formatPriceDual(product.price)}</span>
             {discount && <span className="text-xs text-neutral-400 line-through">{formatPrice(product.originalPrice)}</span>}
           </p>
           <span className={cn("shrink-0 text-xs", outOfStock ? "text-rose-600" : lowStock ? "text-amber-600" : "text-neutral-500")}>

@@ -10,7 +10,7 @@ import { EmptyState } from "@/components/account/EmptyState"
 import { Card } from "@/components/admin/ui/card"
 import { Skeleton } from "@/components/admin/ui/skeleton"
 import { ProductImage } from "@/components/shop/ProductCard"
-import { formatDateTime, formatPrice } from "@/lib/format"
+import { formatDateTime, formatPrice, formatPriceDual } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import { addToCart } from "../../services/cart.service"
 import { getMyOrders } from "../../services/order.service"
@@ -52,7 +52,7 @@ function OrderCard({ order }) {
         </div>
         <div className="text-right">
           <p className="text-xs text-muted-foreground">{t("account.orders.total")}</p>
-          <p className="text-lg font-semibold tabular-nums">{formatPrice(orderTotal(order))}</p>
+          <p className="text-lg font-semibold tabular-nums">{formatPriceDual(orderTotal(order))}</p>
         </div>
       </div>
 

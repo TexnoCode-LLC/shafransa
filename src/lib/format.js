@@ -67,20 +67,32 @@ export function formatRelative(value) {
   return formatDate(date)
 }
 
-// Sayt qiymətləri dollarla göstərir ($24, $12.50)
-const priceFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
-})
+// Qiymətlər bazada MANATLA saxlanılır. Saytda manat əsasdır, yanında dollar qarşılığı göstərilir.
+// AZN dollara sabit məzənnə ilə bağlıdır (1 USD = 1.70 AZN)
+export const AZN_PER_USD = 1.7
 
-// Tam məbləğ qəpiksiz ($24), kəsr həmişə iki rəqəmlə ($8.90 — "$8.9" yox)
-const centsFormatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 2, maximumFractionDigits: 2 })
+// Tam məbləğ qəpiksiz (₼24), kəsr həmişə iki rəqəmlə (₼8.90 — "₼8.9" yox)
+const amountFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 })
+const centsAmountFormatter = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+const formatAmount = (value) => (Number.isInteger(value) ? amountFormatter : centsAmountFormatter).format(value)
 
+// Yalnız manat: "₼24" — admin/satıcı/fitoterapevt panelləri (qiymət manatla daxil edilir)
 export function formatPrice(value) {
-  if (typeof value !== "number") return "—"
-  return Number.isInteger(value) ? priceFormatter.format(value) : centsFormatter.format(value)
+  if (typeof value !== "number" || !Number.isFinite(value)) return "—"
+  return `₼${formatAmount(value)}`
+}
+
+// Manatın dollar qarşılığı: "$14.12"
+export function formatPriceUsd(value) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return "—"
+  return `$${centsAmountFormatter.format(value / AZN_PER_USD)}`
+}
+
+// Müştəri üçün: "₼24 (≈ $14.12)"
+export function formatPriceDual(value) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return "—"
+  if (value === 0) return formatPrice(0)
+  return `${formatPrice(value)} (≈ ${formatPriceUsd(value)})`
 }
 
 // "4 okt 2026, 10:00" — seans vaxtları həmişə Bakı vaxtı ilə

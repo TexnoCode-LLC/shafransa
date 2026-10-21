@@ -23,7 +23,7 @@ import { Textarea } from "@/components/admin/ui/textarea"
 import { ProductCard, ProductImage } from "@/components/shop/ProductCard"
 import { discountPercent } from "@/lib/shop"
 import { useShopActions } from "@/hooks/use-shop-actions"
-import { formatDate, formatPrice } from "@/lib/format"
+import { formatDate, formatPrice, formatPriceUsd } from "@/lib/format"
 import { cn } from "@/lib/utils"
 import SEO from "../../components/common/SEO"
 import { getProductById, getProducts } from "../../services/product.service"
@@ -294,6 +294,7 @@ function ProductDetails({ id }) {
 
             <div className="mt-5 flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <span className="text-3xl font-semibold tabular-nums">{formatPrice(product.price)}</span>
+              <span className="text-sm text-neutral-500 tabular-nums">≈ {formatPriceUsd(product.price)}</span>
               {discount && <span className="text-lg text-neutral-400 line-through">{formatPrice(product.originalPrice)}</span>}
             </div>
 

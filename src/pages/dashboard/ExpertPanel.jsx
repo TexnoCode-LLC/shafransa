@@ -329,7 +329,7 @@ export default function ExpertPanel() {
                           <div className="space-y-2">
                              <label className="text-xs font-bold uppercase tracking-widest text-emerald-600">{t('expert.field.online_price', 'Online Session Price')}</label>
                              <div className="relative">
-                                <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-500" />
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-emerald-500">₼</span>
                                 <Input 
                                    type="number"
                                    min="0"
@@ -345,7 +345,7 @@ export default function ExpertPanel() {
                           <div className="space-y-2">
                              <label className="text-xs font-bold uppercase tracking-widest text-emerald-600">{t('expert.field.offline_price', 'In-Person Session Price')}</label>
                              <div className="relative">
-                                <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-500" />
+                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm font-semibold text-emerald-500">₼</span>
                                 <Input 
                                    type="number"
                                    min="0"

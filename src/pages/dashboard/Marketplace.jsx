@@ -191,7 +191,7 @@ export default function Marketplace() {
   const chips = [
     q && { key: "search", label: `“${q}”`, clear: () => { setSearch(""); update({ search: "" }) } },
     category && { key: "category", label: categoryName, clear: () => update({ category: "" }) },
-    (minPrice || maxPrice) && { key: "price", label: `$${minPrice || 0} – ${maxPrice ? `$${maxPrice}` : "∞"}`, clear: () => update({ minPrice: "", maxPrice: "" }) },
+    (minPrice || maxPrice) && { key: "price", label: `₼${minPrice || 0} – ${maxPrice ? `₼${maxPrice}` : "∞"}`, clear: () => update({ minPrice: "", maxPrice: "" }) },
     verified && { key: "verified", label: t("shop.verified_only"), clear: () => update({ verified: "" }) },
     inStock && { key: "inStock", label: t("shop.in_stock_only"), clear: () => update({ inStock: "" }) },
   ].filter(Boolean)

@@ -667,8 +667,8 @@ function TherapistEditor({ id }) {
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-4">
               {[
-                ["onlinePrice", "Onlayn", "$"],
-                ["offlinePrice", "Əyani", "$"],
+                ["onlinePrice", "Onlayn", "₼"],
+                ["offlinePrice", "Əyani", "₼"],
               ].map(([key, label, suffix]) => (
                 <Field key={key} id={`th-${key}`} label={label} required error={visibleErrors[key]}>
                   <div className="relative">

@@ -14,6 +14,7 @@ import {
   MapPin, FlaskConical, AlertTriangle, BookOpen, Search, Package,
   Heart, Baby, UserMinus, Info
 } from "lucide-react"
+import { formatPriceDual } from "../../lib/format"
 
 // Helper function to render text lists (split by bullets, newlines, or stars) vertically
 const renderFormattedText = (text) => {
@@ -588,7 +589,7 @@ export default function HerbDetailsPage() {
                     <div className="p-5">
                       <div className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60 mb-1">{p.seller?.fullName}</div>
                       <div className="font-semibold text-sm text-[#1a1c1e] line-clamp-2 group-hover:text-primary transition-colors">{p.title}</div>
-                      <div className="font-semibold text-primary text-lg mt-2">${p.price}</div>
+                      <div className="font-semibold text-primary text-lg mt-2">{formatPriceDual(p.price)}</div>
                     </div>
                   </Link>
                 ))}

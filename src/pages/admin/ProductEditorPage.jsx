@@ -626,7 +626,7 @@ function ProductEditor({ id }) {
                 id="product-price"
                 label="Qiymət"
                 required
-                suffix="$"
+                suffix="₼"
                 value={state.price}
                 onChange={(value) => set({ price: value })}
                 error={visibleErrors.price}
@@ -634,7 +634,7 @@ function ProductEditor({ id }) {
               <NumberField
                 id="product-original-price"
                 label="Köhnə qiymət"
-                suffix="$"
+                suffix="₼"
                 value={state.originalPrice}
                 onChange={(value) => set({ originalPrice: value })}
                 error={visibleErrors.originalPrice}

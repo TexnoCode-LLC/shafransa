@@ -101,7 +101,7 @@ export function getProductSchema(product, currentUrl) {
     offers: {
       "@type": "Offer",
       url: currentUrl || BASE_URL,
-      priceCurrency: "USD", // saytda qiymətlər dollarla göstərilir
+      priceCurrency: "AZN", // qiymətlər manatla saxlanılır
       price: price.toFixed(2),
       priceValidUntil: "2027-12-31",
       itemCondition: "https://schema.org/NewCondition",

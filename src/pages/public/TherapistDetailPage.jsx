@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import i18next from "i18next"
-import { formatPrice } from "../../lib/format"
+import { formatPrice, formatPriceUsd } from "../../lib/format"
 import { getTherapistById } from "../../services/therapist.service"
 import { getAvailabilitySummary, createSession } from "../../services/therapySession.service"
 import { useAuthStore } from "../../store/useAuthStore"
@@ -424,6 +424,7 @@ export default function TherapistDetailPage() {
               </div>
               <div className="p-5">
                 <div className="text-xl font-semibold text-emerald-700">{formatPrice(isOnline ? profile.onlinePrice : profile.offlinePrice)}</div>
+                <div className="text-xs font-medium text-stone-500 tabular-nums">≈ {formatPriceUsd(isOnline ? profile.onlinePrice : profile.offlinePrice)}</div>
                 <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-stone-500">{t('therapists.price_label', 'Qiymət')}</p>
               </div>
             </div>

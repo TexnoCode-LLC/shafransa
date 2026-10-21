@@ -13,6 +13,7 @@ import {
   Info, ShoppingBag
 } from "lucide-react"
 import SEO from "../../components/common/SEO"
+import { formatPrice, formatPriceUsd } from "../../lib/format"
 
 export default function CheckoutPage() {
   const { t } = useTranslation()
@@ -204,7 +205,7 @@ export default function CheckoutPage() {
                        </div>
                        <div className="flex-1 min-w-0">
                           <div className="text-xs font-bold text-[#1a1c1e] truncate">{item.product.title}</div>
-                          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">x{item.quantity} • ${(item.product.price * item.quantity).toFixed(2)}</div>
+                          <div className="text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">x{item.quantity} • {formatPrice(item.product.price * item.quantity)}</div>
                        </div>
                     </div>
                   ))}
@@ -213,7 +214,7 @@ export default function CheckoutPage() {
                <div className="space-y-4 pt-6 border-t border-neutral-50 mb-8">
                   <div className="flex justify-between text-sm font-medium text-muted-foreground">
                     <span>{t('cart.subtotal', 'Subtotal')}</span>
-                    <span className="text-[#1a1c1e] font-bold">${subtotal.toFixed(2)}</span>
+                    <span className="text-[#1a1c1e] font-bold">{formatPrice(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-sm font-medium text-muted-foreground">
                     <span>{t('cart.shipping', 'Shipping')}</span>
@@ -223,7 +224,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="pt-4 flex justify-between font-display font-bold text-3xl text-[#1a1c1e]">
                     <span>{t('cart.total', 'Total')}</span>
-                    <span className="text-primary">${subtotal.toFixed(2)}</span>
+                    <span className="text-right text-primary">{formatPrice(subtotal)}<span className="block text-sm font-medium text-muted-foreground">≈ {formatPriceUsd(subtotal)}</span></span>
                   </div>
                </div>
 

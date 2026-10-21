@@ -12,6 +12,7 @@ import { Package, Trash2, DollarSign, Activity, UploadCloud, Loader2, ShieldChec
 import { toast } from "../../store/useToastStore"
 import TranslationTabs from "../../components/shared/TranslationTabs"
 import api from "../../services/api"
+import { formatPrice } from "../../lib/format"
 
 export default function SellerPanel({ tab = "overview" }) {
   const { t, i18n } = useTranslation()
@@ -97,7 +98,7 @@ export default function SellerPanel({ tab = "overview" }) {
                 </div>
               </CardHeader>
               <CardContent className="pt-2">
-                <div className="text-4xl font-display font-bold text-[#1a1c1e]">${revenue.toFixed(2)}</div>
+                <div className="text-4xl font-display font-bold text-[#1a1c1e]">{formatPrice(revenue)}</div>
                 <div className="flex items-center gap-1.5 mt-2 text-green-600 font-bold text-xs uppercase tracking-tight">
                    <Activity className="w-3 h-3" />
                    {t('seller.stats.growth', 'Growth Trending Up')}
@@ -191,7 +192,7 @@ export default function SellerPanel({ tab = "overview" }) {
                         <td className="px-6 py-5 font-bold text-[#1a1c1e]">#{(item.order.id || '').substring(0,8).toUpperCase()}</td>
                         <td className="px-6 py-5 text-muted-foreground font-medium">{item.product.translations?.find(tr => tr.language === i18n.language)?.title || item.product.translations?.[0]?.title || "Product"}</td>
                         <td className="px-6 py-5 text-center font-bold">{item.quantity}</td>
-                        <td className="px-6 py-5 font-bold text-[#1a1c1e]">${(item.price * item.quantity).toFixed(2)}</td>
+                        <td className="px-6 py-5 font-bold text-[#1a1c1e]">{formatPrice(item.price * item.quantity)}</td>
                         <td className="px-6 py-5 text-muted-foreground font-medium whitespace-nowrap">{new Date(item.order.createdAt).toLocaleDateString()}</td>
                         <td className="px-6 py-5 text-right">
                            <Badge className="bg-orange-50 text-orange-600 border-orange-100 font-bold text-[9px] px-3 uppercase tracking-widest">PENDING LAB LOG</Badge>
@@ -716,7 +717,7 @@ function ProductManager({ myProducts, isLoading, client }) {
                                {p.verified && <Badge className="bg-green-50 text-green-600 border-green-100 font-bold text-[9px] px-2 py-0">CERTIFIED</Badge>}
                             </div>
                             <div className="flex items-center gap-4 mt-1">
-                               <span className="text-lg font-bold text-[#1a1c1e]">${p.price}</span>
+                               <span className="text-lg font-bold text-[#1a1c1e]">{formatPrice(p.price)}</span>
                                <div className="h-4 w-[1px] bg-neutral-100"></div>
                                <span className={`text-xs font-bold uppercase tracking-widest ${p.stock < 10 ? 'text-orange-500' : 'text-muted-foreground/60'}`}>
                                   {p.stock} units

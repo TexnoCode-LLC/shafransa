@@ -17,6 +17,7 @@ import { Button } from "../../components/ui/Button"
 import { Badge } from "../../components/ui/Badge"
 import { Package, ShieldCheck, Loader2, User as UserIcon, Heart, Key, Sparkles, Leaf, Eye, EyeOff, Camera, Trash2, Calendar, Clock, Activity, Video, Star } from "lucide-react"
 import { Link } from "react-router-dom"
+import { formatPrice, formatPriceDual } from "../../lib/format"
 
 const LOCAL_AVATAR_KEY = "shafransa_local_profile_avatar"
 const LOCAL_PROFILE_KEY = "shafransa_local_profile_data"
@@ -537,7 +538,7 @@ export default function UserProfile({ tab = "profile", embedded = false }) {
                       </div>
                       <div className="text-right">
                         <div className="font-bold text-lg text-[#1a1c1e]">
-                          ${order.items?.reduce((acc, i) => acc + (i.price * i.quantity), 0).toFixed(2)}
+                          {formatPriceDual(order.items?.reduce((acc, i) => acc + (i.price * i.quantity), 0) ?? 0)}
                         </div>
                         <Badge className="bg-primary/10 text-primary border-primary/20 text-[9px] font-bold uppercase mt-1">
                           {t('user.order_confirmed', 'Confirmed')}
@@ -549,7 +550,7 @@ export default function UserProfile({ tab = "profile", embedded = false }) {
                         <div key={item.id} className="flex items-center gap-3 text-sm">
                           <span className="font-bold text-primary">{item.quantity}×</span>
                           <span className="text-muted-foreground truncate">{item.product?.title}</span>
-                          <span className="ml-auto font-bold text-[#1a1c1e]">${(item.price * item.quantity).toFixed(2)}</span>
+                          <span className="ml-auto font-bold text-[#1a1c1e]">{formatPrice(item.price * item.quantity)}</span>
                         </div>
                       ))}
                     </div>
@@ -594,7 +595,7 @@ export default function UserProfile({ tab = "profile", embedded = false }) {
                   </div>
                   <div className="p-4">
                     <div className="font-bold text-sm text-[#1a1c1e] line-clamp-2">{item.product?.title}</div>
-                    <div className="font-bold text-primary mt-1">${item.product?.price}</div>
+                    <div className="font-bold text-primary mt-1">{formatPriceDual(item.product?.price)}</div>
                   </div>
                 </Link>
               ))}
