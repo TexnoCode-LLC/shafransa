@@ -49,25 +49,32 @@ const HERBS = [
   'seed-herb-ginger',
 ];
 
-const THERAPISTS = [
-  'therapist-1',
-  'therapist-2',
-  'therapist-3',
-];
+const API_URL = process.env.SITEMAP_API_URL || 'https://api.shafransa.com/api';
 
-const BLOGS = [
-  'mock-blog-1',
-  'mock-blog-2',
-  'mock-blog-3',
-  'mock-blog-4',
-  'mock-blog-5',
-];
+// Fitoterapevt və bloq linkləri real API-dən (əvvəl mövcud olmayan mock id-lər idi və 404 verirdi).
+// API əlçatan deyilsə build dayanmır — sadəcə bu linklər sitemap-ə düşmür.
+async function fetchIds(endpoint, pick) {
+  try {
+    const res = await fetch(`${API_URL}${endpoint}`, { signal: AbortSignal.timeout(10000) });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const ids = pick((await res.json())?.data).map(item => item?.id).filter(Boolean);
+    console.log(`ℹ️  ${endpoint}: ${ids.length} link`);
+    return ids;
+  } catch (error) {
+    console.warn(`⚠️  ${endpoint} alınmadı (${error.message}) — sitemap-ə əlavə olunmur`);
+    return [];
+  }
+}
 
 const SELLERS = [
   'seed-seller-shafransa',
 ];
 
-function generateSitemap() {
+async function generateSitemap() {
+  const [THERAPISTS, BLOGS] = await Promise.all([
+    fetchIds('/therapists/verified', data => (Array.isArray(data) ? data : [])),
+    fetchIds('/blogs?page=1&limit=500', data => (Array.isArray(data?.data) ? data.data : [])),
+  ]);
   const currentDate = new Date().toISOString().split('T')[0];
 
   const routes = [];

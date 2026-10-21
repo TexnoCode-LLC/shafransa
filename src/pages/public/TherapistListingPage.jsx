@@ -9,28 +9,8 @@ import { Search, User, MapPin, Star, X, ShieldCheck, Calendar, Clock, DollarSign
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
 
-const LOCAL_AVATAR_KEY = "shafransa_local_profile_avatar"
-const LOCAL_PROFILE_KEY = "shafransa_local_profile_data"
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80"
-
-const getLocalAvatar = (userId) => {
-  if (!userId) return ""
-  try {
-    return localStorage.getItem(`${LOCAL_AVATAR_KEY}_${userId}`) || ""
-  } catch {
-    return ""
-  }
-}
-
-const getLocalProfile = (userId) => {
-  if (!userId) return {}
-  try {
-    return JSON.parse(localStorage.getItem(`${LOCAL_PROFILE_KEY}_${userId}`) || "{}")
-  } catch {
-    return {}
-  }
-}
 
 const getInitials = (name) =>
   (name || "Ş")
@@ -44,26 +24,23 @@ const getInitials = (name) =>
 const normalizeTherapist = (therapist) => {
   const user = therapist?.user || therapist?.User || {}
   const userId = therapist?.userId || therapist?.UserId || user.id || user.Id
-  const localProfile = getLocalProfile(userId)
+  // Yalnız API datası — admin redaktələri brauzerdəki köhnə localStorage ilə əzilməsin
   const rawName = therapist?.fullName || therapist?.FullName || user.fullName || user.FullName || ""
-  const fullName = localProfile.fullName || (rawName && !rawName.includes("@") ? rawName : "Zakir Aliyev")
+  const fullName = rawName && !rawName.includes("@") ? rawName : i18next.t("therapist.unnamed", "Fitoterapevt")
 
   return {
     ...therapist,
     id: therapist?.id || therapist?.Id,
     userId,
     fullName,
-    specialization: localProfile.specialization || therapist?.specialization || therapist?.Specialization || i18next.t('therapist.specialization_default', "Physiotherapist"),
+    specialization: therapist?.specialization || therapist?.Specialization || i18next.t('therapist.specialization_default', "Physiotherapist"),
     description:
-      localProfile.therapistBio ||
-      localProfile.description ||
       therapist?.description ||
       therapist?.Description ||
       therapist?.bio ||
       therapist?.Bio ||
       i18next.t('therapist.bio_default', "Helping you return to healthy movement with personalized recovery plans and careful session tracking."),
     avatar:
-      getLocalAvatar(userId) ||
       therapist?.avatar ||
       therapist?.Avatar ||
       user.avatar ||

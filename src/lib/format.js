@@ -31,6 +31,18 @@ export function formatDate(value) {
   return `${Number(parts.day)} ${MONTHS_AZ[Number(parts.month) - 1]} ${parts.year}`
 }
 
+// Saytın dilinə görə tarix (az — öz ay adlarımızla); səhv/boş tarixdə və ya tanınmayan dildə xəta atmır
+export function formatDateLocale(value, lang) {
+  if (!lang || lang === "az") return formatDate(value)
+  const date = toDate(value)
+  if (!date) return "—"
+  try {
+    return new Intl.DateTimeFormat(lang, { dateStyle: "medium", timeZone: "Asia/Baku" }).format(date)
+  } catch {
+    return formatDate(date)
+  }
+}
+
 export function formatTime(value) {
   const date = toDate(value)
   return date ? timeFormatter.format(date) : "—"

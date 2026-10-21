@@ -27,7 +27,7 @@ import {
 
 import api from "../../services/api"
 import { getPlants } from "../../services/plant.service"
-import { formatDate, formatPrice } from "@/lib/format"
+import { formatDateLocale, formatPrice } from "@/lib/format"
 import heroVideo from "../../assets/heroVideo.mp4"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
@@ -549,7 +549,7 @@ export default function LandingPage() {
                     <Photo src={blog.images?.[0]} alt={blog.title} fallback={Leaf} className="aspect-[16/10] w-full" />
                   </div>
                   <p className="mt-4 text-xs text-neutral-500">
-                    {lang === "az" ? formatDate(blog.createdAt) : new Intl.DateTimeFormat(lang, { dateStyle: "medium" }).format(new Date(blog.createdAt))}
+                    {formatDateLocale(blog.createdAt, lang)}
                   </p>
                   <h3 className="mt-1.5 text-lg font-semibold leading-snug group-hover:text-primary">{blog.title}</h3>
                   <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-600">{stripHtml(blog.description)}</p>

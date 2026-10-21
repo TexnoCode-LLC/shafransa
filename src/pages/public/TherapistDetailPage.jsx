@@ -43,8 +43,6 @@ const DAY_LABELS = [
   i18next.t('therapist.days.sat', 'Sat'),
   i18next.t('therapist.days.sun', 'Sun')
 ]
-const LOCAL_AVATAR_KEY = "shafransa_local_profile_avatar"
-const LOCAL_PROFILE_KEY = "shafransa_local_profile_data"
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80"
 
@@ -109,54 +107,34 @@ const getInitials = (name) =>
     .join("")
     .toUpperCase()
 
-const getLocalAvatar = (userId) => {
-  if (!userId) return ""
-  try {
-    return localStorage.getItem(`${LOCAL_AVATAR_KEY}_${userId}`) || ""
-  } catch {
-    return ""
-  }
-}
-
-const getLocalProfile = (userId) => {
-  if (!userId) return {}
-  try {
-    return JSON.parse(localStorage.getItem(`${LOCAL_PROFILE_KEY}_${userId}`) || "{}")
-  } catch {
-    return {}
-  }
-}
-
 const normalizeTherapist = (therapist) => {
   const data = therapist?.data || therapist || {}
   const user = data.user || data.User || {}
   const userId = data.userId || data.UserId || user.id || user.Id
-  const localProfile = getLocalProfile(userId)
+  // Yalnız API datası — admin redaktələri brauzerdəki köhnə localStorage ilə əzilməsin
   const rawName = data.fullName || data.FullName || user.fullName || user.FullName || ""
-  const fullName = localProfile.fullName || (rawName && !rawName.includes("@") ? rawName : "Zakir Aliyev")
+  const fullName = rawName && !rawName.includes("@") ? rawName : i18next.t("therapist.unnamed", "Fitoterapevt")
 
   return {
     id: data.id || data.Id,
     userId,
     fullName,
-    email: localProfile.email || data.email || data.Email || user.email || user.Email || "",
-    phone: localProfile.phoneNumber || data.phoneNumber || data.PhoneNumber || data.phone || "",
-    specialization: localProfile.specialization || data.specialization || data.Specialization || "Fizioterapevt",
+    email: data.email || data.Email || user.email || user.Email || "",
+    phone: data.phoneNumber || data.PhoneNumber || data.phone || "",
+    specialization: data.specialization || data.Specialization || "Fizioterapevt",
     bio:
-      localProfile.therapistBio ||
-      localProfile.description ||
       data.bio ||
       data.Bio ||
       data.description ||
       data.Description ||
       "Fərdi bərpa planı, rahat seans ritmi və diqqətli izləmə ilə sağlam hərəkətə qayıtmağa kömək edir.",
-    avatar: getLocalAvatar(userId) || data.avatar || data.Avatar || user.avatar || user.Avatar || "",
+    avatar: data.avatar || data.Avatar || user.avatar || user.Avatar || "",
     rating: Number(data.rating || data.Rating || 0),
     reviewsCount: Number(data.reviewsCount || data.ReviewsCount || data.reviewCount || 0),
-    licenseNumber: localProfile.licenseNumber || data.licenseNumber || data.LicenseNumber || "",
+    licenseNumber: data.licenseNumber || data.LicenseNumber || "",
     cv: data.cv || data.CV || "",
     certificates: data.certificates || data.Certificates || [],
-    isVerified: Boolean(data.isVerified ?? data.IsVerified ?? data.verified ?? true),
+    isVerified: Boolean(data.isVerified ?? data.IsVerified ?? data.verified ?? false),
     isEmailVerified: Boolean(data.isEmailVerified ?? data.IsEmailVerified),
     onlinePrice: data.onlinePrice || 0,
     offlinePrice: data.offlinePrice || 0,

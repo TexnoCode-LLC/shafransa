@@ -1,33 +1,43 @@
 import React from "react"
+import { useQuery, keepPreviousData } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import { Link } from "react-router-dom"
 import { Card, CardContent } from "../../components/ui/Card"
 import { Badge } from "../../components/ui/Badge"
-import { Calendar, Clock, ArrowRight, BookOpen, Loader2 } from "lucide-react"
-import { MOCK_BLOGS } from "../../data/mockBlogs"
+import { Calendar, Clock, ArrowRight, ArrowLeft, BookOpen } from "lucide-react"
+import { getBlogs } from "../../services/blog.service"
+import { formatDateLocale } from "../../lib/format"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
 
+const PAGE_SIZE = 9
 
 export default function BlogListingPage() {
   const { t, i18n } = useTranslation()
+  const [page, setPage] = React.useState(1)
 
-  const isLoading = false
-  const currentLang = i18n.language || 'az'
+  const currentLang = (i18n.language || "az").toLowerCase().slice(0, 2)
+
+  // Admin paneldən əlavə olunan real bloqlar (əvvəl burada yalnız mock bloqlar göstərilirdi)
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["blogs", currentLang, page],
+    queryFn: () => getBlogs({ page, limit: PAGE_SIZE }),
+    placeholderData: keepPreviousData,
+  })
+
+  const totalPages = data?.pagination?.pages ?? 1
 
   const blogs = React.useMemo(() => {
-    const allBlogs = MOCK_BLOGS.slice(0, 9)
-
-    return allBlogs.map(blog => {
-      const trans = blog.translations?.find(t => t.language === currentLang) || blog.translations?.[0]
+    const list = Array.isArray(data?.data) ? data.data : Array.isArray(data) ? data : []
+    return list.map(blog => {
+      const trans = blog.translations?.find(tr => tr.language === currentLang)
       return {
         ...blog,
         title: trans?.title || blog.title,
         description: trans?.description || blog.description,
-        category: trans?.category || blog.category
       }
     })
-  }, [currentLang])
+  }, [data, currentLang])
 
   const stripHtml = (html) => {
     if (!html) return ""
@@ -75,7 +85,7 @@ export default function BlogListingPage() {
               </div>
             ))}
           </div>
-        ) : blogs.length === 0 ? (
+        ) : isError || blogs.length === 0 ? (
           <div className="text-center py-24 border-2 border-dashed border-neutral-200 rounded-[32px] bg-white max-w-4xl mx-auto">
             <BookOpen className="mx-auto h-12 w-12 mb-4 opacity-10" />
             <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground/60">{t('blog.empty', 'New protocols are being drafted. Check back soon.')}</p>
@@ -107,7 +117,7 @@ export default function BlogListingPage() {
                   <CardContent className="p-0 flex-1 flex flex-col">
                     <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-primary mb-3">
                        <span className="flex items-center gap-1.5">
-                          <Calendar className="w-3 h-3" /> {new Date(blog.createdAt).toLocaleDateString(currentLang, { year: 'numeric', month: 'numeric', day: 'numeric' })}
+                          <Calendar className="w-3 h-3" /> {formatDateLocale(blog.createdAt, currentLang)}
                        </span>
                        <span className="flex items-center gap-1.5">
                           <Clock className="w-3 h-3" /> {t('blog.min_read', { count: 5 })}
@@ -135,6 +145,30 @@ export default function BlogListingPage() {
                 </Card>
               </Link>
             ))}
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div className="mt-16 flex items-center justify-center gap-4">
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page <= 1}
+              className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-[#1a1c1e] transition-colors hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-40"
+            >
+              <ArrowLeft className="h-4 w-4" /> {t("blog.prev", "Əvvəlki")}
+            </button>
+            <span className="text-sm font-semibold text-muted-foreground">
+              {page} / {totalPages}
+            </span>
+            <button
+              type="button"
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page >= totalPages}
+              className="flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-5 py-2.5 text-sm font-semibold text-[#1a1c1e] transition-colors hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-40"
+            >
+              {t("blog.next", "Növbəti")} <ArrowRight className="h-4 w-4" />
+            </button>
           </div>
         )}
       </main>

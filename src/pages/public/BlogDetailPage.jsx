@@ -7,7 +7,7 @@ import { toYouTubeEmbedUrl } from "../../lib/utils"
 import { getBlog } from "../../services/blog.service"
 import { Badge } from "../../components/ui/Badge"
 import { Calendar, Clock, User, Share2, ArrowLeft, Loader2, BookOpen, Play } from "lucide-react"
-import { MOCK_BLOGS } from "../../data/mockBlogs"
+import { formatDateLocale } from "../../lib/format"
 import SEO from "../../components/common/SEO"
 import { getBlogSchema, stripHtml } from "../../utils/seoSchemas"
 import { BASE_URL } from "../../utils/seoTranslations"
@@ -15,40 +15,27 @@ import { BASE_URL } from "../../utils/seoTranslations"
 export default function BlogDetailPage() {
   const { id } = useParams()
   const { t, i18n } = useTranslation()
-  const isMock = id?.startsWith("mock-blog")
-
   const { data: blogResponse, isLoading } = useQuery({
     queryKey: ["blog", id],
     queryFn: () => getBlog(id),
-    enabled: !isMock,
+    enabled: Boolean(id),
   })
 
-  const currentLang = i18n.language || 'az'
+  const currentLang = (i18n.language || "az").toLowerCase().slice(0, 2)
 
   const blog = React.useMemo(() => {
-    if (isMock) {
-      const mockBlog = MOCK_BLOGS.find(b => b.id === id)
-      if (!mockBlog) return null
-      const trans = mockBlog.translations?.find(t => t.language === currentLang) || mockBlog.translations?.[0]
-      return {
-        ...mockBlog,
-        title: trans?.title || mockBlog.title,
-        description: trans?.description || mockBlog.description,
-        category: trans?.category || mockBlog.category
-      }
-    }
-
     const rawBlog = blogResponse?.data || blogResponse
     if (!rawBlog) return null
 
-    const trans = rawBlog.translations?.find(t => t.language === currentLang) || rawBlog.translations?.[0]
+    // Backend başlığı artıq saytın dilində qaytarır; tərcümə yoxdursa ona toxunmuruq (başqa dilə keçmirik)
+    const trans = rawBlog.translations?.find(t => t.language === currentLang)
     return {
       ...rawBlog,
       title: trans?.title || rawBlog.title,
       description: trans?.description || rawBlog.description,
       category: trans?.category || rawBlog.category
     }
-  }, [blogResponse, id, currentLang, isMock])
+  }, [blogResponse, currentLang])
 
   if (isLoading) {
     return (
@@ -102,7 +89,7 @@ export default function BlogDetailPage() {
                   {blog.category || t('blog.wellness', 'Wellness')}
                </Badge>
                <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">
-                  <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {new Date(blog.createdAt).toLocaleDateString(currentLang, { year: 'numeric', month: 'numeric', day: 'numeric' })}</span>
+                  <span className="flex items-center gap-1.5"><Calendar className="w-3.5 h-3.5" /> {formatDateLocale(blog.createdAt, currentLang)}</span>
                   <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5" /> {t('blog.min_read', { count: 5 })}</span>
                </div>
             </div>

@@ -1,6 +1,5 @@
 import api from "./api";
 import { SESSION_STATUS } from "../constants/enums";
-import { MOCK_SESSIONS, MOCK_AVAILABILITY_SUMMARY } from "./mockData";
 
 /**
  * Normalizes a session object from the API.
@@ -34,25 +33,15 @@ export const createSession = async (data) => {
 };
 
 export const getAvailableSlots = async (therapistId, from, to) => {
-    try {
-        return await api.get(`/therapy-sessions/therapist/${therapistId}/available-slots`, {
-            params: { from, to }
-        });
-    } catch (error) {
-        console.warn(`⚠️ Using mock data for available slots (API failed)`);
-        return MOCK_SESSIONS.filter(s => s.therapistId === therapistId && s.status === "Available");
-    }
+    return await api.get(`/therapy-sessions/therapist/${therapistId}/available-slots`, {
+        params: { from, to }
+    });
 };
 
 export const getAvailabilitySummary = async (therapistId, year, month) => {
-    try {
-        return await api.get(`/therapy-sessions/therapist/${therapistId}/availability-summary`, {
-            params: { year, month }
-        });
-    } catch (error) {
-        console.warn(`⚠️ Using mock data for availability summary (API failed)`, error?.message);
-        return MOCK_AVAILABILITY_SUMMARY;
-    }
+    return await api.get(`/therapy-sessions/therapist/${therapistId}/availability-summary`, {
+        params: { year, month }
+    });
 };
 
 export const getMySessions = async () => {

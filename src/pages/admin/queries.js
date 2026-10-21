@@ -288,6 +288,7 @@ export function useSaveTherapist() {
       queryClient.invalidateQueries({ queryKey: therapistKeys.processed })
       queryClient.invalidateQueries({ queryKey: adminKeys.pendingTherapistRequests })
       queryClient.invalidateQueries({ queryKey: therapistKeys.detail(id) })
+      invalidatePublicTherapists(queryClient)
     },
   })
 }
@@ -318,6 +319,14 @@ function invalidateTherapistData(queryClient) {
   queryClient.invalidateQueries({ queryKey: adminKeys.pendingTherapistRequests })
   queryClient.invalidateQueries({ queryKey: therapistKeys.processed })
   queryClient.invalidateQueries({ queryKey: therapistKeys.all })
+  invalidatePublicTherapists(queryClient)
+}
+
+// Saytın öz keşi (siyahı, ana səhifə, profil) — admin dəyişikliyi dərhal görünsün
+function invalidatePublicTherapists(queryClient) {
+  queryClient.invalidateQueries({ queryKey: ["therapists", "verified"] })
+  queryClient.invalidateQueries({ queryKey: ["landing", "therapists"] })
+  queryClient.invalidateQueries({ queryKey: ["therapist"] })
 }
 
 // Təsdiq/rədd: sidebar badge-i, ümumi baxış və bütün siyahılar yenilənir
@@ -346,7 +355,10 @@ export function useUpdateTherapistMenuStatus() {
       return { previous }
     },
     onError: (_error, _vars, context) => queryClient.setQueryData(therapistKeys.all, context?.previous),
-    onSettled: () => queryClient.invalidateQueries({ queryKey: therapistKeys.all }),
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: therapistKeys.all })
+      invalidatePublicTherapists(queryClient)
+    },
   })
 }
 
@@ -354,6 +366,13 @@ export function useUpdateTherapistMenuStatus() {
 export const blogKeys = {
   list: ["admin", "blogs", "list"],
   detail: (id) => ["admin", "blogs", "detail", id],
+}
+
+// Saytın öz keşi (bloq siyahısı, ana səhifə, bloq səhifəsi)
+function invalidatePublicBlogs(queryClient) {
+  queryClient.invalidateQueries({ queryKey: ["blogs"] })
+  queryClient.invalidateQueries({ queryKey: ["landing", "blogs"] })
+  queryClient.invalidateQueries({ queryKey: ["blog"] })
 }
 
 export function useAdminBlogs(params) {
@@ -385,6 +404,7 @@ export function useSaveBlog() {
       queryClient.invalidateQueries({ queryKey: blogKeys.list })
       queryClient.invalidateQueries({ queryKey: adminKeys.stats("blogs") })
       if (id) queryClient.invalidateQueries({ queryKey: blogKeys.detail(id) })
+      invalidatePublicBlogs(queryClient)
     },
   })
 }
@@ -396,6 +416,7 @@ export function useDeleteBlog() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: blogKeys.list })
       queryClient.invalidateQueries({ queryKey: adminKeys.stats("blogs") })
+      invalidatePublicBlogs(queryClient)
     },
   })
 }
