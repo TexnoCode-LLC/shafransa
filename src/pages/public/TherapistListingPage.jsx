@@ -8,6 +8,7 @@ import { Badge } from "../../components/ui/Badge"
 import { Search, User, MapPin, Star, X, ShieldCheck, Calendar, Clock, DollarSign } from "lucide-react"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
+import { formatPrice } from "../../lib/format"
 
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80"
@@ -48,8 +49,8 @@ const normalizeTherapist = (therapist) => {
       "",
     rating: Number(therapist?.rating || therapist?.Rating || 0),
     reviewsCount: Number(therapist?.reviewsCount || therapist?.reviewCount || therapist?.ReviewCount || 0),
-    onlinePrice: therapist?.onlinePrice || therapist?.OnlinePrice || 0,
-    offlinePrice: therapist?.offlinePrice || therapist?.OfflinePrice || 0,
+    onlinePrice: Number(therapist?.onlinePrice ?? therapist?.OnlinePrice ?? 0),
+    offlinePrice: Number(therapist?.offlinePrice ?? therapist?.OfflinePrice ?? 0),
     sessionDurationInMinutes: therapist?.sessionDurationInMinutes || therapist?.SessionDurationInMinutes || 60,
   }
 }
@@ -237,7 +238,8 @@ function TherapistCard({ therapist, t }) {
                   <span className="text-muted-foreground/40 font-medium">({therapist.reviewsCount || "0"})</span>
                 </div>
                <div className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 flex items-center gap-1">
-                  <DollarSign className="w-3 h-3" /> ₼{therapist.onlinePrice}
+                  <DollarSign className="w-3 h-3" />
+                  {t("therapists.online_label", "Onlayn")} {formatPrice(therapist.onlinePrice)} · {t("therapists.offline_label", "Əyani")} {formatPrice(therapist.offlinePrice)}
                </div>
                <div className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 flex items-center gap-1">
                   <Clock className="w-3 h-3" /> {therapist.sessionDurationInMinutes}m

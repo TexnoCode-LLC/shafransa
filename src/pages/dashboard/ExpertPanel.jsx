@@ -13,6 +13,7 @@ import { Input } from "../../components/ui/Input"
 import { Calendar, Video, Clock, DollarSign, Loader2, CheckCircle2, XCircle, PlayCircle, Settings, ShieldCheck, CheckCircle, Star } from "lucide-react"
 import { toast } from "../../store/useToastStore"
 import { openExternal, safeExternalUrl } from "../../lib/utils"
+import { formatPrice } from "../../lib/format"
 
 export default function ExpertPanel() {
   const { t } = useTranslation()
@@ -100,11 +101,12 @@ export default function ExpertPanel() {
       Hours: selectedHours
     }),
     onSuccess: () => {
-      const localKey = `therapist_hours_${therapist.id || 'me'}`;
-      localStorage.setItem(localKey, JSON.stringify(selectedHours));
+      queryClient.invalidateQueries({ queryKey: ["therapist", "me"] })
+      queryClient.invalidateQueries({ queryKey: ["availability"] })
       toast.success(t('expert.hours_updated', 'Working hours updated!'))
       setIsConfiguringHours(false)
-    }
+    },
+    onError: (err) => toast.error(err?.message || t('expert.hours_update_failed', 'İş saatları yadda saxlanmadı')),
   })
 
   const { data: therapistProfile, isLoading: loadingProfile } = useQuery({
@@ -121,21 +123,14 @@ export default function ExpertPanel() {
         specialization: therapist.specialization || "",
         bio: therapist.bio || "",
         phoneNumber: therapist.phoneNumber || "",
-        onlinePrice: therapist.onlinePrice || 0,
-        offlinePrice: therapist.offlinePrice || 0,
+        onlinePrice: therapist.onlinePrice ?? 0,
+        offlinePrice: therapist.offlinePrice ?? 0,
         sessionDurationInMinutes: therapist.sessionDurationInMinutes || 60
       })
       
-      const localKey = `therapist_hours_${therapist.id || 'me'}`;
-      const cached = localStorage.getItem(localKey);
-      if (cached) {
-        try {
-          setSelectedHours(JSON.parse(cached));
-        } catch (e) {
-          console.error(e);
-        }
-      } else if (therapist.workingHours) {
-        setSelectedHours(therapist.workingHours.map(wh => wh.hour))
+      // İş saatları serverdən (backend "HH:mm" sətirləri qaytarır)
+      if (Array.isArray(therapist.workingHours)) {
+        setSelectedHours(therapist.workingHours.map(wh => (typeof wh === "string" ? wh : wh?.hour)).filter(Boolean))
       }
     }
   }, [therapistProfile])
@@ -143,16 +138,36 @@ export default function ExpertPanel() {
   const { mutate: updateProfile, isPending: updatingProfile } = useMutation({
     mutationFn: (formData) => updateMyProfile(formData),
     onSuccess: () => {
-      queryClient.invalidateQueries(["therapist", "me"])
+      queryClient.invalidateQueries({ queryKey: ["therapist", "me"] })
+      // Saytdakı siyahı və profil yeni qiymətləri dərhal göstərsin
+      queryClient.invalidateQueries({ queryKey: ["therapists", "verified"] })
+      queryClient.invalidateQueries({ queryKey: ["landing", "therapists"] })
+      queryClient.invalidateQueries({ queryKey: ["therapist", therapist.id] })
       toast.success(t('expert.profile_updated', 'Profile updated successfully!'))
-    }
+    },
+    // Əvvəl xəta səssiz qalırdı — fitoterapevt qiymətin saxlanmadığını bilmirdi
+    onError: (err) => toast.error(err?.message || t('expert.profile_update_failed', 'Profil yadda saxlanmadı')),
   })
 
   const handleProfileSubmit = (e) => {
     e.preventDefault()
+    const prices = {}
+    for (const key of ["onlinePrice", "offlinePrice"]) {
+      const value = profileForm[key] === "" ? 0 : Number(profileForm[key])
+      if (!Number.isFinite(value) || value < 0 || value > 100000) {
+        toast.error(t('expert.price_invalid', 'Qiymət 0 ilə 100000 arasında olmalıdır'))
+        return
+      }
+      prices[key] = value
+    }
+    const duration = Number(profileForm.sessionDurationInMinutes)
+    if (!Number.isInteger(duration) || duration < 15 || duration > 480) {
+      toast.error(t('expert.duration_invalid', 'Seans müddəti 15-480 dəqiqə olmalıdır'))
+      return
+    }
     const form = new FormData()
-    Object.entries(profileForm).forEach(([key, value]) => {
-      form.append(key.charAt(0).toUpperCase() + key.slice(1), value)
+    Object.entries({ ...profileForm, ...prices, sessionDurationInMinutes: duration }).forEach(([key, value]) => {
+      form.append(key.charAt(0).toUpperCase() + key.slice(1), value ?? "")
     })
     if (files.cv) form.append("CvFile", files.cv)
     if (files.avatar) form.append("ProfileImageFile", files.avatar)
@@ -317,6 +332,10 @@ export default function ExpertPanel() {
                                 <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-500" />
                                 <Input 
                                    type="number"
+                                   min="0"
+                                   step="0.01"
+                                   inputMode="decimal"
+                                   onWheel={e => e.currentTarget.blur()}
                                    value={profileForm.onlinePrice}
                                    onChange={e => setProfileForm({...profileForm, onlinePrice: e.target.value})}
                                    className="h-12 rounded-xl bg-white pl-10 border-emerald-100"
@@ -329,6 +348,10 @@ export default function ExpertPanel() {
                                 <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-emerald-500" />
                                 <Input 
                                    type="number"
+                                   min="0"
+                                   step="0.01"
+                                   inputMode="decimal"
+                                   onWheel={e => e.currentTarget.blur()}
                                    value={profileForm.offlinePrice}
                                    onChange={e => setProfileForm({...profileForm, offlinePrice: e.target.value})}
                                    className="h-12 rounded-xl bg-white pl-10 border-emerald-100"
@@ -398,7 +421,7 @@ export default function ExpertPanel() {
                     <div className="space-y-4">
                        <div className="flex justify-between items-end border-b border-emerald-100 pb-4">
                           <span className="text-xs font-bold text-emerald-600/60 uppercase tracking-widest">{t('expert.revenue.total', 'Gross Total')}</span>
-                          <span className="text-2xl font-display font-bold text-emerald-900">${(sessions.filter(s => s.status === 3).length * (therapist.onlinePrice || 45)).toFixed(2)}</span>
+                          <span className="text-2xl font-display font-bold text-emerald-900">{formatPrice(sessions.filter(s => s.status === SESSION_STATUS.COMPLETED).reduce((sum, s) => sum + (s.price || 0), 0))}</span>
                        </div>
                        <Button variant="ghost" className="w-full rounded-xl text-emerald-600 hover:bg-emerald-100/50 font-bold text-xs h-10">
                           {t('expert.revenue.view_history', 'Transaction Ledger')}
@@ -446,10 +469,9 @@ export default function ExpertPanel() {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-display font-bold text-[#1a1c1e]">
-              ₼{sessions
+              {formatPrice(sessions
                 .filter(s => s.status === SESSION_STATUS.COMPLETED)
-                .reduce((sum, s) => sum + (s.price || 0), 0)
-                .toFixed(2)}
+                .reduce((sum, s) => sum + (s.price || 0), 0))}
             </div>
             <p className="text-xs font-medium text-muted-foreground/60 mt-1">{t('expert.stats.revenue_desc', 'Verified session settlements')}</p>
           </CardContent>

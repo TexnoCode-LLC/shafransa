@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import i18next from "i18next"
+import { formatPrice } from "../../lib/format"
 import { getTherapistById } from "../../services/therapist.service"
 import { getAvailabilitySummary, createSession } from "../../services/therapySession.service"
 import { useAuthStore } from "../../store/useAuthStore"
@@ -136,8 +137,8 @@ const normalizeTherapist = (therapist) => {
     certificates: data.certificates || data.Certificates || [],
     isVerified: Boolean(data.isVerified ?? data.IsVerified ?? data.verified ?? false),
     isEmailVerified: Boolean(data.isEmailVerified ?? data.IsEmailVerified),
-    onlinePrice: data.onlinePrice || 0,
-    offlinePrice: data.offlinePrice || 0,
+    onlinePrice: Number(data.onlinePrice ?? 0),
+    offlinePrice: Number(data.offlinePrice ?? 0),
     sessionDurationInMinutes: data.sessionDurationInMinutes || 60,
     createdAt: data.createdAt || data.CreatedAt || "",
   }
@@ -422,7 +423,7 @@ export default function TherapistDetailPage() {
                 <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-stone-500">{t('therapists.minutes_label', 'Dəqiqə')}</p>
               </div>
               <div className="p-5">
-                <div className="text-xl font-semibold text-emerald-700">₼{isOnline ? profile.onlinePrice : profile.offlinePrice}</div>
+                <div className="text-xl font-semibold text-emerald-700">{formatPrice(isOnline ? profile.onlinePrice : profile.offlinePrice)}</div>
                 <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-stone-500">{t('therapists.price_label', 'Qiymət')}</p>
               </div>
             </div>
@@ -547,13 +548,13 @@ export default function TherapistDetailPage() {
                   onClick={() => setIsOnline(true)}
                   className={`h-10 rounded-lg text-xs font-bold transition-all ${isOnline ? "bg-white text-[#1a1c1e] shadow-sm" : "text-stone-500 hover:text-stone-700"}`}
                >
-                  {t('therapists.online_label', 'Onlayn')} (₼{profile.onlinePrice})
+                  {t('therapists.online_label', 'Onlayn')} ({formatPrice(profile.onlinePrice)})
                </button>
                <button 
                   onClick={() => setIsOnline(false)}
                   className={`h-10 rounded-lg text-xs font-bold transition-all ${!isOnline ? "bg-white text-[#1a1c1e] shadow-sm" : "text-stone-500 hover:text-stone-700"}`}
                >
-                  {t('therapists.offline_label', 'Əyani')} (₼{profile.offlinePrice})
+                  {t('therapists.offline_label', 'Əyani')} ({formatPrice(profile.offlinePrice)})
                </button>
             </div>
 
