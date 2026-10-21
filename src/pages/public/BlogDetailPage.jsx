@@ -177,7 +177,7 @@ export default function BlogDetailPage() {
                 <div>
                    <h4 className="text-xl font-display font-bold text-[#1a1c1e] mb-2">{t('blog.about_author', 'About Shafransa Editorial')}</h4>
                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {t('blog.author_bio', 'Our editorial team consists of certified physiotherapists and herbalists dedicated to bringing you the most accurate and up-to-date health protocols based on both traditional wisdom and modern evidence.')}
+                      {t('blog.author_bio', 'Our editorial team consists of certified phytotherapists and herbalists dedicated to bringing you the most accurate and up-to-date health protocols based on both traditional wisdom and modern evidence.')}
                    </p>
                 </div>
              </div>

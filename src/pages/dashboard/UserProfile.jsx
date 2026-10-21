@@ -458,7 +458,7 @@ export default function UserProfile({ tab = "profile", embedded = false }) {
                         <Input
                           value={formData.specialization}
                           onChange={(e) => setFormData({ ...formData, specialization: e.target.value })}
-                          placeholder="Fizioterapevt"
+                          placeholder="Fitoterapevt"
                           className="h-12 rounded-xl bg-white border-emerald-100 shadow-sm focus:bg-white transition-all"
                         />
                       </div>

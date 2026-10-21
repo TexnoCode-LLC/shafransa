@@ -16,8 +16,8 @@ export const STATIC_PAGE_SEO = {
   home: {
     az: {
       title: "Shafransa - Klinik Botanika Ensiklopediyası & Təbii Mehsullar Marketplace",
-      description: "Shafransa - Elmi təsdiqli zəfəran, müalicəvi bitkilər, təbii dərmanlar marketplace-i və peşəkar fizioterapevt seansları platforması.",
-      keywords: "zəfəran, müalicəvi bitkilər, təbii mehsullar, fitoterapiya, fizioterapevt, zəfəran çayı, abşeron zəfəranı, shafransa, botanical marketplace",
+      description: "Shafransa - Elmi təsdiqli zəfəran, müalicəvi bitkilər, təbii dərmanlar marketplace-i və peşəkar fitoterapevt seansları platforması.",
+      keywords: "zəfəran, müalicəvi bitkilər, təbii mehsullar, fitoterapiya, fitoterapevt, zəfəran çayı, abşeron zəfəranı, shafransa, botanical marketplace",
     },
     en: {
       title: "Shafransa - Clinical Botanical Encyclopedia & Natural Products Marketplace",
@@ -26,13 +26,13 @@ export const STATIC_PAGE_SEO = {
     },
     ru: {
       title: "Shafransa - Клиническая Ботаническая Энциклопедия и Маркетплейс",
-      description: "Shafransa - Маркетплейс сертифицированного шафрана, лекарственных растений и сеансов квалифицированных физиотерапевтов.",
-      keywords: "шафран, лекарственные растения, фитотерапия, натуральные продукты, физиотерапевт, чай с шафраном, shafransa",
+      description: "Shafransa - Маркетплейс сертифицированного шафрана, лекарственных растений и сеансов квалифицированных фитотерапевтов.",
+      keywords: "шафран, лекарственные растения, фитотерапия, натуральные продукты, фитотерапевт, чай с шафраном, shafransa",
     },
     tr: {
       title: "Shafransa - Klinik Botanik Ansiklopedi & Doğal Ürünler Pazaryeri",
-      description: "Shafransa - Bilimsel onaylı safran, tıbbi bitkiler, doğal takviyeler pazaryeri ve uzman fizyoterapist seansları platformu.",
-      keywords: "safran, tıbbi bitkiler, botanik pazaryeri, fitoterapi, fizyoterapist, safran çayı, doğal ürünler, shafransa",
+      description: "Shafransa - Bilimsel onaylı safran, tıbbi bitkiler, doğal takviyeler pazaryeri ve uzman fitoterapist seansları platformu.",
+      keywords: "safran, tıbbi bitkiler, botanik pazaryeri, fitoterapi, fitoterapist, safran çayı, doğal ürünler, shafransa",
     },
   },
   marketplace: {
@@ -81,9 +81,9 @@ export const STATIC_PAGE_SEO = {
   },
   therapists: {
     az: {
-      title: "Sertifikatlı Fizyoterapistlər və Reabilitasiya Mütəxəssisləri | Shafransa",
-      description: "Ortopedik, nöroloji və kardiyak fizyoterapiya üzrə peşəkar fizyoterapistləri tapın və onlayn seans təyin edin.",
-      keywords: "fizyoterapist baki, reabilitasiya mütəxəssisi, fizioterapiya seansı, ortopedik fizyoterapiya, shafransa",
+      title: "Sertifikatlı Fitoterapevtlər və Reabilitasiya Mütəxəssisləri | Shafransa",
+      description: "Ortopedik, nöroloji və kardiyak fitoterapiya üzrə peşəkar fitoterapevtləri tapın və onlayn seans təyin edin.",
+      keywords: "fitoterapist baki, reabilitasiya mütəxəssisi, fitoterapiya seansı, ortopedik fitoterapiya, shafransa",
     },
     en: {
       title: "Licensed Physical Therapists & Rehabilitation Experts | Shafransa",
@@ -91,14 +91,14 @@ export const STATIC_PAGE_SEO = {
       keywords: "physical therapist, rehabilitation expert, physical therapy booking, orthopedic specialist, shafransa",
     },
     ru: {
-      title: "Сертифицированные Физиотерапевты и Специалисты Реабилитации | Shafransa",
-      description: "Запись на консультацию к опытноым физиотерапевтам. Ортопедическая, неврологическая и кардио-реабилитация.",
-      keywords: "физиотерапевт баку, реабилитолог, сеанс физиотерапии, записи к врачу, shafransa",
+      title: "Сертифицированные Фитотерапевты и Специалисты Реабилитации | Shafransa",
+      description: "Запись на консультацию к опытноым фитотерапевтам. Ортопедическая, неврологическая и кардио-реабилитация.",
+      keywords: "фитотерапевт баку, реабилитолог, сеанс фитотерапии, записи к врачу, shafransa",
     },
     tr: {
-      title: "Lisanslı Fizyoterapistler ve Rehabilitasyon Uzmanları | Shafransa",
-      description: "Ortopedik, nörolojik ve kardiyak rehabilitasyon alanında uzman fizyoterapistlerden online randevu alın.",
-      keywords: "fizyoterapist randevu, rehabilitasyon uzmanı, online fizyoterapi, ortopedik fizyoterapi, shafransa",
+      title: "Lisanslı Fitoterapistler ve Rehabilitasyon Uzmanları | Shafransa",
+      description: "Ortopedik, nörolojik ve kardiyak rehabilitasyon alanında uzman fitoterapistlerden online randevu alın.",
+      keywords: "fitoterapist randevu, rehabilitasyon uzmanı, online fitoterapi, ortopedik fitoterapi, shafransa",
     },
   },
   blogs: {
@@ -170,8 +170,8 @@ export const STATIC_PAGE_SEO = {
   howItWorks: {
     az: {
       title: "Necə İşləyir? - Shafransa Platformasından İstifadə Qaydası",
-      description: "Məhsul sifarişi, bitki ensiklopediyasında axtarış, AI məsləhətçi istifadəsi və fizyoterapist seansı təyini prosesi.",
-      keywords: "shafransa necə işləyir, zəfəran sifarişi, fizyoterapist randevusu, ai məsləhətçi",
+      description: "Məhsul sifarişi, bitki ensiklopediyasında axtarış, AI məsləhətçi istifadəsi və fitoterapist seansı təyini prosesi.",
+      keywords: "shafransa necə işləyir, zəfəran sifarişi, fitoterapist randevusu, ai məsləhətçi",
     },
     en: {
       title: "How It Works - Navigating the Shafransa Platform",
@@ -185,8 +185,8 @@ export const STATIC_PAGE_SEO = {
     },
     tr: {
       title: "Nasıl Çalışır? - Shafransa Platformu Kullanım Rehberi",
-      description: "Ürün siparişi, bitki ansiklopedisi araması, AI danışmanı kullanımı ve fizyoterapist randevusu oluşturma adımları.",
-      keywords: "shafransa nasıl çalışır, safran siparişi, online fizyoterapi randevu",
+      description: "Ürün siparişi, bitki ansiklopedisi araması, AI danışmanı kullanımı ve fitoterapist randevusu oluşturma adımları.",
+      keywords: "shafransa nasıl çalışır, safran siparişi, online fitoterapi randevu",
     },
   },
   aiConsultant: {

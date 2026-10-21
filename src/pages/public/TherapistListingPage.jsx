@@ -33,7 +33,7 @@ const normalizeTherapist = (therapist) => {
     id: therapist?.id || therapist?.Id,
     userId,
     fullName,
-    specialization: therapist?.specialization || therapist?.Specialization || i18next.t('therapist.specialization_default', "Physiotherapist"),
+    specialization: therapist?.specialization || therapist?.Specialization || i18next.t('therapist.specialization_default', "Phytotherapist"),
     description:
       therapist?.description ||
       therapist?.Description ||
@@ -114,7 +114,7 @@ export default function TherapistListingPage() {
           <h1 className="text-5xl lg:text-6xl font-display font-bold tracking-tight leading-none">
             {t('therapists.title_p1', 'Find Your')}<br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
-              {t('therapists.title_p2', 'Physiotherapist')}
+              {t('therapists.title_p2', 'Phytotherapist')}
             </span>
           </h1>
           <p className="text-lg text-white/50 font-medium max-w-xl mx-auto">
@@ -222,7 +222,7 @@ function TherapistCard({ therapist, t }) {
               {therapist.fullName}
             </h3>
             <p className="text-emerald-600 text-sm font-bold mt-1">
-              {therapist.specialization || t('therapists.default_specialty', 'Physiotherapist')}
+              {therapist.specialization || t('therapists.default_specialty', 'Phytotherapist')}
             </p>
             <p className="text-muted-foreground text-sm mt-3 line-clamp-3 leading-relaxed">
               {therapist.description || t('therapists.no_description', 'Qualified specialist dedicated to your recovery and physical well-being.')}

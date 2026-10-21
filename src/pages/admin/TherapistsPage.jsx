@@ -10,6 +10,7 @@ import {
   MoreHorizontal,
   Pencil,
   Phone,
+  Plus,
   RefreshCw,
   Search,
   ShieldAlert,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react"
 
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog"
+import { CreateTherapistDialog } from "./CreateTherapistDialog"
 import { PageHeader } from "@/components/admin/PageHeader"
 import { Button } from "@/components/admin/ui/button"
 import { Card, CardContent } from "@/components/admin/ui/card"
@@ -44,6 +46,7 @@ import {
   usePendingTherapistRequests,
   useProcessedTherapistRequests,
   useReviewTherapistRequest,
+  useCreateTherapist,
   useUpdateTherapistMenuStatus,
 } from "./queries"
 import {
@@ -167,6 +170,8 @@ export default function TherapistsPage() {
   const therapists = useAdminTherapists()
   const review = useReviewTherapistRequest()
   const menuStatus = useUpdateTherapistMenuStatus()
+  const createTherapist = useCreateTherapist()
+  const [creating, setCreating] = useState(false)
 
   const [approving, setApproving] = useState(null)
   const [rejecting, setRejecting] = useState(null)
@@ -256,10 +261,32 @@ export default function TherapistsPage() {
         title="Terapevtlər"
         description="Qeydiyyat müraciətlərini yoxla və terapevtlərin saytda görünməsini idarə et."
         actions={
-          <Button variant="outline" size="sm" onClick={refetchAll} disabled={fetching}>
-            <RefreshCw className={cn(fetching && "animate-spin")} />
-            Yenilə
-          </Button>
+          <>
+            <Button variant="outline" size="sm" onClick={refetchAll} disabled={fetching}>
+              <RefreshCw className={cn(fetching && "animate-spin")} />
+              Yenilə
+            </Button>
+            <Button size="sm" onClick={() => setCreating(true)}>
+              <Plus />
+              Yeni fitoterapevt
+            </Button>
+          </>
+        }
+      />
+
+      <CreateTherapistDialog
+        open={creating}
+        onOpenChange={setCreating}
+        saving={createTherapist.isPending}
+        onSubmit={(data, done) =>
+          createTherapist.mutate(data, {
+            onSuccess: (therapist) => {
+              done()
+              toast.success(`${data.fullName} yaradıldı — şəkil, qiymət və iş saatlarını əlavə edin`)
+              if (therapist?.id) navigate(`/admin/therapists/${therapist.id}`)
+            },
+            onError: (error) => toast.error(apiErrorMessage(error)),
+          })
         }
       />
 

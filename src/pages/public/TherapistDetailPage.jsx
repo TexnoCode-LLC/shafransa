@@ -121,7 +121,7 @@ const normalizeTherapist = (therapist) => {
     fullName,
     email: data.email || data.Email || user.email || user.Email || "",
     phone: data.phoneNumber || data.PhoneNumber || data.phone || "",
-    specialization: data.specialization || data.Specialization || "Fizioterapevt",
+    specialization: data.specialization || data.Specialization || "Fitoterapevt",
     bio:
       data.bio ||
       data.Bio ||
@@ -337,7 +337,7 @@ export default function TherapistDetailPage() {
       <SEO
         title={`${profile.fullName} - ${profile.specialization}`}
         description={profile.bio || `${profile.fullName} - ${profile.specialization}. Seans təyini və məsləhət.`}
-        keywords={`${profile.fullName}, ${profile.specialization}, fizyoterapist, fizioterapiya, shafransa`}
+        keywords={`${profile.fullName}, ${profile.specialization}, fitoterapist, fitoterapiya, shafransa`}
         image={profile.avatar}
         canonical={`/therapist/${id}`}
         type="profile"

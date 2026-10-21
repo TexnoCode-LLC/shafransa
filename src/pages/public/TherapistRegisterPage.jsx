@@ -78,7 +78,7 @@ export default function TherapistRegisterPage() {
                  {t('therapists.register_title', 'Join Shafransa Professional Network.')}
               </h1>
               <p className="text-muted-foreground font-medium leading-relaxed">
-                 Apply to become a verified physiotherapist on our platform and connect with patients seeking restorative clinical care.
+                 Apply to become a verified phytotherapist on our platform and connect with patients seeking restorative clinical care.
               </p>
            </div>
 
@@ -126,7 +126,7 @@ export default function TherapistRegisterPage() {
                           <Input 
                              value={formData.specialization} 
                              onChange={(e) => setFormData({...formData, specialization: e.target.value})}
-                             placeholder="e.g. Neurological Physio"
+                             placeholder={t("therapists.placeholder_specialization", "məs. Klinik fitoterapiya")}
                              required
                              className="h-12 bg-neutral-50/50 border-neutral-200"
                           />

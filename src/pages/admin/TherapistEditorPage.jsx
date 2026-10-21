@@ -553,7 +553,7 @@ function TherapistEditor({ id }) {
                     id="th-specialization"
                     value={state.specialization}
                     onChange={(e) => set({ specialization: e.target.value })}
-                    placeholder="məs. Fizioterapevt, idman travmaları"
+                    placeholder="məs. Fitoterapevt, idman travmaları"
                     aria-invalid={!!visibleErrors.specialization}
                     className={invalidClass(visibleErrors.specialization)}
                   />

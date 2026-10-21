@@ -67,7 +67,7 @@ export default function BlogListingPage() {
                {t('blog.title', 'Shafransa Blogs')}
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-               {t('blog.subtitle', 'Deep dives into physiotherapy, herbal medicine, and holistic wellness protocols.')}
+               {t('blog.subtitle', 'Deep dives into phytotherapy, herbal medicine, and holistic wellness protocols.')}
             </p>
           </div>
         </div>

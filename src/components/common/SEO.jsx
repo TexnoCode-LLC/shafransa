@@ -40,8 +40,8 @@ export default function SEO({
     : `${BASE_URL}${path}${location.search}`;
 
   const metaTitle = title ? `${title} | Shafransa` : "Shafransa - Clinical Botanical Marketplace & Encyclopedia";
-  const metaDescription = description || "Shafransa - Klinik yönümlü bitki ensiklopediyası, təsdiqlənmiş marketplace və fizioterapevt seansları.";
-  const metaKeywords = keywords || "zəfəran, müalicəvi bitkilər, təbii mehsullar, fizioterapiya, shafransa";
+  const metaDescription = description || "Shafransa - Klinik yönümlü bitki ensiklopediyası, təsdiqlənmiş marketplace və fitoterapevt seansları.";
+  const metaKeywords = keywords || "zəfəran, müalicəvi bitkilər, təbii mehsullar, fitoterapiya, shafransa";
   const metaImage = image
     ? (image.startsWith("http") ? image : `${BASE_URL}${image}`)
     : DEFAULT_SEO_CONFIG.defaultImage;

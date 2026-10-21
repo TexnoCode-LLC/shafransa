@@ -293,6 +293,14 @@ export function useSaveTherapist() {
   })
 }
 
+export function useCreateTherapist() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (data) => api.post("/therapists", data),
+    onSuccess: () => invalidateTherapistData(queryClient),
+  })
+}
+
 export function useProcessedTherapistRequests(options = {}) {
   return useQuery({
     queryKey: therapistKeys.processed,

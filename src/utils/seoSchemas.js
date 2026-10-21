@@ -28,7 +28,7 @@ export function getOrganizationSchema() {
       width: 512,
       height: 512,
     },
-    description: "Klinik yönümlü bitki ensiklopediyası, təsdiqlənmiş zəfəran marketplace-i və fizioterapevt seansları platforması.",
+    description: "Klinik yönümlü bitki ensiklopediyası, təsdiqlənmiş zəfəran marketplace-i və fitoterapevt seansları platforması.",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Baku",

@@ -3,7 +3,7 @@
   "login": "Daxil ol",
   "nav_marketplace": "Market",
   "nav_encyclopedia": "Ensiklopediya",
-  "nav_therapists": "Fizioterapevtlər",
+  "nav_therapists": "Fitoterapevtlər",
   "nav_ai_consultant": "Süni İntellekt Məsləhətçisi",
   "nav_about": "Haqqımızda",
   "nav_blogs": "Bloqlar",
@@ -47,10 +47,10 @@
   },
   "landing": {
     "hero": {
-      "kicker": "Bitki ensiklopediyası · Market · Fizioterapevtlər",
+      "kicker": "Bitki ensiklopediyası · Market · Fitoterapevtlər",
       "title_1": "Süni intellekt və botanikanın",
       "title_2": "kəsişdiyi yer.",
-      "subtitle": "Shafransa bitki elmini süni intellektlə birləşdirir: mənbəli ensiklopediya, laboratoriya göstəriciləri açıq olan məhsullar və lisenziyalı fizioterapevtlər — hamısı bir platformada.",
+      "subtitle": "Shafransa bitki elmini süni intellektlə birləşdirir: mənbəli ensiklopediya, laboratoriya göstəriciləri açıq olan məhsullar və lisenziyalı fitoterapevtlər — hamısı bir platformada.",
       "cta_primary": "Marketə keç",
       "cta_secondary": "Ensiklopediyanı oxu",
       "scroll": "Aşağı keç"
@@ -79,8 +79,8 @@
         "link": "Məhsullara bax"
       },
       "therapists": {
-        "title": "Fizioterapevtlər",
-        "text": "Lisenziyalı fizioterapevtlə onlayn video və ya əyani seansa yazılın. Qiyməti və müddəti əvvəlcədən görürsünüz.",
+        "title": "Fitoterapevtlər",
+        "text": "Lisenziyalı fitoterapevtlə onlayn video və ya əyani seansa yazılın. Qiyməti və müddəti əvvəlcədən görürsünüz.",
         "link": "Terapevt seç"
       }
     },
@@ -143,9 +143,9 @@
       "note": "Hər hansı bitki vasitəsinə başlamazdan əvvəl həkiminizlə məsləhətləşin."
     },
     "therapists": {
-      "label": "Fizioterapevtlər",
+      "label": "Fitoterapevtlər",
       "title": "Mütəxəssislə danışın.",
-      "text": "Sualınız bərpa, ağrı və ya bitki vasitələri ilə bağlıdırsa, fizioterapevtlə görüş təyin edin.",
+      "text": "Sualınız bərpa, ağrı və ya bitki vasitələri ilə bağlıdırsa, fitoterapevtlə görüş təyin edin.",
       "step_1_title": "Terapevt seçin",
       "step_1_text": "Profilində ixtisası, özü haqqında məlumat və seans qiymətləri var.",
       "step_2_title": "Vaxtı rezerv edin",
@@ -162,10 +162,10 @@
       "a1_text": "Bitki çayı və ya əlavə almazdan əvvəl onun təsirini, dozasını və risklərini öyrənmək istəyənlər üçün.",
       "a1_link": "Ensiklopediyaya keç",
       "a2_title": "Bərpa dövründə olanlara",
-      "a2_text": "Zədə, əməliyyat və ya xroniki ağrıdan sonra fizioterapevtlə plan qurmaq istəyənlər üçün.",
+      "a2_text": "Zədə, əməliyyat və ya xroniki ağrıdan sonra fitoterapevtlə plan qurmaq istəyənlər üçün.",
       "a2_link": "Terapevt seç",
       "a3_title": "Mütəxəssislərə",
-      "a3_text": "Profil yaradıb onlayn və əyani seanslar üçün pasiyent qəbul etmək istəyən fizioterapevtlər üçün.",
+      "a3_text": "Profil yaradıb onlayn və əyani seanslar üçün pasiyent qəbul etmək istəyən fitoterapevtlər üçün.",
       "a3_link": "Terapevt kimi qoşul"
     },
     "blog": {
@@ -245,7 +245,7 @@
   "blog": {
     "badge": "Bilik Mərkəzi",
     "title": "Shafransa Bloqları",
-    "subtitle": "Fizioterapiya, bitki təbabəti və holistik sağlamlıq protokolları haqqında ətraflı məlumatlar.",
+    "subtitle": "Fitoterapiya, bitki təbabəti və holistik sağlamlıq protokolları haqqında ətraflı məlumatlar.",
     "loading": "Məqalələr hazırlanır...",
     "empty": "Yeni protokollar hazırlanır. Tezliklə yenidən yoxlayın.",
     "read_more": "Protokolu oxu",
@@ -253,13 +253,13 @@
     "author_default": "Shafransa Komandası",
     "about_author": "Shafransa Redaksiyası Haqqında",
     "author_role": "Sağlamlıq və Rifah Eksperti",
-    "author_bio": "Redaksiya heyətimiz həm ənənəvi hikmətə, həm də müasir elmi sübutlara əsaslanan ən dəqiq və aktual sağlamlıq protokolları sizə təqdim etmək üçün çalışan sertifikatlaşdırılmış fizioterapevt və herbalistlərdən ibarətdir."
+    "author_bio": "Redaksiya heyətimiz həm ənənəvi hikmətə, həm də müasir elmi sübutlara əsaslanan ən dəqiq və aktual sağlamlıq protokolları sizə təqdim etmək üçün çalışan sertifikatlaşdırılmış fitoterapevt və herbalistlərdən ibarətdir."
   },
   "cart": {
     "title": "Səbət"
   },
   "therapist": {
-    "specialization_default": "Fizioterapevt",
+    "specialization_default": "Fitoterapevt",
     "bio_default": "Fərdi bərpa planı və diqqətli seans izləməsi ilə sağlam hərəkətə qayıtmağa kömək edir.",
     "name_default": "Zakir Əliyev",
     "days": {
@@ -728,14 +728,14 @@
   "therapists": {
     "badge": "Təsdiqlənmiş Mütəxəssislər",
     "title_p1": "Sizin",
-    "title_p2": "Fizioterapevtiniz",
+    "title_p2": "Fitoterapevtiniz",
     "subtitle": "Bərpa və fiziki sağlamlığınız üçün klinik olaraq təsdiqlənmiş mütəxəssislərlə əlaqə qurun.",
     "search_placeholder": "Ad, ixtisas və ya xəstəliyə görə axtarın...",
     "count_label": "Mütəxəssis Tapıldı",
     "error": "Mütəxəssisləri yükləmək mümkün olmadı",
     "no_results": "Mütəxəssis tapılmadı",
     "no_results_sub": "Axtarış sözünü dəyişməyə və ya filtrləri təmizləmeye çalışın.",
-    "default_specialty": "Fizioterapevt",
+    "default_specialty": "Fitoterapevt",
     "no_description": "Sağlamlığınız və bərpanız üçün fədakarlıqla çalışan ixtisaslı mütəxəssis.",
     "book_now": "Seans Sifariş Et",
     "booking_title": "Seans Rezerv Et",
@@ -812,15 +812,15 @@
   },
   "admin": {
     "therapists": {
-      "requests": "Fizioterapevt Təsdiq Müraciətləri",
-      "list": "Təsdiqlənmiş Fizioterapevtler",
+      "requests": "Fitoterapevt Təsdiq Müraciətləri",
+      "list": "Təsdiqlənmiş Fitoterapevtler",
       "no_requests": "Gözləyən müraciət yoxdur.",
-      "no_therapists": "Fizioterapevt tapılmadı.",
+      "no_therapists": "Fitoterapevt tapılmadı.",
       "table_therapist": "Terapevt",
       "table_specialization": "İxtisaslaşma",
       "table_license": "Lisenziya",
       "table_actions": "Əməliyyatlar",
-      "approved_toast": "Fizioterapevt təsdiqləndi!",
+      "approved_toast": "Fitoterapevt təsdiqləndi!",
       "approve_button": "Təsdiqlə",
       "reject_reason_prompt": "Rədd etmə səbəbini daxil edin:",
       "rejected_toast": "Müraciət rədd edildi.",
@@ -1024,7 +1024,7 @@
         {
           "title": "Xidmətlər",
           "paragraphs": [
-            "Shafransa bitki ensiklopediyası, təbii məhsulların satıldığı market, fizioterapevtlərlə onlayn və əyani seanslar, həmçinin süni intellekt köməkçisi təqdim edir. Xidmətlərin tərkibi zamanla dəyişə bilər."
+            "Shafransa bitki ensiklopediyası, təbii məhsulların satıldığı market, fitoterapevtlərlə onlayn və əyani seanslar, həmçinin süni intellekt köməkçisi təqdim edir. Xidmətlərin tərkibi zamanla dəyişə bilər."
           ]
         },
         {

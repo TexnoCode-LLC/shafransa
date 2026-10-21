@@ -3,7 +3,7 @@
   "login": "Giriş yap",
   "nav_marketplace": "Mağaza",
   "nav_encyclopedia": "Ansiklopedi",
-  "nav_therapists": "Fizyoterapistler",
+  "nav_therapists": "Fitoterapistler",
   "nav_ai_consultant": "Yapay Zeka Danışmanı",
   "nav_about": "Hakkımızda",
   "nav_blogs": "Bloglar",
@@ -47,10 +47,10 @@
   },
   "landing": {
     "hero": {
-      "kicker": "Bitki ansiklopedisi · Mağaza · Fizyoterapistler",
+      "kicker": "Bitki ansiklopedisi · Mağaza · Fitoterapistler",
       "title_1": "Yapay zekânın botanikle",
       "title_2": "buluştuğu yer.",
-      "subtitle": "Shafransa bitki bilimini yapay zekâyla bir araya getirir: kaynaklı bir ansiklopedi, laboratuvar sonuçları açık ürünler ve lisanslı fizyoterapistler — hepsi tek platformda.",
+      "subtitle": "Shafransa bitki bilimini yapay zekâyla bir araya getirir: kaynaklı bir ansiklopedi, laboratuvar sonuçları açık ürünler ve lisanslı fitoterapistler — hepsi tek platformda.",
       "cta_primary": "Mağazaya git",
       "cta_secondary": "Ansiklopediyi oku",
       "scroll": "Aşağı kaydır"
@@ -79,8 +79,8 @@
         "link": "Ürünlere göz at"
       },
       "therapists": {
-        "title": "Fizyoterapistler",
-        "text": "Lisanslı bir fizyoterapistle online görüntülü ya da yüz yüze seans ayarlayın. Ücret ve süre önceden görünür.",
+        "title": "Fitoterapistler",
+        "text": "Lisanslı bir fitoterapistle online görüntülü ya da yüz yüze seans ayarlayın. Ücret ve süre önceden görünür.",
         "link": "Terapist seç"
       }
     },
@@ -143,9 +143,9 @@
       "note": "Herhangi bir bitkisel ürüne başlamadan önce doktorunuza danışın."
     },
     "therapists": {
-      "label": "Fizyoterapistler",
+      "label": "Fitoterapistler",
       "title": "Bir uzmanla konuşun.",
-      "text": "Sorunuz iyileşme, ağrı ya da bitkisel ürünlerle ilgiliyse bir fizyoterapistten randevu alın.",
+      "text": "Sorunuz iyileşme, ağrı ya da bitkisel ürünlerle ilgiliyse bir fitoterapistten randevu alın.",
       "step_1_title": "Terapist seçin",
       "step_1_text": "Profilinde uzmanlık alanı, kendisi hakkında bilgi ve seans ücretleri yer alır.",
       "step_2_title": "Saati ayırın",
@@ -162,10 +162,10 @@
       "a1_text": "Bir bitki çayını ya da takviyeyi almadan önce etkisini, dozunu ve risklerini öğrenmek isteyenler için.",
       "a1_link": "Ansiklopediye git",
       "a2_title": "İyileşme sürecindekilere",
-      "a2_text": "Sakatlık, ameliyat ya da kronik ağrı sonrasında bir fizyoterapistle plan yapmak isteyenler için.",
+      "a2_text": "Sakatlık, ameliyat ya da kronik ağrı sonrasında bir fitoterapistle plan yapmak isteyenler için.",
       "a2_link": "Terapist seç",
       "a3_title": "Uzmanlara",
-      "a3_text": "Profil oluşturup online ve yüz yüze seanslar için danışan kabul etmek isteyen fizyoterapistler için.",
+      "a3_text": "Profil oluşturup online ve yüz yüze seanslar için danışan kabul etmek isteyen fitoterapistler için.",
       "a3_link": "Terapist olarak katıl"
     },
     "blog": {
@@ -245,7 +245,7 @@
   "blog": {
     "badge": "Bilgi Merkezi",
     "title": "Shafransa Blogları",
-    "subtitle": "Fizyoterapi, bitkisel tıp ve bütünsel sağlık protokolleri üzerine derinlemesine incelemeler.",
+    "subtitle": "Fitoterapi, bitkisel tıp ve bütünsel sağlık protokolleri üzerine derinlemesine incelemeler.",
     "loading": "Makaleler hazırlanıyor...",
     "empty": "Yeni protokoller hazırlanıyor. Yakında tekrar kontrol edin.",
     "read_more": "Protokolü Oku",
@@ -253,13 +253,13 @@
     "author_default": "Shafransa Ekibi",
     "about_author": "Shafransa Editör Kadrosu Hakkında",
     "author_role": "Sağlık ve Esenlik Uzmanı",
-    "author_bio": "Editör kadromuz, hem geleneksel bilgeliğe hem de modern bilimsel kanıtlara dayalı en doğru ve güncel sağlık protokollerini size sunmak için çalışan sertifikalı fizyoterapist ve herbalistlerden oluşmaktadır."
+    "author_bio": "Editör kadromuz, hem geleneksel bilgeliğe hem de modern bilimsel kanıtlara dayalı en doğru ve güncel sağlık protokollerini size sunmak için çalışan sertifikalı fitoterapist ve herbalistlerden oluşmaktadır."
   },
   "cart": {
     "title": "Sepet"
   },
   "therapist": {
-    "specialization_default": "Fizyoterapist",
+    "specialization_default": "Fitoterapist",
     "bio_default": "Kişiselleştirilmiş iyileşme planları ve dikkatli seans takibi ile sağlıklı harekete dönmenize yardımcı olur.",
     "name_default": "Zakir Aliyev",
     "days": {
@@ -723,14 +723,14 @@
   "therapists": {
     "badge": "Onaylı Uzmanlar",
     "title_p1": "Sizin",
-    "title_p2": "Fizyoterapistiniz",
+    "title_p2": "Fitoterapistiniz",
     "subtitle": "İyileşmeniz ve fiziksel sağlığınız için klinik olarak onaylanmış uzmanlarla iletişime geçin.",
     "search_placeholder": "İsim, uzmanlık alanı veya rahatsızlığa göre arayın...",
     "count_label": "Uzman Bulundu",
     "error": "Uzmanlar yüklenirken hata oluştu",
     "no_results": "Uzman bulunamadı",
     "no_results_sub": "Arama kelimenizi değiştirmeyi veya filtreleri temizlemeyi deneyin.",
-    "default_specialty": "Fizyoterapist",
+    "default_specialty": "Fitoterapist",
     "no_description": "Sağlığınız ve iyileşmeniz için özveriyle çalışan uzman hekim.",
     "book_now": "Seans Rezervasyonunu Yap",
     "booking_title": "Seans Rezervasyonu",
@@ -752,7 +752,7 @@
     "label_description": "Profesyonel Biyografi / Klinik Yaklaşım",
     "submit_application": "Klinik Beyanı Gönder",
     "loading_profile": "Uzman bilgileri yükleniyor...",
-    "not_found": "Fizyoterapist bulunamadı",
+    "not_found": "Fitoterapist bulunamadı",
     "not_found_desc": "Bu profil silinmiş veya artık menüde gösterilmiyor.",
     "back_to_list": "Listeye dön",
     "verified_badge": "Onaylı",
@@ -787,7 +787,7 @@
     "no_slots_month": "Bu ay için uygun seans bulunamadı. Sonraki ayı kontrol edin.",
     "no_slots_day": "Bu tarih için uygun seans saati kalmadı.",
     "select_date_time": "Tarih ve uygun saati seçin",
-    "booking_disclaimer": "Başvuru gönderildikten sonra seansın fizyoterapist tarafından onaylanması gerekir.",
+    "booking_disclaimer": "Başvuru gönderildikten sonra seansın fitoterapist tarafından onaylanması gerekir.",
     "pick_time": "Tarih ve saat seçin",
     "label_license": "Lisans Numarası",
     "label_password": "Şifre (hesabınız için)",
@@ -807,15 +807,15 @@
   },
   "admin": {
     "therapists": {
-      "requests": "Fizyoterapist Doğrulama Talepleri",
-      "list": "Onaylı Fizyoterapistler",
+      "requests": "Fitoterapist Doğrulama Talepleri",
+      "list": "Onaylı Fitoterapistler",
       "no_requests": "Bekleyen talep bulunmamaktadır.",
-      "no_therapists": "Fizyoterapist bulunamadı.",
-      "table_therapist": "Fizyoterapist",
+      "no_therapists": "Fitoterapist bulunamadı.",
+      "table_therapist": "Fitoterapist",
       "table_specialization": "Uzmanlık Alanı",
       "table_license": "Lisans",
       "table_actions": "İşlemler",
-      "approved_toast": "Fizyoterapist onaylandı!",
+      "approved_toast": "Fitoterapist onaylandı!",
       "approve_button": "Onayla",
       "reject_reason_prompt": "Reddetme nedenini girin:",
       "rejected_toast": "Talep reddedildi.",
@@ -827,7 +827,7 @@
       "products": "Ürünler",
       "plants": "Ansiklopedi",
       "categories": "Kategoriler",
-      "therapists": "Fizyoterapistler",
+      "therapists": "Fitoterapistler",
       "sessions": "Seanslar"
     }
   },
@@ -1019,7 +1019,7 @@
         {
           "title": "Hizmetler",
           "paragraphs": [
-            "Shafransa bir bitki ansiklopedisi, doğal ürünlerin satıldığı bir mağaza, fizyoterapistlerle online ve yüz yüze seanslar ve bir yapay zekâ asistanı sunar. Hizmetlerin kapsamı zamanla değişebilir."
+            "Shafransa bir bitki ansiklopedisi, doğal ürünlerin satıldığı bir mağaza, fitoterapistlerle online ve yüz yüze seanslar ve bir yapay zekâ asistanı sunar. Hizmetlerin kapsamı zamanla değişebilir."
           ]
         },
         {

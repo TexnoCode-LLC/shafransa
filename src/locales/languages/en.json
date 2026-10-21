@@ -3,7 +3,7 @@
   "login": "Login",
   "nav_marketplace": "Shop",
   "nav_encyclopedia": "Encyclopedia",
-  "nav_therapists": "Physiotherapists",
+  "nav_therapists": "Phytotherapists",
   "nav_ai_consultant": "AI Consultant",
   "nav_about": "About Us",
   "nav_how_it_works": "How It Works",
@@ -48,7 +48,7 @@
   "blog": {
     "badge": "Knowledge Hub",
     "title": "Shafransa Blogs",
-    "subtitle": "Deep dives into physiotherapy, herbal medicine, and holistic wellness protocols.",
+    "subtitle": "Deep dives into phytotherapy, herbal medicine, and holistic wellness protocols.",
     "loading": "Curating articles...",
     "empty": "New protocols are being drafted. Check back soon.",
     "read_more": "Read Protocol",
@@ -61,7 +61,7 @@
     "min_read": "{{count}} min read",
     "author_default": "Shafransa Team",
     "author_role": "Health & Wellness Expert",
-    "author_bio": "Our editorial team consists of certified physiotherapists and herbalists dedicated to bringing you the most accurate and up-to-date health protocols based on both traditional wisdom and modern evidence."
+    "author_bio": "Our editorial team consists of certified phytotherapists and herbalists dedicated to bringing you the most accurate and up-to-date health protocols based on both traditional wisdom and modern evidence."
   },
   "session": {
     "join": "Join",
@@ -93,10 +93,10 @@
   },
   "landing": {
     "hero": {
-      "kicker": "Plant encyclopedia · Shop · Physiotherapists",
+      "kicker": "Plant encyclopedia · Shop · Phytotherapists",
       "title_1": "Where artificial intelligence",
       "title_2": "meets botany.",
-      "subtitle": "Shafransa brings plant science and artificial intelligence together: a sourced encyclopedia, products with published lab results and licensed physiotherapists — all on one platform.",
+      "subtitle": "Shafransa brings plant science and artificial intelligence together: a sourced encyclopedia, products with published lab results and licensed phytotherapists — all on one platform.",
       "cta_primary": "Go to the shop",
       "cta_secondary": "Read the encyclopedia",
       "scroll": "Scroll down"
@@ -125,8 +125,8 @@
         "link": "Browse products"
       },
       "therapists": {
-        "title": "Physiotherapists",
-        "text": "Book an online video or in-person session with a licensed physiotherapist. Price and duration are shown up front.",
+        "title": "Phytotherapists",
+        "text": "Book an online video or in-person session with a licensed phytotherapist. Price and duration are shown up front.",
         "link": "Choose a therapist"
       }
     },
@@ -189,9 +189,9 @@
       "note": "Talk to your doctor before starting any herbal remedy."
     },
     "therapists": {
-      "label": "Physiotherapists",
+      "label": "Phytotherapists",
       "title": "Talk to a specialist.",
-      "text": "If your question is about recovery, pain or herbal remedies, book an appointment with a physiotherapist.",
+      "text": "If your question is about recovery, pain or herbal remedies, book an appointment with a phytotherapist.",
       "step_1_title": "Choose a therapist",
       "step_1_text": "Each profile shows the therapist's specialisation, background and session prices.",
       "step_2_title": "Book a time",
@@ -208,10 +208,10 @@
       "a1_text": "For anyone who wants to understand a herbal tea or supplement — its effects, dosage and risks — before buying it.",
       "a1_link": "Open the encyclopedia",
       "a2_title": "People in recovery",
-      "a2_text": "For anyone who wants a plan with a physiotherapist after an injury, surgery or long-term pain.",
+      "a2_text": "For anyone who wants a plan with a phytotherapist after an injury, surgery or long-term pain.",
       "a2_link": "Choose a therapist",
       "a3_title": "Specialists",
-      "a3_text": "For physiotherapists who want to create a profile and see patients online or in person.",
+      "a3_text": "For phytotherapists who want to create a profile and see patients online or in person.",
       "a3_link": "Join as a therapist"
     },
     "blog": {
@@ -291,7 +291,7 @@
   "blog": {
     "badge": "Knowledge Hub",
     "title": "Shafransa Blogs",
-    "subtitle": "Deep dives into physiotherapy, herbal medicine, and holistic wellness protocols.",
+    "subtitle": "Deep dives into phytotherapy, herbal medicine, and holistic wellness protocols.",
     "loading": "Curating articles...",
     "empty": "New protocols are being drafted. Check back soon.",
     "read_more": "Read Protocol",
@@ -302,7 +302,7 @@
     "title": "Cart"
   },
   "therapist": {
-    "specialization_default": "Physiotherapist",
+    "specialization_default": "Phytotherapist",
     "bio_default": "Helping you return to healthy movement with personalized recovery plans and careful session tracking.",
     "name_default": "Zakir Aliyev",
     "days": {
@@ -766,14 +766,14 @@
   "therapists": {
     "badge": "Verified Specialists",
     "title_p1": "Your",
-    "title_p2": "Physiotherapist",
+    "title_p2": "Phytotherapist",
     "subtitle": "Connect with clinically verified specialists for your recovery and physical wellness.",
     "search_placeholder": "Search by name, specialty or condition...",
     "count_label": "Specialists Found",
     "error": "Failed to load specialists",
     "no_results": "No specialists found",
     "no_results_sub": "Try modifying your search query or clearing filters.",
-    "default_specialty": "Physiotherapist",
+    "default_specialty": "Phytotherapist",
     "no_description": "A qualified specialist dedicated to your recovery and physical health.",
     "book_now": "Book Session",
     "booking_title": "Book a Session",
@@ -1062,7 +1062,7 @@
         {
           "title": "Services",
           "paragraphs": [
-            "Shafransa offers a plant encyclopedia, a shop for natural products, online and in-person sessions with physiotherapists, and an AI assistant. The range of services may change over time."
+            "Shafransa offers a plant encyclopedia, a shop for natural products, online and in-person sessions with phytotherapists, and an AI assistant. The range of services may change over time."
           ]
         },
         {
