@@ -80,7 +80,7 @@ export function useDeleteUser() {
       queryClient.setQueryData(adminKeys.users, (users) => (Array.isArray(users) ? users.filter((u) => u.id !== id) : users))
       queryClient.removeQueries({ queryKey: userKeys.detail(id) })
       queryClient.invalidateQueries({ queryKey: adminKeys.users })
-      queryClient.invalidateQueries({ queryKey: therapistKeys.all })
+      invalidateTherapistData(queryClient)
     },
   })
 }

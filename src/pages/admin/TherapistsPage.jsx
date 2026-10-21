@@ -15,6 +15,7 @@ import {
   Search,
   ShieldAlert,
   Stethoscope,
+  Trash2,
   UserRound,
   X,
 } from "lucide-react"
@@ -28,6 +29,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/admin/ui/dropdown-menu"
 import { Input } from "@/components/admin/ui/input"
@@ -37,6 +39,7 @@ import { Switch } from "@/components/admin/ui/switch"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/admin/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/admin/ui/tabs"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/admin/ui/tooltip"
+import { useAdminRole } from "@/hooks/use-admin-role"
 import { useUrlFilters } from "@/hooks/use-url-filters"
 import { apiErrorMessage, therapistName } from "@/lib/admin"
 import { formatDate, formatPrice, formatRelative } from "@/lib/format"
@@ -47,6 +50,7 @@ import {
   useProcessedTherapistRequests,
   useReviewTherapistRequest,
   useCreateTherapist,
+  useDeleteUser,
   useUpdateTherapistMenuStatus,
 } from "./queries"
 import {
@@ -172,6 +176,12 @@ export default function TherapistsPage() {
   const menuStatus = useUpdateTherapistMenuStatus()
   const createTherapist = useCreateTherapist()
   const [creating, setCreating] = useState(false)
+  // Silmə hesabla birlikdədir (backend: DELETE /user/{id}, yalnız SuperAdmin); seans tarixçəsi varsa backend imtina edir
+  const { isSuperAdmin } = useAdminRole()
+  const deleteUser = useDeleteUser()
+  const [deleting, setDeleting] = useState(null)
+  const lastDeletingRef = useRef(null)
+  if (deleting) lastDeletingRef.current = deleting
 
   const [approving, setApproving] = useState(null)
   const [rejecting, setRejecting] = useState(null)
@@ -481,6 +491,18 @@ export default function TherapistsPage() {
                                     Saytda bax
                                   </Link>
                                 </DropdownMenuItem>
+                                {isSuperAdmin && (
+                                  <>
+                                    <DropdownMenuSeparator />
+                                    <DropdownMenuItem
+                                      onSelect={() => setDeleting(t)}
+                                      className="text-destructive focus:text-destructive"
+                                    >
+                                      <Trash2 />
+                                      Sil
+                                    </DropdownMenuItem>
+                                  </>
+                                )}
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </TableCell>
@@ -597,6 +619,26 @@ export default function TherapistsPage() {
             )
           )
         }
+      />
+
+      <ConfirmDialog
+        open={!!deleting}
+        onOpenChange={(open) => !open && setDeleting(null)}
+        title={`${therapistName(lastDeletingRef.current)} silinsin?`}
+        description="Fitoterapevt profili və hesabı (sənədləri ilə birlikdə) birdəfəlik silinəcək. Seans tarixçəsi varsa silinmir — onda saytdan gizlədin və ya hesabı bloklayın."
+        confirmLabel="Sil"
+        destructive
+        pending={deleteUser.isPending}
+        onConfirm={() => {
+          const t = deleting
+          deleteUser.mutate(t.userId, {
+            onSuccess: () => {
+              toast.success(`${therapistName(t)} silindi`)
+              setDeleting(null)
+            },
+            onError: (error) => toast.error(apiErrorMessage(error)),
+          })
+        }}
       />
 
       <ConfirmDialog
