@@ -95,8 +95,16 @@ export default function HerbDetailsPage() {
   const herbData = React.useMemo(() => {
     if (!rawHerb.translations || !Array.isArray(rawHerb.translations)) return rawHerb
     
+    // Mənbələr: seçilmiş dildə yoxdursa az, o da yoxdursa istənilən dildəki göstərilir
+    const hasRefs = (t) => Array.isArray(t?.references) && t.references.length > 0
+    const fallbackReferences =
+      (hasRefs(rawHerb) && rawHerb.references) ||
+      rawHerb.translations.find(t => t.language === "az" && hasRefs(t))?.references ||
+      rawHerb.translations.find(hasRefs)?.references ||
+      []
+
     const translation = rawHerb.translations.find(t => t.language === currentLang)
-    if (!translation) return rawHerb
+    if (!translation) return { ...rawHerb, references: fallbackReferences }
 
     // Create a merged object prioritizing translated fields
     const merged = { ...rawHerb }
@@ -107,6 +115,7 @@ export default function HerbDetailsPage() {
         merged[key] = val
       }
     })
+    if (!hasRefs(merged)) merged.references = fallbackReferences
     return merged
   }, [rawHerb, currentLang])
 
