@@ -9,6 +9,10 @@ import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import { getRoleName } from "../../constants/roles"
 import { homePathForRole, safeRedirectPath } from "@/lib/utils"
+import { authErrorMessage, forgetOtpEmail, recallOtpEmail } from "@/lib/authErrors"
+import api from "../../services/api"
+
+const RESEND_COOLDOWN = 60
 
 export default function OTPPage() {
   const { t } = useTranslation()
@@ -19,7 +23,10 @@ export default function OTPPage() {
   const location = useLocation()
   const { verifyOTP, user, isAuthenticated } = useAuthStore()
   
-  const email = location.state?.email
+  // Səhifə yenilənəndə router state itir — email sessionStorage-dan götürülür
+  const email = location.state?.email || recallOtpEmail()
+  const [resendIn, setResendIn] = useState(RESEND_COOLDOWN)
+  const [resending, setResending] = useState(false)
 
   useEffect(() => {
     if (!email) {
@@ -31,6 +38,7 @@ export default function OTPPage() {
   // Redirect when authentication state changes after OTP verification
   useEffect(() => {
     if (isAuthenticated && user) {
+      forgetOtpEmail()
       navigate(safeRedirectPath(location.state?.redirect) || homePathForRole(getRoleName(user?.role)), { replace: true })
     }
   }, [isAuthenticated, user, navigate, location.state])
@@ -41,6 +49,30 @@ export default function OTPPage() {
     return () => clearInterval(timerId)
   }, [timeLeft])
 
+  useEffect(() => {
+    if (resendIn <= 0) return
+    const timerId = setInterval(() => setResendIn((s) => s - 1), 1000)
+    return () => clearInterval(timerId)
+  }, [resendIn])
+
+  // Yeni kod birbaşa göndərilir (əvvəl login səhifəsinə atırdı və şifrəni yenidən yazmaq lazım idi)
+  const resendCode = async () => {
+    if (resendIn > 0 || resending) return
+    setResending(true)
+    try {
+      await api.post("/auth/resend-otp", { email })
+      toast.success(t('auth.otp_sent_msg', "Verification code sent to your email."))
+      setOtp("")
+      setTimeLeft(600)
+      setResendIn(RESEND_COOLDOWN)
+    } catch (err) {
+      toast.error(authErrorMessage(err))
+      if (err?.code === "OTP_RECENTLY_SENT") setResendIn(RESEND_COOLDOWN)
+    } finally {
+      setResending(false)
+    }
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault()
     setIsLoading(true)
@@ -48,7 +80,12 @@ export default function OTPPage() {
       await verifyOTP(email, otp)
       toast.success(t('auth.verify_success', "Verification successful!"))
     } catch (err) {
-      toast.error(err?.message || err?.response?.data?.message || t('auth.invalid_otp', "Invalid verification code"))
+      toast.error(authErrorMessage(err, t('auth.invalid_otp', "Invalid verification code")))
+      // Email artıq təsdiqlənibsə OTP-də qalmağın mənası yoxdur
+      if (err?.code === "EMAIL_ALREADY_VERIFIED") {
+        forgetOtpEmail()
+        navigate("/login")
+      }
       setIsLoading(false)
     }
   }
@@ -78,24 +115,30 @@ export default function OTPPage() {
               autoComplete="one-time-code" 
               required 
               value={otp}
-              onChange={(e) => setOtp(e.target.value)}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
+              pattern="\d{6}"
             />
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button className="w-full" type="submit" disabled={isLoading}>
               {isLoading ? t('auth.verifying', "Verifying...") : t('auth.verify_code', "Verify Code")}
             </Button>
-            <div className="text-sm text-muted-foreground w-full">
+            <div className="w-full space-y-2 text-sm text-muted-foreground">
               {timeLeft > 0 ? (
-                <span className="tabular-nums">
+                <p className="tabular-nums">
                   {t('auth.expires_in', 'Code expires in')} {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
-                </span>
+                </p>
               ) : (
-                <button 
-                  type="button" 
-                  // Login təsdiqsiz hesaba yeni kod göndərir (həm user, həm terapevt üçün işləyir)
-                  onClick={() => navigate("/login")} 
-                  className="font-medium text-primary hover:underline focus:outline-none"
+                <p>{t('auth.code_expired', 'Kodun vaxtı bitib.')}</p>
+              )}
+              {resendIn > 0 ? (
+                <p className="tabular-nums">{t('auth.resend_in', 'Resend code in')} {resendIn}s</p>
+              ) : (
+                <button
+                  type="button"
+                  onClick={resendCode}
+                  disabled={resending}
+                  className="font-medium text-primary hover:underline focus:outline-none disabled:opacity-50"
                 >
                   {t('auth.request_new_code', 'Request a new code')}
                 </button>

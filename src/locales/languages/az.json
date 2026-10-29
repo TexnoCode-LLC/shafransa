@@ -417,6 +417,26 @@
     "compounds_pending": "Birləşmə məlumatları laboratoriya analizini gözləyir"
   },
   "auth": {
+    "errors": {
+      "INVALID_CREDENTIALS": "Email və ya şifrə yanlışdır.",
+      "ACCOUNT_DISABLED": "Hesabınız bloklanıb. Dəstək xidməti ilə əlaqə saxlayın.",
+      "EMAIL_NOT_VERIFIED": "Email təsdiqlənməyib. Emailinizə yeni kod göndərdik.",
+      "EMAIL_ALREADY_EXISTS": "Bu email ilə hesab artıq mövcuddur. Daxil olun və ya şifrəni bərpa edin.",
+      "EMAIL_ALREADY_VERIFIED": "Email artıq təsdiqlənib. Daxil ola bilərsiniz.",
+      "REGISTRATION_NOT_FOUND": "Qeydiyyat tapılmadı. Yenidən qeydiyyatdan keçin.",
+      "INVALID_OTP": "Kod yanlışdır.",
+      "OTP_EXPIRED": "Kodun vaxtı bitib. Yeni kod istəyin.",
+      "OTP_SEND_FAILED": "Kodu emailə göndərmək alınmadı. Bir az sonra yenidən cəhd edin.",
+      "OTP_RECENTLY_SENT": "Kod bir az əvvəl göndərilib. Yenisini istəməzdən əvvəl 1 dəqiqə gözləyin.",
+      "TOO_MANY_ATTEMPTS": "Çox sayda uğursuz cəhd. Bir neçə dəqiqə sonra yenidən cəhd edin.",
+      "VALIDATION_ERROR": "Daxil edilən məlumatlar düzgün deyil.",
+      "NETWORK": "Serverə qoşulmaq alınmadı. İnternet bağlantısını yoxlayın.",
+      "GENERIC": "Xəta baş verdi. Yenidən cəhd edin."
+    },
+    "reset_code_sent": "Bu email ilə hesab varsa, ona kod göndərdik.",
+    "password_min_length_8": "Şifrə ən azı 8 simvol olmalıdır.",
+    "name_min_length": "Ad ən azı 2 simvol olmalıdır.",
+    "code_expired": "Kodun vaxtı bitib.",
     "login_required": "Zəhmət olmasa əvvəlcə daxil olun",
     "login_required_cart": "Səbətə əlavə etmək üçün daxil olun",
     "login_required_save": "Yadda saxlamaq üçün daxil olun",

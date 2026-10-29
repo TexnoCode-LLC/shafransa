@@ -8,6 +8,7 @@ import { ArrowRight, ShieldCheck, User, Store, Eye, EyeOff } from "lucide-react"
 import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import SEO from "../../components/common/SEO"
+import { authErrorMessage, rememberOtpEmail } from "@/lib/authErrors"
 
 export default function RegisterPage() {
   const { t } = useTranslation()
@@ -22,13 +23,24 @@ export default function RegisterPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    // Backend ilə eyni qayda (RegisterDto: şifrə 8-128 simvol, ad 2-100)
+    if (fullName.trim().length < 2) {
+      toast.error(t('auth.name_min_length', "Ad ən azı 2 simvol olmalıdır."))
+      return
+    }
+    if (password.length < 8) {
+      toast.error(t('auth.password_min_length_8', "Şifrə ən azı 8 simvol olmalıdır."))
+      return
+    }
+    const cleanEmail = email.trim()
     setIsLoading(true)
     try {
-      await register({ fullName, email, password, role })
+      await register({ fullName: fullName.trim(), email: cleanEmail, password, role })
       toast.success(t('auth.otp_sent_msg', "Verification code sent to your email."))
-      navigate("/otp", { state: { email } })
+      rememberOtpEmail(cleanEmail)
+      navigate("/otp", { state: { email: cleanEmail } })
     } catch (err) {
-      toast.error(err?.message || err?.response?.data?.message || t('auth.register_error', "Registration failed. Please try again."))
+      toast.error(authErrorMessage(err, t('auth.register_error', "Registration failed. Please try again.")))
     } finally {
       setIsLoading(false)
     }

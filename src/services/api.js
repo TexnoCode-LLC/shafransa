@@ -124,7 +124,8 @@ api.interceptors.response.use(
     if (status === 429) {
       return Promise.reject({
         status: 429,
-        message: "Too many requests. Please wait a moment and try again.",
+        code: errorData?.error || "TOO_MANY_ATTEMPTS",
+        message: errorData?.message || "Too many requests. Please wait a moment and try again.",
       });
     }
 

@@ -460,6 +460,26 @@
     "compounds_pending": "Compound data pending lab analysis"
   },
   "auth": {
+    "errors": {
+      "INVALID_CREDENTIALS": "Incorrect email or password.",
+      "ACCOUNT_DISABLED": "Your account has been blocked. Please contact support.",
+      "EMAIL_NOT_VERIFIED": "Your email is not verified. We sent you a new code.",
+      "EMAIL_ALREADY_EXISTS": "An account with this email already exists. Sign in or reset your password.",
+      "EMAIL_ALREADY_VERIFIED": "Email already verified. You can sign in.",
+      "REGISTRATION_NOT_FOUND": "Registration not found. Please register again.",
+      "INVALID_OTP": "Incorrect code.",
+      "OTP_EXPIRED": "The code has expired. Request a new one.",
+      "OTP_SEND_FAILED": "We couldn't send the code. Please try again shortly.",
+      "OTP_RECENTLY_SENT": "A code was just sent. Please wait a minute before requesting another.",
+      "TOO_MANY_ATTEMPTS": "Too many failed attempts. Please try again in a few minutes.",
+      "VALIDATION_ERROR": "Some of the entered data is invalid.",
+      "NETWORK": "Couldn't reach the server. Check your internet connection.",
+      "GENERIC": "Something went wrong. Please try again."
+    },
+    "reset_code_sent": "If an account exists for this email, we've sent it a code.",
+    "password_min_length_8": "Password must be at least 8 characters.",
+    "name_min_length": "Name must be at least 2 characters.",
+    "code_expired": "The code has expired.",
     "login_required": "Please sign in first",
     "login_required_cart": "Please sign in to add items to cart",
     "login_required_save": "Please sign in to save items",

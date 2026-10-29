@@ -16,6 +16,7 @@ import {
   Camera, Upload, Trash2, X
 } from "lucide-react"
 import SEO from "../../components/common/SEO"
+import { authErrorMessage, rememberOtpEmail } from "@/lib/authErrors"
 
 export default function TherapistRegisterPage() {
   const { t } = useTranslation()
@@ -53,9 +54,10 @@ export default function TherapistRegisterPage() {
     onSuccess: (_, data) => {
       // Qeydiyyatdan sonra email OTP ilə təsdiqlənməlidir
       toast.success(t('auth.otp_sent_msg', "Verification code sent to your email."))
-      navigate("/otp", { state: { email: data.email } })
+      rememberOtpEmail(data.email.trim())
+      navigate("/otp", { state: { email: data.email.trim() } })
     },
-    onError: (err) => toast.error(err.message || t('therapists.registration_error', 'Failed to submit application'))
+    onError: (err) => toast.error(authErrorMessage(err, t('therapists.registration_error', 'Failed to submit application')))
   })
 
   const handleSubmit = (e) => {

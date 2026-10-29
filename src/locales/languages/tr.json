@@ -417,6 +417,26 @@
     "compounds_pending": "Bileşik verileri laboratuvar analizi bekliyor"
   },
   "auth": {
+    "errors": {
+      "INVALID_CREDENTIALS": "E-posta veya şifre hatalı.",
+      "ACCOUNT_DISABLED": "Hesabınız engellendi. Destek ile iletişime geçin.",
+      "EMAIL_NOT_VERIFIED": "E-postanız doğrulanmadı. Size yeni bir kod gönderdik.",
+      "EMAIL_ALREADY_EXISTS": "Bu e-posta ile bir hesap zaten var. Giriş yapın veya şifrenizi sıfırlayın.",
+      "EMAIL_ALREADY_VERIFIED": "E-posta zaten doğrulandı. Giriş yapabilirsiniz.",
+      "REGISTRATION_NOT_FOUND": "Kayıt bulunamadı. Lütfen tekrar kayıt olun.",
+      "INVALID_OTP": "Kod hatalı.",
+      "OTP_EXPIRED": "Kodun süresi doldu. Yeni kod isteyin.",
+      "OTP_SEND_FAILED": "Kod gönderilemedi. Biraz sonra tekrar deneyin.",
+      "OTP_RECENTLY_SENT": "Kod az önce gönderildi. Yeni kod istemeden önce bir dakika bekleyin.",
+      "TOO_MANY_ATTEMPTS": "Çok fazla başarısız deneme. Birkaç dakika sonra tekrar deneyin.",
+      "VALIDATION_ERROR": "Girilen bilgiler geçersiz.",
+      "NETWORK": "Sunucuya bağlanılamadı. İnternet bağlantınızı kontrol edin.",
+      "GENERIC": "Bir hata oluştu. Lütfen tekrar deneyin."
+    },
+    "reset_code_sent": "Bu e-postaya ait bir hesap varsa, ona bir kod gönderdik.",
+    "password_min_length_8": "Şifre en az 8 karakter olmalıdır.",
+    "name_min_length": "Ad en az 2 karakter olmalıdır.",
+    "code_expired": "Kodun süresi doldu.",
     "login_required": "Lütfen önce giriş yapın",
     "login_required_cart": "Sepete eklemek için lütfen giriş yapın",
     "login_required_save": "Kaydetmek için lütfen giriş yapın",

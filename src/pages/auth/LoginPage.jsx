@@ -9,6 +9,7 @@ import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import { getRoleName } from "../../constants/roles"
 import { homePathForRole, safeRedirectPath } from "@/lib/utils"
+import { authErrorMessage, rememberOtpEmail } from "@/lib/authErrors"
 import SEO from "../../components/common/SEO"
 
 export default function LoginPage() {
@@ -34,17 +35,18 @@ export default function LoginPage() {
     e.preventDefault()
     setIsLoading(true)
     try {
-      await login({ email, password })
+      await login({ email: email.trim(), password })
       toast.success(t('auth.login_success', "Welcome back! Redirecting..."))
     } catch (err) {
       // Təsdiqlənməmiş email: backend yeni kod göndərib — OTP səhifəsinə keçirik
       if (err?.code === "EMAIL_NOT_VERIFIED") {
         toast.success(t('auth.otp_sent_msg', "Verification code sent to your email."))
-        navigate("/otp", { state: { email, redirect } })
+        rememberOtpEmail(email.trim())
+        navigate("/otp", { state: { email: email.trim(), redirect } })
         return
       }
-      // 429 — çox səhv cəhd (bloklanma) mesajını göstər, qalanında ümumi tərcümə olunmuş mətn
-      toast.error(err?.status === 429 ? err.message : t('auth.login_error', "Invalid credentials. Please try again."))
+      // Bloklanmış hesab, mail xətası, çox cəhd və s. — hamısı "şifrə yanlışdır" deyilməsin
+      toast.error(authErrorMessage(err, t('auth.login_error', "Invalid credentials. Please try again.")))
       setIsLoading(false)
     }
   }

@@ -8,6 +8,7 @@ import { KeyRound, ArrowRight, ShieldCheck, ArrowLeft, Eye, EyeOff, Mail, Refres
 import { useAuthStore } from "../../store/useAuthStore"
 import { toast } from "../../store/useToastStore"
 import SEO from "../../components/common/SEO"
+import { authErrorMessage } from "@/lib/authErrors"
 
 export default function ForgotPasswordPage() {
   const { t } = useTranslation()
@@ -43,12 +44,13 @@ export default function ForgotPasswordPage() {
     }
     setIsLoading(true)
     try {
-      await forgotPassword(email)
-      toast.success(t('auth.otp_sent', "Verification code sent to your email."))
+      await forgotPassword(email.trim())
+      // Hesab olmasa da eyni cavab gəlir (email siyahısı yığılmasın)
+      toast.success(t('auth.reset_code_sent', "Bu email ilə hesab varsa, ona kod göndərdik."))
       setStep("reset")
       setResendCooldown(60) // 60s cooldown for resend
     } catch (err) {
-      toast.error(err?.message || err?.response?.data?.message || t('auth.login_error', "Something went wrong. Please try again."))
+      toast.error(authErrorMessage(err))
     } finally {
       setIsLoading(false)
     }
@@ -63,8 +65,8 @@ export default function ForgotPasswordPage() {
       return
     }
 
-    if (newPassword.length < 6) {
-      toast.error(t('auth.password_min_length', "Password must be at least 6 characters."))
+    if (newPassword.length < 8) {
+      toast.error(t('auth.password_min_length_8', "Şifrə ən azı 8 simvol olmalıdır."))
       return
     }
 
@@ -76,7 +78,7 @@ export default function ForgotPasswordPage() {
     setIsLoading(true)
     try {
       await resetPassword({
-        email,
+        email: email.trim(),
         otp,
         newPassword,
         password: newPassword
@@ -84,7 +86,7 @@ export default function ForgotPasswordPage() {
       toast.success(t('auth.reset_success', "Security key updated successfully! Please sign in."))
       navigate("/login")
     } catch (err) {
-      toast.error(err?.message || err?.response?.data?.message || t('auth.invalid_otp', "Failed to reset security key."))
+      toast.error(authErrorMessage(err))
     } finally {
       setIsLoading(false)
     }
@@ -95,11 +97,11 @@ export default function ForgotPasswordPage() {
     if (resendCooldown > 0 || !email) return
     setIsLoading(true)
     try {
-      await forgotPassword(email)
+      await forgotPassword(email.trim())
       toast.success(t('auth.otp_sent', "Verification code resent to your email."))
       setResendCooldown(60)
     } catch (err) {
-      toast.error(err?.message || err?.response?.data?.message || t('auth.login_error', "Failed to resend code."))
+      toast.error(authErrorMessage(err))
     } finally {
       setIsLoading(false)
     }
