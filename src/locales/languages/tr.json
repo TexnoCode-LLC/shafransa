@@ -1403,5 +1403,21 @@
       "empty_text": "Ürün kartındaki kalp simgesiyle ürünleri buraya ekleyin.",
       "go_shop": "Mağazaya git"
     }
+  },
+  "chat": {
+    "title": "Shafransa asistanı",
+    "subtitle": "Sitedeki bilgilere göre yanıt verir",
+    "welcome": "Merhaba! Şifalı bitkiler, ürünler veya fitoterapistler hakkında soru sorun — sitedeki bilgilerle yanıtlayayım.",
+    "suggest_1": "Safranın faydaları nelerdir?",
+    "suggest_2": "Uykusuzluğa hangi bitkiler iyi gelir?",
+    "suggest_3": "Fitoterapistten nasıl randevu alırım?",
+    "placeholder": "Sorunuzu yazın…",
+    "send": "Gönder",
+    "thinking": "Yanıt hazırlanıyor…",
+    "error": "Yanıt alınamadı. Biraz sonra tekrar deneyin.",
+    "too_many": "Çok fazla soru gönderdiniz. Bir dakika bekleyin.",
+    "disclaimer": "Bilgiler bilgilendirme amaçlıdır, doktor tavsiyesinin yerini tutmaz.",
+    "open": "Asistanla konuş",
+    "close": "Kapat"
   }
 }

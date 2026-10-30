@@ -32,6 +32,7 @@ import heroVideo from "../../assets/heroVideo.mp4"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
 import { blogPath } from "@/lib/blog"
+import ChatWidget from "@/components/common/ChatWidget"
 
 // Canlı bölmələr real datadan qurulur; data yoxdursa bölmə göstərilmir (boş "skelet" qalmasın)
 const asList = (value) => (Array.isArray(value) ? value : Array.isArray(value?.data) ? value.data : [])
@@ -605,6 +606,7 @@ export default function LandingPage() {
           <p className="mt-12 border-t border-white/10 pt-6 text-xs leading-relaxed text-white/40">{t("landing.disclaimer")}</p>
         </Container>
       </section>
+      <ChatWidget />
     </div>
   )
 }

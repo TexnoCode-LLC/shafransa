@@ -1400,5 +1400,21 @@
       "empty_text": "Use the heart icon on a product card to save products here.",
       "go_shop": "Go to the shop"
     }
+  },
+  "chat": {
+    "title": "Shafransa assistant",
+    "subtitle": "Answers based on the site's content",
+    "welcome": "Hi! Ask about medicinal plants, products or phytotherapists — I'll answer using the information on this site.",
+    "suggest_1": "What are the benefits of saffron?",
+    "suggest_2": "Which plants help with insomnia?",
+    "suggest_3": "How do I book a phytotherapist?",
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "thinking": "Preparing an answer…",
+    "error": "Couldn't get an answer. Please try again shortly.",
+    "too_many": "Too many questions. Please wait a minute.",
+    "disclaimer": "Information is educational and does not replace a doctor's advice.",
+    "open": "Chat with the assistant",
+    "close": "Close"
   }
 }

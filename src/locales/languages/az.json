@@ -1403,5 +1403,21 @@
       "empty_text": "Məhsul kartındakı ürək işarəsi ilə bəyəndiyiniz məhsulları buraya əlavə edin.",
       "go_shop": "Marketə keç"
     }
+  },
+  "chat": {
+    "title": "Shafransa köməkçisi",
+    "subtitle": "Saytdakı məlumatlar əsasında cavab verir",
+    "welcome": "Salam! Dərman bitkiləri, məhsullar və ya fitoterapevtlər haqqında sual verin — saytdakı məlumatlarla cavab verim.",
+    "suggest_1": "Zəfəranın faydaları nədir?",
+    "suggest_2": "Yuxusuzluğa hansı bitki kömək edir?",
+    "suggest_3": "Fitoterapevtlə necə görüş təyin edim?",
+    "placeholder": "Sualınızı yazın…",
+    "send": "Göndər",
+    "thinking": "Cavab hazırlanır…",
+    "error": "Cavab almaq alınmadı. Bir az sonra yenidən cəhd edin.",
+    "too_many": "Çox sual göndərdiniz. Bir dəqiqə sonra yenidən yazın.",
+    "disclaimer": "Məlumat maarifləndirici xarakter daşıyır və həkim məsləhətini əvəz etmir.",
+    "open": "Köməkçi ilə danış",
+    "close": "Bağla"
   }
 }
