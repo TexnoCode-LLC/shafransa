@@ -43,7 +43,15 @@
     "back": "Back",
     "botanical": "BOTANICAL",
     "remove": "Remove",
-    "view_source": "View Source"
+    "view_source": "View Source",
+    "booking_submitting": "Sending",
+    "confirm": "Confirm",
+    "confirm_cancel": "Are you sure you want to cancel this session?",
+    "loading": "Loading...",
+    "reject": "Reject",
+    "save_changes": "Save changes",
+    "save_profile": "Save profile",
+    "submit": "Submit"
   },
   "blog": {
     "badge": "Knowledge Hub",
@@ -52,43 +60,64 @@
     "loading": "Curating articles...",
     "empty": "New protocols are being drafted. Check back soon.",
     "read_more": "Read Protocol",
-    "loading_article": "Loading article...",
-    "not_found": "Article not found",
-    "back_to_listing": "Back to Blog",
-    "back": "Back to Hub",
-    "wellness": "Wellness",
-    "about_author": "About Shafransa Editorial",
     "min_read": "{{count}} min read",
     "author_default": "Shafransa Team",
-    "author_role": "Health & Wellness Expert",
-    "author_bio": "Our editorial team consists of certified phytotherapists and herbalists dedicated to bringing you the most accurate and up-to-date health protocols based on both traditional wisdom and modern evidence."
+    "back": "Back to blog",
+    "back_to_listing": "Back to blog",
+    "loading_article": "Loading article...",
+    "next": "Next",
+    "not_found": "Article not found",
+    "prev": "Previous",
+    "wellness": "Wellness",
+    "categories": {
+      "phytotherapy": "Phytotherapy",
+      "herbs": "Medicinal herbs",
+      "health": "Health",
+      "nutrition": "Nutrition",
+      "research": "Research",
+      "news": "News"
+    },
+    "sources": "Scientific sources",
+    "tags": "Tags",
+    "all_categories": "All"
   },
   "session": {
-    "join": "Join",
     "status": {
       "pending": "Pending",
       "confirmed": "Confirmed",
-      "therapist_confirmed": "Therapist Confirmed",
       "completed": "Completed",
-      "cancelled": "Cancelled"
-    }
+      "cancelled": "Cancelled",
+      "rejected": "Rejected",
+      "therapist_confirmed": "Waiting for patient"
+    },
+    "cancelled": "Session cancelled.",
+    "confirmed": "Session confirmed successfully!",
+    "join": "Join"
   },
   "admin": {
-    "blogs": {
-      "deleted": "Article removed.",
-      "created": "Article published!",
-      "updated": "Article updated!",
-      "create": "Draft New Article",
-      "edit": "Edit Article",
-      "field_title": "Article Title",
-      "field_author": "Author",
-      "field_category": "Category",
-      "field_summary": "Short Description",
-      "field_image": "Featured Media",
-      "field_content": "Full Content (HTML)",
-      "publish": "Publish Article",
-      "list_title": "Editorial Archives",
-      "empty_list": "No articles found in archives."
+    "therapists": {
+      "requests": "Therapist Verification Requests",
+      "list": "Verified Therapists",
+      "no_requests": "No pending requests.",
+      "no_therapists": "No therapists found.",
+      "table_therapist": "Therapist",
+      "table_specialization": "Specialization",
+      "table_license": "License",
+      "table_actions": "Actions",
+      "approved_toast": "Therapist approved!",
+      "approve_button": "Approve",
+      "reject_reason_prompt": "Enter rejection reason:",
+      "rejected_toast": "Request rejected.",
+      "reject_button": "Reject"
+    },
+    "tabs": {
+      "overview": "Overview",
+      "users": "Users",
+      "products": "Products",
+      "plants": "Encyclopedia",
+      "categories": "Categories",
+      "therapists": "Therapists",
+      "sessions": "Sessions"
     }
   },
   "landing": {
@@ -252,7 +281,8 @@
     "legal": {
       "privacy": "Privacy Policy",
       "terms": "Terms of Service"
-    }
+    },
+    "socials": "Social media"
   },
   "encyclopedia": {
     "badge": "Botanical Encyclopedia",
@@ -285,21 +315,30 @@
     "entry_count_plural": "entries",
     "found": "found",
     "grade": "Grade",
-    "monograph": "Full Monograph",
-    "loading": "Loading botanical database..."
-  },
-  "blog": {
-    "badge": "Knowledge Hub",
-    "title": "Shafransa Blogs",
-    "subtitle": "Deep dives into phytotherapy, herbal medicine, and holistic wellness protocols.",
-    "loading": "Curating articles...",
-    "empty": "New protocols are being drafted. Check back soon.",
-    "read_more": "Read Protocol",
-    "min_read": "{{count}} min read",
-    "author_default": "Shafransa Team"
+    "monograph": "Full Monograph"
   },
   "cart": {
-    "title": "Cart"
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty.",
+    "continue_shopping": "Continue Shopping",
+    "qty": "Qty",
+    "remove": "Remove",
+    "order_summary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "shipping_desc": "Calculated at checkout",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "items_label": "Items",
+    "empty_title": "Your cart is empty",
+    "empty_desc": "Explore our botanical repository to find the perfect specimens for your protocol.",
+    "start_browsing": "Start Browsing",
+    "proceed_to_checkout": "Proceed to Checkout",
+    "tax": "Estimated Tax",
+    "shipping_free": "FREE",
+    "guarantee_purity": "100% Botanical Purity",
+    "guarantee_lab": "Lab Verified Specimens",
+    "loading": "Loading your cart..."
   },
   "therapist": {
     "specialization_default": "Phytotherapist",
@@ -313,7 +352,8 @@
       "fri": "Fri",
       "sat": "Sat",
       "sun": "Sun"
-    }
+    },
+    "unnamed": "Phytotherapist"
   },
   "herb": {
     "tabs": {
@@ -333,13 +373,14 @@
       "terroir": "Terroir",
       "cultivation": "Cultivation",
       "chemotype": "Chemotype",
-      "climate": "Endemic Climate"
+      "climate": "Endemic Climate",
+      "country": "Country"
     },
     "image_pending": "Imaging Pending",
     "sections": {
-      "description": "Botanical Description",
-      "benefits": "Therapeutic Benefits",
-      "usage": "Traditional Usage",
+      "description": "Botanical description",
+      "benefits": "Medical benefits",
+      "usage": "Methods of use",
       "compounds": "Active Compounds",
       "dosage": "Clinical Dosage",
       "contraindications": "Contraindications",
@@ -352,8 +393,8 @@
       "allergy_warnings": "Potential Allergen Alerts",
       "clinical_conditions": "Sensitive Medical Conditions",
       "dosage_caution": "Dosage Caution",
-      "usage_forms": "Available Forms",
-      "used_in": "Traditional Medicine & Used In",
+      "usage_forms": "Forms of use",
+      "used_in": "Culinary use",
       "expert_notes": "Expert Notes",
       "references": "Scientific References"
     },
@@ -364,6 +405,9 @@
     "compounds_pending": "Pending precise spectrophotometry analytics.",
     "alerts": {
       "pregnancy_warning": "Warning"
+    },
+    "reference": {
+      "untitled": "Scientific reference"
     }
   },
   "marketplace": {
@@ -542,7 +586,25 @@
     "password_min_length": "Password must be at least 6 characters.",
     "email_required": "Email is required.",
     "back_to_login": "Return to Portal Sign In",
-    "change_email": "Change Email"
+    "change_email": "Change Email",
+    "apply_as_therapist": "Apply as a Specialist →",
+    "are_therapist": "Are you a phytotherapist?",
+    "email_label": "Email address",
+    "email_placeholder": "you@example.com",
+    "expires_in": "Code expires in",
+    "invalid_email": "Invalid email format",
+    "logging_in": "Signing in...",
+    "login_button": "Sign in",
+    "login_required_booking": "Sign in to book a session",
+    "otp_sent_msg": "Verification code sent to your email.",
+    "otp_sent_to": "We sent a verification code to",
+    "password_label": "Password",
+    "password_min": "Password must be at least 8 characters",
+    "password_placeholder": "Enter your password",
+    "password_required": "Password is required",
+    "register_error": "Registration failed. Please try again.",
+    "request_new_code": "Send a new code",
+    "verify_success": "Verification successful!"
   },
   "user": {
     "member_badge": "Member",
@@ -572,29 +634,22 @@
     "account_settings_desc": "Manage your password and account preferences.",
     "new_password": "New Password",
     "confirm_password": "Confirm Password",
-    "update_password": "Update Password"
-  },
-  "cart": {
-    "title": "Shopping Cart",
-    "empty": "Your cart is empty.",
-    "continue_shopping": "Continue Shopping",
-    "qty": "Qty",
-    "remove": "Remove",
-    "order_summary": "Order Summary",
-    "subtotal": "Subtotal",
-    "shipping": "Shipping",
-    "shipping_desc": "Calculated at checkout",
-    "total": "Total",
-    "checkout": "Proceed to Checkout",
-    "items_label": "Items",
-    "empty_title": "Your cart is empty",
-    "empty_desc": "Explore our botanical repository to find the perfect specimens for your protocol.",
-    "start_browsing": "Start Browsing",
-    "proceed_to_checkout": "Proceed to Checkout",
-    "tax": "Estimated Tax",
-    "shipping_free": "FREE",
-    "guarantee_purity": "100% Botanical Purity",
-    "guarantee_lab": "Lab Verified Specimens"
+    "update_password": "Update Password",
+    "avatar_hint": "JPG, PNG or GIF. Max 2MB.",
+    "avatar_label": "Profile photo",
+    "bio_placeholder": "Tell us about yourself...",
+    "find_specialist": "Find a specialist",
+    "label_description": "About",
+    "my_sessions": "My sessions",
+    "no_sessions": "No sessions booked yet",
+    "rate_desc": "How was your session with the specialist?",
+    "rate_session": "Rate session",
+    "rate_title": "Share your experience",
+    "rating_submitted": "Thank you for your feedback!",
+    "review_label": "Your review",
+    "review_placeholder": "Write your feedback here...",
+    "sessions_desc": "Track and manage your appointments with specialists",
+    "tab_sessions": "Sessions"
   },
   "checkout": {
     "title": "Checkout",
@@ -854,45 +909,10 @@
     "pick_time": "Select date and time",
     "label_license": "License Number",
     "label_password": "Password (for your account)",
-    "bio_placeholder": "Detail your clinical experience and therapeutic approach..."
-  },
-  "session": {
-    "status": {
-      "pending": "Pending",
-      "confirmed": "Confirmed",
-      "completed": "Completed",
-      "cancelled": "Cancelled",
-      "rejected": "Rejected",
-      "therapist_confirmed": "Waiting for patient"
-    },
-    "cancelled": "Session cancelled.",
-    "confirmed": "Session confirmed successfully!"
-  },
-  "admin": {
-    "therapists": {
-      "requests": "Therapist Verification Requests",
-      "list": "Verified Therapists",
-      "no_requests": "No pending requests.",
-      "no_therapists": "No therapists found.",
-      "table_therapist": "Therapist",
-      "table_specialization": "Specialization",
-      "table_license": "License",
-      "table_actions": "Actions",
-      "approved_toast": "Therapist approved!",
-      "approve_button": "Approve",
-      "reject_reason_prompt": "Enter rejection reason:",
-      "rejected_toast": "Request rejected.",
-      "reject_button": "Reject"
-    },
-    "tabs": {
-      "overview": "Overview",
-      "users": "Users",
-      "products": "Products",
-      "plants": "Encyclopedia",
-      "categories": "Categories",
-      "therapists": "Therapists",
-      "sessions": "Sessions"
-    }
+    "bio_placeholder": "Detail your clinical experience and therapeutic approach...",
+    "label_email": "Email address",
+    "placeholder_specialization": "e.g. Clinical phytotherapy",
+    "registration_error": "Failed to submit application"
   },
   "expert": {
     "title": "Specialist Panel",
@@ -962,7 +982,12 @@
     "link_hint": "Leave blank to automatically use a default Jitsi link.",
     "select_all": "Select All",
     "clear_all": "Clear All",
-    "waiting_user_badge": "Waiting for patient"
+    "waiting_user_badge": "Waiting for patient",
+    "duration_invalid": "Session length must be 15–480 minutes",
+    "hours_update_failed": "Working hours were not saved",
+    "invalid_meeting_link": "Meeting link must be a valid https:// URL",
+    "price_invalid": "Price must be between 0 and 100000",
+    "profile_update_failed": "Profile was not saved"
   },
   "layout": {
     "skip": "Skip to content",

@@ -197,7 +197,8 @@ export default function HerbDetailsPage() {
   return (
     <div className="max-w-7xl mx-auto py-10 px-4 lg:px-8">
       <SEO
-        title={`${herbData.name || 'Botanical Entry'} ${herbData.scientificName ? `(${herbData.scientificName})` : ''}`}
+        // Tab başlığında saytın dilindəki ad (Xına / Henna / Хна), latın adı deyil
+        title={herbData.localName || herbData.name || t('herb.not_found', 'Botanical entry')}
         description={herbData.shortSummary || herbData.description || herbData.benefits || `${herbData.name} clinical overview and active compounds.`}
         keywords={`${herbData.name || ''}, ${herbData.localName || ''}, ${herbData.scientificName || ''}, müalicəvi bitki, fitoterapiya, shafransa`}
         image={herbData.image}
@@ -207,7 +208,7 @@ export default function HerbDetailsPage() {
         crumbs={[
           { name: "Home", url: "/" },
           { name: "Encyclopedia", url: "/herbs" },
-          { name: herbData.name || "Herb Details", url: `/herb/${id}` }
+          { name: herbData.localName || herbData.name || "Herb Details", url: `/herb/${id}` }
         ]}
       />
 
@@ -429,10 +430,6 @@ export default function HerbDetailsPage() {
             </div>
 
             <div className="space-y-6">
-              <div className="p-6 rounded-2xl bg-white border border-neutral-100 shadow-xl shadow-black/5">
-                <h3 className="font-semibold text-[#1a1c1e] mb-4 flex items-center gap-2"><MapPin className="w-4 h-4 text-primary" /> {t('herb.meta.climate', 'Endemic Climate')}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{herbData.climate || t('herb.climate_default', "Global adaptivity. Often found in temperate to subtropical zones.")}</p>
-              </div>
               <div className="p-6 rounded-2xl bg-white border border-neutral-100 shadow-xl shadow-black/5">
                 <h3 className="font-semibold text-[#1a1c1e] mb-2 flex items-center gap-2"><Leaf className="w-4 h-4 text-primary" /> {t('herb.sections.usage', 'Traditional Usage')}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">{herbData.usage}</p>

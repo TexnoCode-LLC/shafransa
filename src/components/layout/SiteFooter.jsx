@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next"
 
 import logo from "../../assets/logo.png"
 import LanguageSwitcher from "../LanguageSwitcher"
+import { SOCIAL_LINKS } from "../../constants/social"
 
 const COLUMNS = [
   {
@@ -51,6 +52,22 @@ export default function SiteFooter() {
               <img src={logo} alt="Shafransa" className="h-10 w-auto" />
             </Link>
             <p className="max-w-sm text-sm leading-relaxed text-neutral-600">{t("footer.bio")}</p>
+            <ul className="flex flex-wrap items-center gap-2" aria-label={t("footer.socials", "Sosial şəbəkələr")}>
+              {SOCIAL_LINKS.map(({ key, label, icon: Icon, url }) => (
+                <li key={key}>
+                  <a
+                    href={url}
+                    target={key === "email" ? undefined : "_blank"}
+                    rel={key === "email" ? undefined : "noopener noreferrer"}
+                    aria-label={label}
+                    title={label}
+                    className="flex h-10 w-10 items-center justify-center rounded-full border border-neutral-200 text-neutral-500 transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <Icon className="h-4 w-4" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <nav className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-8" aria-label={t("layout.menu")}>

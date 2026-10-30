@@ -43,7 +43,15 @@
     "back": "Geri",
     "botanical": "BOTANİKA",
     "remove": "Sil",
-    "view_source": "Mənbəyə Bax"
+    "view_source": "Mənbəyə Bax",
+    "booking_submitting": "Göndərilir",
+    "confirm": "Təsdiqlə",
+    "confirm_cancel": "Bu seansı ləğv etmək istədiyinizə əminsiniz?",
+    "loading": "Yüklənir...",
+    "reject": "Rədd et",
+    "save_changes": "Dəyişiklikləri yadda saxla",
+    "save_profile": "Profili yadda saxla",
+    "submit": "Göndər"
   },
   "landing": {
     "hero": {
@@ -206,7 +214,8 @@
     "legal": {
       "privacy": "Məxfilik Siyasəti",
       "terms": "İstifadə Şərtləri"
-    }
+    },
+    "socials": "Sosial şəbəkələr"
   },
   "encyclopedia": {
     "badge": "Botanika Ensiklopediyası",
@@ -239,8 +248,7 @@
     "entry_count_plural": "nəticə",
     "found": "tapıldı",
     "grade": "Dərəcə",
-    "monograph": "Tam Monoqrafiya",
-    "loading": "Botanika verilənlər bazası yüklənir..."
+    "monograph": "Tam Monoqrafiya"
   },
   "blog": {
     "badge": "Bilik Mərkəzi",
@@ -249,14 +257,52 @@
     "loading": "Məqalələr hazırlanır...",
     "empty": "Yeni protokollar hazırlanır. Tezliklə yenidən yoxlayın.",
     "read_more": "Protokolu oxu",
-    "min_read": "{{count}} dəq mütaliə",
+    "min_read": "{{count}} dəq oxuma",
     "author_default": "Shafransa Komandası",
     "about_author": "Shafransa Redaksiyası Haqqında",
     "author_role": "Sağlamlıq və Rifah Eksperti",
-    "author_bio": "Redaksiya heyətimiz həm ənənəvi hikmətə, həm də müasir elmi sübutlara əsaslanan ən dəqiq və aktual sağlamlıq protokolları sizə təqdim etmək üçün çalışan sertifikatlaşdırılmış fitoterapevt və herbalistlərdən ibarətdir."
+    "author_bio": "Redaksiya heyətimiz həm ənənəvi hikmətə, həm də müasir elmi sübutlara əsaslanan ən dəqiq və aktual sağlamlıq protokolları sizə təqdim etmək üçün çalışan sertifikatlaşdırılmış fitoterapevt və herbalistlərdən ibarətdir.",
+    "back": "Bloqlara qayıt",
+    "back_to_listing": "Bloqlara qayıt",
+    "loading_article": "Məqalə yüklənir...",
+    "next": "Növbəti",
+    "not_found": "Məqalə tapılmadı",
+    "prev": "Əvvəlki",
+    "wellness": "Sağlamlıq",
+    "categories": {
+      "phytotherapy": "Fitoterapiya",
+      "herbs": "Dərman bitkiləri",
+      "health": "Sağlamlıq",
+      "nutrition": "Qidalanma",
+      "research": "Elmi araşdırma",
+      "news": "Xəbərlər"
+    },
+    "sources": "Elmi mənbələr",
+    "tags": "Etiketlər",
+    "all_categories": "Hamısı"
   },
   "cart": {
-    "title": "Səbət"
+    "title": "Səbət",
+    "empty": "Səbətiniz boşdur.",
+    "continue_shopping": "Alış-verişə davam et",
+    "qty": "Say",
+    "remove": "Sil",
+    "order_summary": "Sifariş Xülasəsi",
+    "subtotal": "Cəmi",
+    "shipping": "Çatdırılma",
+    "shipping_desc": "Ödəniş zamanı hesablanır",
+    "total": "Yekun",
+    "checkout": "Ödənişə keç",
+    "items_label": "Məhsul",
+    "empty_title": "Səbətiniz boşdur",
+    "empty_desc": "Protokolunuz üçün uyğun nümunələri tapmaq üçün botanika anbarımızı araşdırın.",
+    "start_browsing": "Axtarışa başla",
+    "proceed_to_checkout": "Ödənişə keç",
+    "tax": "Təxmini Vergi",
+    "shipping_free": "PULSUZ",
+    "guarantee_purity": "100% Botanika Saflığı",
+    "guarantee_lab": "Laboratoriya Təsdiqli Nümunələr",
+    "loading": "Səbət yüklənir..."
   },
   "therapist": {
     "specialization_default": "Fitoterapevt",
@@ -270,7 +316,8 @@
       "fri": "C",
       "sat": "Ş",
       "sun": "B"
-    }
+    },
+    "unnamed": "Fitoterapevt"
   },
   "herb": {
     "tabs": {
@@ -290,13 +337,14 @@
       "terroir": "Teruar",
       "cultivation": "Becərilmə",
       "chemotype": "Ximotip",
-      "climate": "Endemik İqlim"
+      "climate": "Endemik İqlim",
+      "country": "Ölkə"
     },
     "image_pending": "Şəkil gözlənilir",
     "sections": {
-      "description": "Botanika Təsviri",
-      "benefits": "Terapevtik Faydaları",
-      "usage": "Ənənəvi İstifadə",
+      "description": "Botaniki təsvir",
+      "benefits": "Tibbi faydaları",
+      "usage": "İstifadə üsulları",
       "compounds": "Aktiv Birləşmələr",
       "dosage": "Klinik Doza",
       "contraindications": "Əks göstərişlər",
@@ -309,8 +357,8 @@
       "allergy_warnings": "Potensial Allergen Xəbərdarlıqları",
       "clinical_conditions": "Həssas Tibbi Vəziyyətlər",
       "dosage_caution": "Doza Ehtiyatı",
-      "usage_forms": "Mövcud Formalar",
-      "used_in": "Ənənəvi Tibb və İstifadəsi",
+      "usage_forms": "İstifadə formaları",
+      "used_in": "Mətbəxdə istifadəsi",
       "expert_notes": "Ekspert Qeydləri",
       "references": "Elmi İstinadlar"
     },
@@ -321,6 +369,9 @@
     "compounds_pending": "Dəqiq spektrofotometriya analizi gözlənilir.",
     "alerts": {
       "pregnancy_warning": "Xəbərdarlıq"
+    },
+    "reference": {
+      "untitled": "Elmi mənbə"
     }
   },
   "marketplace": {
@@ -499,7 +550,25 @@
     "password_min_length": "Şifrə ən azı 6 simvoldan ibarət olmalıdır.",
     "email_required": "Email daxil edilməlidir.",
     "back_to_login": "Portala Daxil Olmaya Qayıt",
-    "change_email": "Emaili dəyiş"
+    "change_email": "Emaili dəyiş",
+    "apply_as_therapist": "Mütəxəssis kimi müraciət et →",
+    "are_therapist": "Fitoterapevtsiniz?",
+    "email_label": "Email ünvanı",
+    "email_placeholder": "siz@example.com",
+    "expires_in": "Kodun bitməsinə",
+    "invalid_email": "Email formatı yanlışdır",
+    "logging_in": "Daxil olunur...",
+    "login_button": "Daxil ol",
+    "login_required_booking": "Seans üçün hesaba daxil olun",
+    "otp_sent_msg": "Təsdiq kodu emailinizə göndərildi.",
+    "otp_sent_to": "Təsdiq kodunu bu ünvana göndərdik:",
+    "password_label": "Şifrə",
+    "password_min": "Şifrə ən azı 8 simvol olmalıdır",
+    "password_placeholder": "Şifrənizi daxil edin",
+    "password_required": "Şifrə tələb olunur",
+    "register_error": "Qeydiyyat alınmadı. Yenidən cəhd edin.",
+    "request_new_code": "Yeni kod göndər",
+    "verify_success": "Təsdiq uğurludur!"
   },
   "user": {
     "member_badge": "Üzv",
@@ -508,7 +577,7 @@
     "tab_profile": "Profil",
     "tab_orders": "Sifarişlər",
     "tab_wishlist": "İstək siyahısı",
-    "tab_sessions": "Seanslarım",
+    "tab_sessions": "Seanslar",
     "tab_settings": "Tənzimləmələr",
     "personal_details": "Şəxsi Məlumatlar",
     "personal_details_desc": "Adınızı və email ünvanınızı yeniləyin.",
@@ -531,32 +600,20 @@
     "new_password": "Yeni Şifrə",
     "confirm_password": "Şifrəni təsdiqlə",
     "update_password": "Şifrəni yenilə",
-    "my_sessions": "Mənim Seanslarım",
-    "sessions_desc": "Mütəxəssislərlə olan görüşlərinizi izləyin və idarə edin.",
-    "no_sessions": "Hələ heç bir seans sifariş edilməyib",
-    "find_specialist": "Mütəxəssis tap"
-  },
-  "cart": {
-    "title": "Səbət",
-    "empty": "Səbətiniz boşdur.",
-    "continue_shopping": "Alış-verişə davam et",
-    "qty": "Say",
-    "remove": "Sil",
-    "order_summary": "Sifariş Xülasəsi",
-    "subtotal": "Cəmi",
-    "shipping": "Çatdırılma",
-    "shipping_desc": "Ödəniş zamanı hesablanır",
-    "total": "Yekun",
-    "checkout": "Ödənişə keç",
-    "items_label": "Məhsul",
-    "empty_title": "Səbətiniz boşdur",
-    "empty_desc": "Protokolunuz üçün uyğun nümunələri tapmaq üçün botanika anbarımızı araşdırın.",
-    "start_browsing": "Axtarışa başla",
-    "proceed_to_checkout": "Ödənişə keç",
-    "tax": "Təxmini Vergi",
-    "shipping_free": "PULSUZ",
-    "guarantee_purity": "100% Botanika Saflığı",
-    "guarantee_lab": "Laboratoriya Təsdiqli Nümunələr"
+    "my_sessions": "Seanslarım",
+    "sessions_desc": "Mütəxəssislərlə görüşlərinizi izləyin və idarə edin",
+    "no_sessions": "Hələ seans yoxdur",
+    "find_specialist": "Mütəxəssis tap",
+    "avatar_hint": "JPG, PNG və ya GIF. Maks. 2MB.",
+    "avatar_label": "Profil şəkli",
+    "bio_placeholder": "Özünüz haqqında yazın...",
+    "label_description": "Haqqında",
+    "rate_desc": "Mütəxəssislə seansınız necə keçdi?",
+    "rate_session": "Seansı qiymətləndir",
+    "rate_title": "Təcrübənizi paylaşın",
+    "rating_submitted": "Rəyiniz üçün təşəkkür edirik!",
+    "review_label": "Rəyiniz",
+    "review_placeholder": "Rəyinizi burada yazın..."
   },
   "checkout": {
     "title": "Ödəniş",
@@ -816,7 +873,10 @@
     "pick_time": "Tarix və saat seçin",
     "label_license": "Lisenziya nömrəsi",
     "label_password": "Şifrə (hesabınız üçün)",
-    "bio_placeholder": "Klinik təcrübənizi və terapevtik yanaşmanızı ətraflı qeyd edin..."
+    "bio_placeholder": "Klinik təcrübənizi və terapevtik yanaşmanızı ətraflı qeyd edin...",
+    "label_email": "Email ünvanı",
+    "placeholder_specialization": "məs. Klinik fitoterapiya",
+    "registration_error": "Müraciət göndərilmədi"
   },
   "session": {
     "status": {
@@ -828,7 +888,8 @@
       "therapist_confirmed": "İstifadəçi təsdiqi gözlənilir"
     },
     "cancelled": "Seans ləğv edildi.",
-    "confirmed": "Seans uğurla təsdiqləndi!"
+    "confirmed": "Seans uğurla təsdiqləndi!",
+    "join": "Qoşul"
   },
   "admin": {
     "therapists": {
@@ -924,7 +985,12 @@
     "link_hint": "Avtomatik Jitsi linkindən istifadə etmək üçün boş buraxın.",
     "select_all": "Hamısını Seç",
     "clear_all": "Təmizlə",
-    "waiting_user_badge": "İstifadəçi təsdiqi"
+    "waiting_user_badge": "İstifadəçi təsdiqi",
+    "duration_invalid": "Seans müddəti 15-480 dəqiqə olmalıdır",
+    "hours_update_failed": "İş saatları yadda saxlanmadı",
+    "invalid_meeting_link": "Görüş linki düzgün https:// ünvanı olmalıdır",
+    "price_invalid": "Qiymət 0 ilə 100000 arasında olmalıdır",
+    "profile_update_failed": "Profil yadda saxlanmadı"
   },
   "layout": {
     "skip": "Məzmuna keç",

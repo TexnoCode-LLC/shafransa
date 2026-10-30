@@ -9,6 +9,7 @@ import { Button } from "../../components/ui/Button"
 
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
+import { SOCIAL_LINKS } from "../../constants/social"
 
 const ContactPage = () => {
   const { t, i18n } = useTranslation()
@@ -169,16 +170,20 @@ const ContactPage = () => {
                 </div>
 
                 {/* Socials */}
-                <div className="pt-8 border-t border-neutral-100 flex gap-4">
-                  <a href="#" className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
-                    <FaInstagram className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
-                    <FaFacebook className="w-5 h-5" />
-                  </a>
-                  <a href="#" className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all">
-                    <FaTwitter className="w-5 h-5" />
-                  </a>
+                <div className="pt-8 border-t border-neutral-100 flex flex-wrap gap-4">
+                  {SOCIAL_LINKS.map(({ key, label, icon: Icon, url }) => (
+                    <a
+                      key={key}
+                      href={url}
+                      target={key === "email" ? undefined : "_blank"}
+                      rel={key === "email" ? undefined : "noopener noreferrer"}
+                      aria-label={label}
+                      title={label}
+                      className="w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all"
+                    >
+                      <Icon className="w-5 h-5" />
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
