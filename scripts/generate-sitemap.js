@@ -57,7 +57,8 @@ async function fetchIds(endpoint, pick) {
   try {
     const res = await fetch(`${API_URL}${endpoint}`, { signal: AbortSignal.timeout(10000) });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const ids = pick((await res.json())?.data).map(item => item?.id).filter(Boolean);
+    // Bloqlar üçün SEO URL (slug) varsa o işlədilir
+    const ids = pick((await res.json())?.data).map(item => item?.slug || item?.id).filter(Boolean);
     console.log(`ℹ️  ${endpoint}: ${ids.length} link`);
     return ids;
   } catch (error) {

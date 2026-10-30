@@ -31,6 +31,7 @@ import { formatDateLocale, formatPrice, formatPriceDual } from "@/lib/format"
 import heroVideo from "../../assets/heroVideo.mp4"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
+import { blogPath } from "@/lib/blog"
 
 // Canlı bölmələr real datadan qurulur; data yoxdursa bölmə göstərilmir (boş "skelet" qalmasın)
 const asList = (value) => (Array.isArray(value) ? value : Array.isArray(value?.data) ? value.data : [])
@@ -544,7 +545,7 @@ export default function LandingPage() {
           <ul className="grid gap-8 md:grid-cols-3 md:gap-5">
             {blogs.map((blog) => (
               <li key={blog.id}>
-                <Link to={`/blog/${blog.id}`} className="group block">
+                <Link to={blogPath(blog)} className="group block">
                   <div className="overflow-hidden rounded-2xl">
                     <Photo src={blog.images?.[0]} alt={blog.title} fallback={Leaf} className="aspect-[16/10] w-full" />
                   </div>
@@ -552,7 +553,7 @@ export default function LandingPage() {
                     {formatDateLocale(blog.createdAt, lang)}
                   </p>
                   <h3 className="mt-1.5 text-lg font-semibold leading-snug group-hover:text-primary">{blog.title}</h3>
-                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-600">{stripHtml(blog.description)}</p>
+                  <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-neutral-600">{blog.summary || stripHtml(blog.description)}</p>
                 </Link>
               </li>
             ))}

@@ -1,12 +1,13 @@
 import React from "react"
 import { useQuery, keepPreviousData } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
-import { Link } from "react-router-dom"
+import { Link, useSearchParams } from "react-router-dom"
 import { Card, CardContent } from "../../components/ui/Card"
 import { Badge } from "../../components/ui/Badge"
 import { Calendar, Clock, ArrowRight, ArrowLeft, BookOpen } from "lucide-react"
 import { getBlogs } from "../../services/blog.service"
 import { formatDateLocale } from "../../lib/format"
+import { BLOG_CATEGORIES, blogPath, categoryLabel, readMinutes } from "../../lib/blog"
 import SEO from "../../components/common/SEO"
 import { STATIC_PAGE_SEO } from "../../utils/seoTranslations"
 
@@ -15,13 +16,25 @@ const PAGE_SIZE = 9
 export default function BlogListingPage() {
   const { t, i18n } = useTranslation()
   const [page, setPage] = React.useState(1)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const category = BLOG_CATEGORIES.includes(searchParams.get("category")) ? searchParams.get("category") : ""
+  const tag = searchParams.get("tag") || ""
 
   const currentLang = (i18n.language || "az").toLowerCase().slice(0, 2)
 
-  // Admin paneldən əlavə olunan real bloqlar (əvvəl burada yalnız mock bloqlar göstərilirdi)
+  const setFilter = (key, value) => {
+    setPage(1)
+    setSearchParams((params) => {
+      if (value) params.set(key, value)
+      else params.delete(key)
+      return params
+    }, { replace: true })
+  }
+
+  // Admin paneldən əlavə olunan real bloqlar (yalnız yayımda olanlar)
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["blogs", currentLang, page],
-    queryFn: () => getBlogs({ page, limit: PAGE_SIZE }),
+    queryKey: ["blogs", currentLang, page, category, tag],
+    queryFn: () => getBlogs({ page, limit: PAGE_SIZE, category: category || undefined, tag: tag || undefined }),
     placeholderData: keepPreviousData,
   })
 
@@ -35,6 +48,7 @@ export default function BlogListingPage() {
         ...blog,
         title: trans?.title || blog.title,
         description: trans?.description || blog.description,
+        summary: trans ? trans.summary : blog.summary,
       }
     })
   }, [data, currentLang])
@@ -73,7 +87,30 @@ export default function BlogListingPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-6 py-20">
+      <main className="container mx-auto px-6 py-12 md:py-16">
+        <div className="mb-10 flex flex-wrap items-center gap-2">
+          {["", ...BLOG_CATEGORIES].map((key) => (
+            <button
+              key={key || "all"}
+              type="button"
+              onClick={() => setFilter("category", key)}
+              className={`rounded-full border px-4 py-1.5 text-sm font-medium transition-colors ${
+                category === key ? "border-primary bg-primary text-white" : "border-neutral-200 bg-white text-neutral-600 hover:border-primary hover:text-primary"
+              }`}
+            >
+              {key ? categoryLabel(key, t) : t('blog.all_categories', 'Hamısı')}
+            </button>
+          ))}
+          {tag && (
+            <button
+              type="button"
+              onClick={() => setFilter("tag", "")}
+              className="ml-1 inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3.5 py-1.5 text-sm font-medium text-primary"
+            >
+              #{tag} <span aria-hidden>×</span>
+            </button>
+          )}
+        </div>
         {isLoading ? (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3].map((i) => (
@@ -93,7 +130,7 @@ export default function BlogListingPage() {
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {blogs.map((blog) => (
-              <Link key={blog.id} to={`/blog/${blog.id}`} className="group flex flex-col h-full">
+              <Link key={blog.id} to={blogPath(blog)} className="group flex flex-col h-full">
                 <Card className="h-full border-none shadow-none bg-transparent flex flex-col">
                   <div className="relative aspect-[16/10] rounded-3xl overflow-hidden mb-6">
                     {blog.images?.[0] ? (
@@ -115,12 +152,13 @@ export default function BlogListingPage() {
                   </div>
                   
                   <CardContent className="p-0 flex-1 flex flex-col">
-                    <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-widest text-primary mb-3">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-medium text-muted-foreground mb-3">
+                       <span className="rounded-full bg-primary/10 px-2.5 py-0.5 font-semibold text-primary">{categoryLabel(blog.category, t)}</span>
                        <span className="flex items-center gap-1.5">
-                          <Calendar className="w-3 h-3" /> {formatDateLocale(blog.createdAt, currentLang)}
+                          <Calendar className="w-3.5 h-3.5" /> {formatDateLocale(blog.createdAt, currentLang)}
                        </span>
                        <span className="flex items-center gap-1.5">
-                          <Clock className="w-3 h-3" /> {t('blog.min_read', { count: 5 })}
+                          <Clock className="w-3.5 h-3.5" /> {t('blog.min_read', { count: readMinutes(blog.description) })}
                        </span>
                     </div>
                     
@@ -129,7 +167,7 @@ export default function BlogListingPage() {
                     </h3>
                     
                     <p className="text-muted-foreground text-sm line-clamp-3 mb-6 flex-1">
-                      {stripHtml(blog.description)}
+                      {blog.summary || stripHtml(blog.description)}
                     </p>
                     
                     <div className="pt-6 border-t border-neutral-100 flex items-center justify-between">

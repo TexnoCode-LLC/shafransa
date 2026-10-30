@@ -7,7 +7,7 @@ import { toYouTubeEmbedUrl } from "../../lib/utils"
 import { getBlog } from "../../services/blog.service"
 import { Badge } from "../../components/ui/Badge"
 import { Calendar, Clock, ArrowLeft, Loader2, BookOpen, Play } from "lucide-react"
-import { categoryLabel, readMinutes } from "../../lib/blog"
+import { blogPath, categoryLabel, readMinutes } from "../../lib/blog"
 import { formatDateLocale } from "../../lib/format"
 import SEO from "../../components/common/SEO"
 import { getBlogSchema, stripHtml } from "../../utils/seoSchemas"
@@ -34,7 +34,9 @@ export default function BlogDetailPage() {
       ...rawBlog,
       title: trans?.title || rawBlog.title,
       description: trans?.description || rawBlog.description,
-      category: trans?.category || rawBlog.category
+      summary: trans ? trans.summary : rawBlog.summary,
+      seoTitle: trans ? trans.seoTitle : rawBlog.seoTitle,
+      seoDescription: trans ? trans.seoDescription : rawBlog.seoDescription,
     }
   }, [blogResponse, currentLang])
 
@@ -64,17 +66,17 @@ export default function BlogDetailPage() {
   return (
     <article className="min-h-screen bg-white pb-24">
       <SEO
-        title={blog.title}
-        description={stripHtml(blog.description).slice(0, 160) || blog.title}
-        keywords={`${blog.title}, ${blog.category || ''}, zəfəran, fitoterapiya, shafransa`}
+        title={blog.seoTitle || blog.title}
+        description={blog.seoDescription || blog.summary || stripHtml(blog.description).slice(0, 160) || blog.title}
+        keywords={[blog.title, ...(blog.tags || []), "fitoterapiya", "shafransa"].filter(Boolean).join(", ")}
         image={(Array.isArray(blog.images) && blog.images[0]) || blog.image}
-        canonical={`/blog/${id}`}
+        canonical={blogPath(blog)}
         type="article"
-        schema={getBlogSchema(blog, `${BASE_URL}/blog/${id}`)}
+        schema={getBlogSchema(blog, `${BASE_URL}${blogPath(blog)}`)}
         crumbs={[
           { name: "Home", url: "/" },
           { name: "Blogs", url: "/blogs" },
-          { name: blog.title, url: `/blog/${id}` }
+          { name: blog.title, url: blogPath(blog) }
         ]}
       />
       {/* Header Section */}
@@ -106,7 +108,7 @@ export default function BlogDetailPage() {
       </header>
 
       {/* Featured Image or Gallery */}
-      <div className="container mx-auto px-6 mb-20">
+      <div className={`container mx-auto px-6 ${blog.images?.length ? "mb-16" : "mb-8"}`}>
         <div className="grid grid-cols-1 gap-6">
           {blog.images?.[0] && (
             <div className="aspect-[21/9] rounded-[40px] overflow-hidden shadow-2xl shadow-neutral-200">
@@ -149,6 +151,35 @@ export default function BlogDetailPage() {
             className="rich-content"
             dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(blog.description || "", { USE_PROFILES: { html: true } }) }}
           />
+
+          {blog.tags?.length > 0 && (
+            <div className="mt-12 flex flex-wrap items-center gap-2" aria-label={t('blog.tags', 'Etiketlər')}>
+              {blog.tags.map((tag) => (
+                <Link
+                  key={tag}
+                  to={`/blogs?tag=${encodeURIComponent(tag)}`}
+                  className="rounded-full bg-neutral-100 px-3.5 py-1.5 text-sm text-neutral-600 transition-colors hover:bg-primary/10 hover:text-primary"
+                >
+                  #{tag}
+                </Link>
+              ))}
+            </div>
+          )}
+
+          {blog.sources?.length > 0 && (
+            <section className="mt-12 border-t border-neutral-100 pt-8">
+              <h2 className="mb-4 text-xl font-display font-bold text-[#1a1c1e]">{t('blog.sources', 'Elmi mənbələr')}</h2>
+              <ol className="list-decimal space-y-2 pl-5 text-sm leading-relaxed text-neutral-600 marker:text-neutral-400">
+                {blog.sources.map((source, index) => (
+                  <li key={index}>
+                    <a href={source.url} target="_blank" rel="noopener noreferrer nofollow" className="break-words text-primary underline-offset-2 hover:underline">
+                      {source.title || source.url}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
           
         </div>
       </div>

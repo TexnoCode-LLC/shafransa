@@ -1,12 +1,15 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { Placeholder } from "@tiptap/extensions"
+import Image from "@tiptap/extension-image"
 import {
   Bold,
   Heading2,
   Heading3,
+  ImagePlus,
   Italic,
+  Loader2,
   Link2,
   List,
   ListOrdered,
@@ -105,9 +108,41 @@ function LinkButton({ editor, isLink }) {
   )
 }
 
+// Mətnin içinə şəkil: fayl seçilir → onImageUpload(file) URL qaytarır → kursorun yerinə qoyulur
+function ImageButton({ editor, onImageUpload, onError }) {
+  const inputRef = useRef(null)
+  const [uploading, setUploading] = useState(false)
+
+  const pick = async (event) => {
+    const file = event.target.files?.[0]
+    event.target.value = ""
+    if (!file) return
+    if (!file.type.startsWith("image/")) return onError?.("Yalnız şəkil faylı seçin.")
+    if (file.size > 10 * 1024 * 1024) return onError?.("Şəkil çox böyükdür (maksimum 10 MB).")
+    setUploading(true)
+    try {
+      const url = await onImageUpload(file)
+      if (url) editor.chain().focus().setImage({ src: url, alt: file.name.replace(/\.[^.]+$/, "") }).run()
+    } catch (error) {
+      onError?.(error?.message || "Şəkil yüklənmədi.")
+    } finally {
+      setUploading(false)
+    }
+  }
+
+  return (
+    <>
+      <Toggle size="sm" pressed={false} onPressedChange={() => inputRef.current?.click()} disabled={uploading} aria-label="Şəkil əlavə et" title="Şəkil əlavə et">
+        {uploading ? <Loader2 className="animate-spin" /> : <ImagePlus />}
+      </Toggle>
+      <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={pick} />
+    </>
+  )
+}
+
 // Blog məzmunu üçün redaktor: HTML çıxarır (saytda DOMPurify ilə təmizlənib göstərilir).
 // value yalnız ilk dəfə oxunur — hər dil üçün ayrıca instance (key ilə) yaradılır.
-export default function RichTextEditor({ id, value, onChange, placeholder = "Mətni yazın…", invalid }) {
+export default function RichTextEditor({ id, value, onChange, placeholder = "Mətni yazın…", invalid, onImageUpload, onImageError }) {
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
@@ -115,6 +150,7 @@ export default function RichTextEditor({ id, value, onChange, placeholder = "Mə
         link: { openOnClick: false, autolink: true, protocols: ["http", "https", "mailto"] },
       }),
       Placeholder.configure({ placeholder }),
+      Image.configure({ HTMLAttributes: { loading: "lazy" } }),
     ],
     content: value || "",
     editorProps: {
@@ -193,6 +229,7 @@ export default function RichTextEditor({ id, value, onChange, placeholder = "Mə
         {blocks.map(renderToggle)}
         <Separator orientation="vertical" className="mx-1 h-5" />
         <LinkButton editor={editor} isLink={state.link} />
+        {onImageUpload && <ImageButton editor={editor} onImageUpload={onImageUpload} onError={onImageError} />}
         <div className="ml-auto flex gap-0.5">
           <Button type="button" variant="ghost" size="icon" className="size-8" onClick={() => editor.chain().focus().undo().run()} disabled={!state.canUndo} aria-label="Geri al">
             <Undo2 />

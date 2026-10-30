@@ -56,6 +56,8 @@ body.admin-theme {
 .admin-rich-text ol { list-style: decimal; padding-left: 1.5rem; }
 .admin-rich-text li > p { margin: 0; }
 .admin-rich-text blockquote { border-left: 3px solid hsl(var(--primary) / 0.4); padding-left: 1rem; color: hsl(var(--muted-foreground)); font-style: italic; }
+.admin-rich-text img { max-width: 100%; height: auto; border-radius: 0.5rem; margin: 0.75em 0; }
+.admin-rich-text img.ProseMirror-selectednode { outline: 3px solid hsl(var(--primary) / 0.5); }
 .admin-rich-text a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 3px; }
 .admin-rich-text p.is-editor-empty:first-child::before {
   content: attr(data-placeholder);

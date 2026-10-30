@@ -387,7 +387,8 @@ export function useAdminBlogs(params) {
   return useQuery({
     queryKey: [...blogKeys.list, params],
     queryFn: async () => {
-      const data = await api.get("/blogs", { params, headers: { "Accept-Language": "az" } })
+      // Admin qaralamaları da görür
+      const data = await api.get("/blogs", { params: { ...params, includeDrafts: true }, headers: { "Accept-Language": "az" } })
       return { items: Array.isArray(data?.data) ? data.data : [], total: data?.pagination?.total ?? 0 }
     },
     placeholderData: keepPreviousData,
@@ -402,6 +403,14 @@ export function useAdminBlog(id, options = {}) {
     staleTime: 0,
     ...options,
   })
+}
+
+// Redaktorda mətnin içinə qoyulan şəkil — URL qaytarır
+export async function uploadBlogContentImage(file) {
+  const form = new FormData()
+  form.append("file", file)
+  const data = await api.post("/blogs/content-image", form)
+  return data?.url
 }
 
 export function useSaveBlog() {

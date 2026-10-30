@@ -37,6 +37,7 @@ import { apiErrorMessage, CONTENT_LANGUAGES } from "@/lib/admin"
 import { formatDate } from "@/lib/format"
 import { cn, safeExternalUrl } from "@/lib/utils"
 import { useAdminBlogs, useDeleteBlog } from "./queries"
+import { blogPath } from "@/lib/blog"
 
 const PAGE_SIZES = [10, 20, 50]
 
@@ -249,8 +250,11 @@ export default function BlogsPage() {
                       <div className="flex min-w-0 items-center gap-3">
                         <Cover url={blog.images?.[0]} />
                         <div className="min-w-0">
-                          <p className="max-w-[160px] truncate font-medium sm:max-w-[360px]" title={blog.title}>
-                            {blog.title || "Başlıqsız"}
+                          <p className="flex max-w-[200px] items-center gap-2 font-medium sm:max-w-[400px]" title={blog.title}>
+                            <span className="truncate">{blog.title || "Başlıqsız"}</span>
+                            {blog.isPublished === false && (
+                              <span className="shrink-0 rounded-full border border-amber-200 bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700">Qaralama</span>
+                            )}
                           </p>
                           <p className="max-w-[160px] truncate text-xs text-muted-foreground sm:max-w-[360px]">
                             {blog.author || "Müəllif göstərilməyib"}
@@ -280,7 +284,7 @@ export default function BlogsPage() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end" className="w-48">
                           <DropdownMenuItem asChild>
-                            <Link to={`/blog/${blog.id}`} target="_blank" rel="noopener noreferrer">
+                            <Link to={blogPath(blog)} target="_blank" rel="noopener noreferrer">
                               <ExternalLink />
                               Saytda bax
                             </Link>
