@@ -13,7 +13,6 @@ import {
   Plus,
   RefreshCw,
   Search,
-  ShieldAlert,
   Stethoscope,
   Trash2,
   UserRound,
@@ -133,16 +132,8 @@ function RequestCard({ request, onApprove, onReject, onDetails, busy }) {
                   {t.phoneNumber}
                 </span>
               )}
-              {t?.licenseNumber ? (
-                <span>Lisenziya: <span className="font-medium text-foreground">{t.licenseNumber}</span></span>
-              ) : (
-                <span className="inline-flex items-center gap-1 text-amber-600">
-                  <ShieldAlert className="size-3.5" />
-                  Lisenziya göstərilməyib
-                </span>
-              )}
             </div>
-            {t?.bio?.trim() && <p className="line-clamp-2 text-sm text-muted-foreground">{t.bio}</p>}
+            {(t?.shortBio || t?.bio)?.trim() && <p className="line-clamp-2 text-sm text-muted-foreground">{t.shortBio || t.bio}</p>}
             <DocumentLinks therapist={t} compact />
           </div>
         </div>

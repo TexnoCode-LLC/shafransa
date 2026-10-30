@@ -35,12 +35,8 @@ const normalizeTherapist = (therapist) => {
     userId,
     fullName,
     specialization: therapist?.specialization || therapist?.Specialization || i18next.t('therapist.specialization_default', "Phytotherapist"),
-    description:
-      therapist?.description ||
-      therapist?.Description ||
-      therapist?.bio ||
-      therapist?.Bio ||
-      i18next.t('therapist.bio_default', "Helping you return to healthy movement with personalized recovery plans and careful session tracking."),
+    // Kartda qısa məlumat; yoxdursa geniş "Haqqında" mətni (kəsilmiş göstərilir)
+    description: therapist?.shortBio || therapist?.bio || therapist?.Bio || therapist?.description || "",
     avatar:
       therapist?.avatar ||
       therapist?.Avatar ||
@@ -225,9 +221,9 @@ function TherapistCard({ therapist, t }) {
             <p className="text-emerald-600 text-sm font-bold mt-1">
               {therapist.specialization || t('therapists.default_specialty', 'Phytotherapist')}
             </p>
-            <p className="text-muted-foreground text-sm mt-3 line-clamp-3 leading-relaxed">
-              {therapist.description || t('therapists.no_description', 'Qualified specialist dedicated to your recovery and physical well-being.')}
-            </p>
+            {therapist.description && (
+              <p className="text-muted-foreground text-sm mt-3 line-clamp-3 leading-relaxed">{therapist.description}</p>
+            )}
           </div>
 
           <div className="space-y-3 pt-4 border-t border-neutral-50">

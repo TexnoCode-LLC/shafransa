@@ -317,7 +317,21 @@
       "sat": "Cmt",
       "sun": "Paz"
     },
-    "unnamed": "Fitoterapist"
+    "unnamed": "Fitoterapist",
+    "months": {
+      "jan": "Ocak",
+      "feb": "Şubat",
+      "mar": "Mart",
+      "apr": "Nisan",
+      "may": "Mayıs",
+      "jun": "Haziran",
+      "jul": "Temmuz",
+      "aug": "Ağustos",
+      "sep": "Eylül",
+      "oct": "Ekim",
+      "nov": "Kasım",
+      "dec": "Aralık"
+    }
   },
   "herb": {
     "tabs": {
@@ -825,14 +839,14 @@
     "confirm_booking": "Rezervasyonu Onayla",
     "booking_success": "Seans talebiniz başarıyla gönderildi!",
     "booking_error": "Seans rezervasyonu başarısız oldu",
-    "register_title": "Shafransa Profesyonel Ağına Katılın.",
-    "register_form_title": "Profesyonel Beyan",
-    "register_form_desc": "Doğrulama için klinik bilgilerinizi gönderin.",
+    "register_title": "Shafransa uzman ağına katılın",
+    "register_form_title": "Başvuru formu",
+    "register_form_desc": "İnceleme için bilgilerinizi girin.",
     "label_specialization": "Uzmanlık Alanı",
     "label_experience": "Deneyim Yılı",
-    "label_phone": "İrtibat Telefonu",
+    "label_phone": "İletişim telefonu",
     "label_description": "Profesyonel Biyografi / Klinik Yaklaşım",
-    "submit_application": "Klinik Beyanı Gönder",
+    "submit_application": "Başvuruyu gönder",
     "loading_profile": "Uzman bilgileri yükleniyor...",
     "not_found": "Fitoterapist bulunamadı",
     "not_found_desc": "Bu profil silinmiş veya artık menüde gösterilmiyor.",
@@ -876,7 +890,25 @@
     "bio_placeholder": "Klinik deneyiminizi ve tedavi yaklaşımınızı detaylıca belirtin...",
     "label_email": "E-posta adresi",
     "placeholder_specialization": "örn. Klinik fitoterapi",
-    "registration_error": "Başvuru gönderilemedi"
+    "registration_error": "Başvuru gönderilemedi",
+    "register_seo": "Fitoterapist kaydı",
+    "register_badge": "Fitoterapistler için",
+    "register_intro": "Platformumuzda onaylı fitoterapist olmak için başvurun ve bitkisel tedavi arayan hastalarla buluşun.",
+    "perk_verified_title": "Onaylı statü",
+    "perk_verified_desc": "Profilinizdeki «Onaylı» rozetiyle hastaların güvenini kazanın.",
+    "perk_patients_title": "Hasta ağı",
+    "perk_patients_desc": "Bitkisel tedavi arayan hastalara doğrudan ulaşın.",
+    "perk_sessions_title": "Seans yönetimi",
+    "perk_sessions_desc": "Çalışma saatlerinizi ve seanslarınızı kolay bir panelden yönetin.",
+    "placeholder_fullname": "Ad Soyad",
+    "short_bio_title": "Kısa tanıtım",
+    "short_bio_hint": "Kendiniz hakkında 1–3 cümle. Profilinizin üstünde, adınızın altında gösterilir.",
+    "short_bio_placeholder": "örn. 10 yıllık deneyime sahip klinik fitoterapistim, sindirim ve bağışıklık alanında uzmanım.",
+    "label_about": "Hakkında",
+    "about_placeholder": "Eğitiminizi, deneyiminizi, yöntemlerinizi ve yaklaşımınızı ayrıntılı yazın...",
+    "review_notice": "Başvurunuz ekibimiz tarafından incelenecek. Onay genellikle 48–72 saat sürer.",
+    "about_title": "Hakkında",
+    "verified_by": "Shafransa tarafından onaylandı"
   },
   "session": {
     "status": {

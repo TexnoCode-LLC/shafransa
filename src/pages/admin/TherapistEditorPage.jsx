@@ -31,7 +31,7 @@ function stateFromTherapist(t) {
   return {
     fullName: t?.user?.fullName ?? "",
     phoneNumber: t?.phoneNumber ?? "",
-    licenseNumber: t?.licenseNumber ?? "",
+    shortBio: t?.shortBio ?? "",
     specialization: t?.specialization ?? "",
     bio: t?.bio ?? "",
     onlinePrice: numberToInput(t?.onlinePrice ?? 0),
@@ -75,7 +75,7 @@ function validate(state, existingCertificates) {
   if (!phone) errors.phoneNumber = "Telefon nömrəsini yazın."
   else if (!PHONE_PATTERN.test(phone)) errors.phoneNumber = "Düzgün telefon nömrəsi yazın, məs. +994 50 123 45 67"
 
-  if (state.licenseNumber.trim().length > 100) errors.licenseNumber = "Ən çox 100 simvol ola bilər."
+  if (state.shortBio.trim().length > 500) errors.shortBio = "Ən çox 500 simvol ola bilər."
   if (state.specialization.trim().length > 200) errors.specialization = "Ən çox 200 simvol ola bilər."
   if (state.bio.length > 4000) errors.bio = "Ən çox 4000 simvol ola bilər."
 
@@ -384,7 +384,7 @@ function buildForm(state) {
   append("fullName", state.fullName.trim())
   append("phoneNumber", state.phoneNumber.trim())
   // Boş sətir = təmizlə
-  append("licenseNumber", state.licenseNumber.trim())
+  append("shortBio", state.shortBio.trim())
   append("specialization", state.specialization.trim())
   append("bio", state.bio.trim())
   append("onlinePrice", Number(state.onlinePrice))
@@ -560,8 +560,28 @@ function TherapistEditor({ id }) {
                 </Field>
               </div>
               <Field
+                id="th-shortBio"
+                label="Qısa məlumat"
+                error={visibleErrors.shortBio}
+                counter={
+                  <span className={cn("text-xs tabular-nums text-muted-foreground", state.shortBio.length > 500 && "text-destructive")}>
+                    {state.shortBio.length}/500
+                  </span>
+                }
+              >
+                <Textarea
+                  id="th-shortBio"
+                  rows={3}
+                  value={state.shortBio}
+                  onChange={(e) => set({ shortBio: e.target.value })}
+                  placeholder="Profilin yuxarısında, adın altında görünür (1-3 cümlə)"
+                  aria-invalid={!!visibleErrors.shortBio}
+                  className={invalidClass(visibleErrors.shortBio)}
+                />
+              </Field>
+              <Field
                 id="th-bio"
-                label="Haqqında"
+                label="Haqqında (geniş məlumat)"
                 error={visibleErrors.bio}
                 counter={
                   <span className={cn("text-xs tabular-nums text-muted-foreground", state.bio.length > 4000 && "text-destructive")}>
@@ -588,16 +608,6 @@ function TherapistEditor({ id }) {
               <CardDescription>Yalnız adminlər görür — saytda açıq göstərilmir</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <Field id="th-license" label="Lisenziya nömrəsi" error={visibleErrors.licenseNumber}>
-                <Input
-                  id="th-license"
-                  value={state.licenseNumber}
-                  onChange={(e) => set({ licenseNumber: e.target.value })}
-                  placeholder="məs. LIC-2231"
-                  aria-invalid={!!visibleErrors.licenseNumber}
-                  className={invalidClass(visibleErrors.licenseNumber)}
-                />
-              </Field>
               <CvField currentUrl={data.cv} value={state.cv} onChange={(cv) => set({ cv })} />
               <CertificatesField
                 existing={existingCertificates}

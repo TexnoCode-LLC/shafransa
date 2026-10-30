@@ -187,12 +187,11 @@ export default function UserProfile({ tab = "profile", embedded = false }) {
         avatar: localAvatar,
       }
 
-      if (avatarFile || data.phoneNumber || data.specialization || data.therapistBio || data.licenseNumber) {
+      if (avatarFile || data.phoneNumber || data.specialization || data.therapistBio) {
         const therapistForm = new FormData()
         therapistForm.append("FullName", data.fullName || "")
         therapistForm.append("PhoneNumber", data.phoneNumber || "")
         therapistForm.append("Specialization", data.specialization || "")
-        therapistForm.append("LicenseNumber", data.licenseNumber || "")
         therapistForm.append("Bio", data.therapistBio || data.description || "")
         if (avatarFile) therapistForm.append("ProfileImageFile", avatarFile)
 
@@ -423,15 +422,6 @@ export default function UserProfile({ tab = "profile", embedded = false }) {
                         value={formData.phoneNumber}
                         onChange={(e) => setFormData({ ...formData, phoneNumber: e.target.value })}
                         placeholder="+994 (__) ___ __ __"
-                        className="h-12 rounded-xl bg-neutral-50/50 border-neutral-200 shadow-sm focus:bg-white transition-all"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Lisenziya nömrəsi</label>
-                      <Input
-                        value={formData.licenseNumber}
-                        onChange={(e) => setFormData({ ...formData, licenseNumber: e.target.value })}
-                        placeholder="AZ-FZ-0000"
                         className="h-12 rounded-xl bg-neutral-50/50 border-neutral-200 shadow-sm focus:bg-white transition-all"
                       />
                     </div>

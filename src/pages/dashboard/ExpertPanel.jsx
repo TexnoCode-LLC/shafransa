@@ -23,6 +23,7 @@ export default function ExpertPanel() {
   const [profileForm, setProfileForm] = useState({
     fullName: "",
     specialization: "",
+    shortBio: "",
     bio: "",
     phoneNumber: "",
     onlinePrice: 0,
@@ -121,6 +122,7 @@ export default function ExpertPanel() {
       setProfileForm({
         fullName: therapist.user?.fullName || therapist.fullName || "",
         specialization: therapist.specialization || "",
+        shortBio: therapist.shortBio || "",
         bio: therapist.bio || "",
         phoneNumber: therapist.phoneNumber || "",
         onlinePrice: therapist.onlinePrice ?? 0,
@@ -361,7 +363,21 @@ export default function ExpertPanel() {
                        </div>
 
                        <div className="space-y-2">
-                          <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('expert.field.bio', 'Professional Bio')}</label>
+                          <div className="flex items-baseline justify-between">
+                             <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('therapists.short_bio_title', 'Qısa məlumat')}</label>
+                             <span className="text-[11px] tabular-nums text-muted-foreground">{profileForm.shortBio.length}/500</span>
+                          </div>
+                          <textarea
+                             value={profileForm.shortBio}
+                             onChange={e => setProfileForm({...profileForm, shortBio: e.target.value.slice(0, 500)})}
+                             maxLength={500}
+                             className="w-full min-h-[80px] p-4 rounded-xl bg-neutral-50/50 border border-neutral-100 text-sm outline-none focus:ring-2 focus:ring-primary/20"
+                             placeholder={t('therapists.short_bio_hint', 'Özünüz haqqında 1-3 cümlə. Profilinizin yuxarısında, adınızın altında göstəriləcək.')}
+                          />
+                       </div>
+
+                       <div className="space-y-2">
+                          <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">{t('therapists.label_about', 'Haqqında')}</label>
                           <textarea 
                              value={profileForm.bio}
                              onChange={e => setProfileForm({...profileForm, bio: e.target.value})}

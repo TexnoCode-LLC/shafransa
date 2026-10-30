@@ -317,7 +317,21 @@
       "sat": "Ş",
       "sun": "B"
     },
-    "unnamed": "Fitoterapevt"
+    "unnamed": "Fitoterapevt",
+    "months": {
+      "jan": "Yanvar",
+      "feb": "Fevral",
+      "mar": "Mart",
+      "apr": "Aprel",
+      "may": "May",
+      "jun": "İyun",
+      "jul": "İyul",
+      "aug": "Avqust",
+      "sep": "Sentyabr",
+      "oct": "Oktyabr",
+      "nov": "Noyabr",
+      "dec": "Dekabr"
+    }
   },
   "herb": {
     "tabs": {
@@ -825,14 +839,14 @@
     "confirm_booking": "Sifarişi Təsdiqlə",
     "booking_success": "Seans müraciətiniz göndərildi!",
     "booking_error": "Seansı bron etmək alınmadı",
-    "register_title": "Shafransa Peşəkar Şəbəkəsinə Qoşulun.",
-    "register_form_title": "Peşəkar Manifest",
-    "register_form_desc": "Yoxlama üçün klinik məlumatlarınızı təqdim edin.",
+    "register_title": "Shafransa mütəxəssis şəbəkəsinə qoşulun",
+    "register_form_title": "Müraciət forması",
+    "register_form_desc": "Yoxlama üçün məlumatlarınızı daxil edin.",
     "label_specialization": "İxtisaslaşma",
     "label_experience": "Təcrübə İli",
-    "label_phone": "Əlaqə Telefonu",
+    "label_phone": "Əlaqə telefonu",
     "label_description": "Peşəkar Bio / Klinik Yanaşma",
-    "submit_application": "Klinik Manifesti Göndər",
+    "submit_application": "Müraciəti göndər",
     "loading_profile": "Mütəxəssis məlumatları yüklənir",
     "not_found": "Terapevt tapılmadı",
     "not_found_desc": "Bu profil silinmiş və ya artıq menyuda göstərilmir.",
@@ -876,7 +890,25 @@
     "bio_placeholder": "Klinik təcrübənizi və terapevtik yanaşmanızı ətraflı qeyd edin...",
     "label_email": "Email ünvanı",
     "placeholder_specialization": "məs. Klinik fitoterapiya",
-    "registration_error": "Müraciət göndərilmədi"
+    "registration_error": "Müraciət göndərilmədi",
+    "register_seo": "Fitoterapevt qeydiyyatı",
+    "register_badge": "Fitoterapevtlər üçün",
+    "register_intro": "Platformamızda təsdiqlənmiş fitoterapevt olmaq üçün müraciət edin və bitki mənşəli müalicə axtaran pasiyentlərlə əlaqə qurun.",
+    "perk_verified_title": "Təsdiqlənmiş status",
+    "perk_verified_desc": "Profilinizdə «Təsdiqlənmiş» nişanı ilə pasiyentlərin etibarını qazanın.",
+    "perk_patients_title": "Pasiyent şəbəkəsi",
+    "perk_patients_desc": "Bitki mənşəli müalicə axtaran pasiyentlərə birbaşa çıxış əldə edin.",
+    "perk_sessions_title": "Seansların idarəsi",
+    "perk_sessions_desc": "İş saatlarınızı və seanslarınızı rahat paneldən idarə edin.",
+    "placeholder_fullname": "Ad Soyad",
+    "short_bio_title": "Qısa məlumat",
+    "short_bio_hint": "Özünüz haqqında 1-3 cümlə. Profilinizin yuxarısında, adınızın altında göstəriləcək.",
+    "short_bio_placeholder": "məs. 10 illik təcrübəyə malik klinik fitoterapevtəm, həzm və immunitet problemləri üzrə ixtisaslaşıram.",
+    "label_about": "Haqqında",
+    "about_placeholder": "Təhsiliniz, təcrübəniz, iş üsullarınız və yanaşmanız haqqında ətraflı yazın...",
+    "review_notice": "Müraciətiniz komandamız tərəfindən yoxlanılacaq. Təsdiq adətən 48-72 saat çəkir.",
+    "about_title": "Haqqında",
+    "verified_by": "Shafransa tərəfindən təsdiqlənib"
   },
   "session": {
     "status": {

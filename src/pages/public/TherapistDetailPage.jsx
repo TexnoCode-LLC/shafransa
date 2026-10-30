@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import i18next from "i18next"
 import { formatPrice, formatPriceUsd } from "../../lib/format"
+import { cn } from "@/lib/utils"
 import { getTherapistById } from "../../services/therapist.service"
 import { getAvailabilitySummary, createSession } from "../../services/therapySession.service"
 import { useAuthStore } from "../../store/useAuthStore"
@@ -35,15 +36,10 @@ import {
   User,
 } from "lucide-react"
 
-const DAY_LABELS = [
-  i18next.t('therapist.days.mon', 'Mon'),
-  i18next.t('therapist.days.tue', 'Tue'),
-  i18next.t('therapist.days.wed', 'Wed'),
-  i18next.t('therapist.days.thu', 'Thu'),
-  i18next.t('therapist.days.fri', 'Fri'),
-  i18next.t('therapist.days.sat', 'Sat'),
-  i18next.t('therapist.days.sun', 'Sun')
-]
+// Gün adları render zamanı tərcümə olunur (modul yüklənəndə i18n hələ hazır deyil və ingiliscə qalırdı)
+const DAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+// Ay adları: Chrome az-AZ üçün ay adlarını bilmir ("2026 M10" çıxırdı)
+const MONTH_KEYS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
 const DEFAULT_AVATAR =
   "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=900&q=80"
 
@@ -123,16 +119,12 @@ const normalizeTherapist = (therapist) => {
     email: data.email || data.Email || user.email || user.Email || "",
     phone: data.phoneNumber || data.PhoneNumber || data.phone || "",
     specialization: data.specialization || data.Specialization || "Fitoterapevt",
-    bio:
-      data.bio ||
-      data.Bio ||
-      data.description ||
-      data.Description ||
-      "Fərdi bərpa planı, rahat seans ritmi və diqqətli izləmə ilə sağlam hərəkətə qayıtmağa kömək edir.",
+    // Qısa məlumat yuxarıda (adın altında), geniş "Haqqında" isə aşağı bölmədə
+    shortBio: (data.shortBio || data.ShortBio || "").trim(),
+    bio: (data.bio || data.Bio || data.description || data.Description || "").trim(),
     avatar: data.avatar || data.Avatar || user.avatar || user.Avatar || "",
     rating: Number(data.rating || data.Rating || 0),
     reviewsCount: Number(data.reviewsCount || data.ReviewsCount || data.reviewCount || 0),
-    licenseNumber: data.licenseNumber || data.LicenseNumber || "",
     cv: data.cv || data.CV || "",
     certificates: data.certificates || data.Certificates || [],
     isVerified: Boolean(data.isVerified ?? data.IsVerified ?? data.verified ?? false),
@@ -337,7 +329,7 @@ export default function TherapistDetailPage() {
     <div className="min-h-screen bg-[#fafafa] text-stone-900">
       <SEO
         title={`${profile.fullName} - ${profile.specialization}`}
-        description={profile.bio || `${profile.fullName} - ${profile.specialization}. Seans təyini və məsləhət.`}
+        description={profile.shortBio || profile.bio || `${profile.fullName} - ${profile.specialization}`}
         keywords={`${profile.fullName}, ${profile.specialization}, fitoterapist, fitoterapiya, shafransa`}
         image={profile.avatar}
         canonical={`/therapist/${id}`}
@@ -387,13 +379,8 @@ export default function TherapistDetailPage() {
                 <div className="flex flex-wrap gap-2">
                   <Badge className="rounded-md border-emerald-200 bg-emerald-50 text-emerald-800">
                     <ShieldCheck className="mr-1.5 h-3.5 w-3.5" />
-                    Shafransa verified
+                    {t('therapists.verified_by', 'Shafransa tərəfindən təsdiqlənib')}
                   </Badge>
-                  {profile.licenseNumber && (
-                    <Badge className="rounded-md border-amber-200 bg-amber-50 text-amber-800">
-                      {t('therapists.license', 'Lisenziya')}: {profile.licenseNumber}
-                    </Badge>
-                  )}
                 </div>
 
                 <div>
@@ -406,7 +393,11 @@ export default function TherapistDetailPage() {
                   </p>
                 </div>
 
-                <p className="max-w-3xl text-sm leading-7 text-stone-600">{profile.bio}</p>
+                {(profile.shortBio || profile.bio) && (
+                  <p className={cn("max-w-3xl text-base leading-7 text-stone-600", !profile.shortBio && "line-clamp-3")}>
+                    {profile.shortBio || profile.bio}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -434,18 +425,17 @@ export default function TherapistDetailPage() {
 
       <main className="mx-auto grid max-w-7xl gap-8 px-4 py-10 lg:grid-cols-[1fr_420px] lg:px-8">
         <div className="space-y-6">
-          <section className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
-            <div className="mb-5 flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-50 text-emerald-700">
-                <Sparkles className="h-[18px] w-[18px]" />
+          {profile.bio && (
+            <section className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
+              <div className="mb-5 flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-md bg-emerald-50 text-emerald-700">
+                  <Sparkles className="h-[18px] w-[18px]" />
+                </div>
+                <h2 className="text-lg font-semibold text-stone-900">{t('therapists.about_title', 'Haqqında')}</h2>
               </div>
-              <div>
-                <h2 className="text-lg font-semibold text-stone-900">{t('therapists.approach_title', 'Müalicə yanaşması')}</h2>
-                <p className="text-sm text-stone-500">{t('therapists.approach_subtitle', 'Sakit, ölçülə bilən və davamlı bərpa planı')}</p>
-              </div>
-            </div>
-            <p className="text-sm leading-7 text-stone-600">{profile.bio}</p>
-          </section>
+              <p className="whitespace-pre-line text-sm leading-7 text-stone-600">{profile.bio}</p>
+            </section>
+          )}
 
           <div className="grid gap-4 md:grid-cols-3">
             {[
@@ -562,10 +552,7 @@ export default function TherapistDetailPage() {
             <div className="rounded-lg border border-stone-200 p-4">
               <div className="mb-4 flex items-center justify-between">
                 <h3 className="text-sm font-semibold capitalize text-stone-900">
-                  {new Intl.DateTimeFormat("az-AZ", {
-                    month: "long",
-                    year: "numeric",
-                  }).format(new Date(currentYear, currentMonth - 1))}
+                  {t(`therapist.months.${MONTH_KEYS[currentMonth - 1]}`)} {currentYear}
                 </h3>
                 <div className="flex gap-2">
                   <button
@@ -586,7 +573,7 @@ export default function TherapistDetailPage() {
               </div>
 
               <div className="grid grid-cols-7 gap-1 text-center text-[10px] font-medium uppercase tracking-wide text-stone-400">
-                {DAY_LABELS.map((label) => (
+                {DAY_KEYS.map((key) => t(`therapist.days.${key}`)).map((label) => (
                   <div key={label} className="py-2">
                     {label}
                   </div>

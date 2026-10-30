@@ -19,13 +19,15 @@ import { cn } from "@/lib/utils"
 // Backend EmailRules.Pattern ilə eyni qayda
 const EMAIL_RE = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/
 
+const SHORT_BIO_MAX = 500
+
 const EMPTY = {
   fullName: "",
   email: "",
   password: "",
   phoneNumber: "",
   specialization: "",
-  licenseNumber: "",
+  shortBio: "",
   bio: "",
   isShowMenu: true,
 }
@@ -36,6 +38,7 @@ function validate(form) {
   if (!EMAIL_RE.test(form.email.trim())) errors.email = "Düzgün email daxil edin."
   if (form.password.length < 8) errors.password = "Parol ən azı 8 simvol olmalıdır."
   if (!/^\+?[\d\s()-]{7,30}$/.test(form.phoneNumber.trim())) errors.phoneNumber = "Düzgün telefon nömrəsi daxil edin."
+  if (form.shortBio.trim().length > SHORT_BIO_MAX) errors.shortBio = `Ən çox ${SHORT_BIO_MAX} simvol ola bilər.`
   return errors
 }
 
@@ -67,7 +70,7 @@ export function CreateTherapistDialog({ open, onOpenChange, onSubmit, saving }) 
       email: form.email.trim(),
       phoneNumber: form.phoneNumber.trim(),
       specialization: form.specialization.trim() || null,
-      licenseNumber: form.licenseNumber.trim() || null,
+      shortBio: form.shortBio.trim() || null,
       bio: form.bio.trim() || null,
     }, () => close(false))
   }
@@ -102,11 +105,26 @@ export function CreateTherapistDialog({ open, onOpenChange, onSubmit, saving }) 
             {field("email", "Email", { type: "email", autoComplete: "off" })}
             {field("password", "Parol", { type: "text", autoComplete: "new-password" })}
             {field("phoneNumber", "Telefon", { type: "tel", placeholder: "+994 50 000 00 00" })}
-            {field("licenseNumber", "Lisenziya nömrəsi")}
-            <div className="sm:col-span-2">{field("specialization", "İxtisas", { placeholder: "məs. Klinik fitoterapiya" })}</div>
+            {field("specialization", "İxtisas", { placeholder: "məs. Klinik fitoterapiya" })}
             <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="new-therapist-bio">Haqqında</Label>
-              <Textarea id="new-therapist-bio" rows={3} value={form.bio} onChange={set("bio")} />
+              <div className="flex items-center justify-between">
+                <Label htmlFor="new-therapist-shortBio">Qısa məlumat</Label>
+                <span className="text-xs tabular-nums text-muted-foreground">{form.shortBio.length}/{SHORT_BIO_MAX}</span>
+              </div>
+              <Textarea
+                id="new-therapist-shortBio"
+                rows={2}
+                value={form.shortBio}
+                onChange={set("shortBio")}
+                placeholder="Profilin yuxarısında, adın altında görünür (1-3 cümlə)"
+                aria-invalid={touched && !!errors.shortBio}
+                className={cn(touched && errors.shortBio && "border-destructive focus-visible:ring-destructive")}
+              />
+              {touched && errors.shortBio && <p className="text-xs text-destructive">{errors.shortBio}</p>}
+            </div>
+            <div className="space-y-2 sm:col-span-2">
+              <Label htmlFor="new-therapist-bio">Haqqında (geniş məlumat)</Label>
+              <Textarea id="new-therapist-bio" rows={5} value={form.bio} onChange={set("bio")} placeholder="Profilin aşağısındakı «Haqqında» bölməsində görünür" />
             </div>
             <label className="flex items-center justify-between gap-4 rounded-md border p-3 sm:col-span-2">
               <span className="text-sm">

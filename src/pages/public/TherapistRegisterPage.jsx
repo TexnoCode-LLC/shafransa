@@ -26,8 +26,8 @@ export default function TherapistRegisterPage() {
   const [formData, setFormData] = useState({
     fullName: user?.fullName || "",
     specialization: "",
+    shortBio: "",
     bio: "",
-    licenseNumber: "",
     phoneNumber: "",
     email: user?.email || "",
     password: "",
@@ -47,8 +47,8 @@ export default function TherapistRegisterPage() {
         password: data.password,
         phoneNumber: data.phoneNumber,
         specialization: data.specialization,
-        bio: data.bio,
-        licenseNumber: data.licenseNumber
+        shortBio: data.shortBio.trim(),
+        bio: data.bio
       })
     },
     onSuccess: (_, data) => {
@@ -67,28 +67,28 @@ export default function TherapistRegisterPage() {
 
   return (
     <div className="min-h-screen bg-[#fafafa] py-20 px-4">
-      <SEO title="Therapist Registration" noindex={true} />
+      <SEO title={t('therapists.register_seo', 'Fitoterapevt qeydiyyatı')} noindex={true} />
       <div className="max-w-4xl mx-auto grid lg:grid-cols-5 gap-12">
         
         {/* Left Column: Info & Trust */}
         <div className="lg:col-span-2 space-y-8">
            <div className="space-y-4 pt-10">
               <Badge className="bg-primary/10 text-primary border-primary/20 font-bold uppercase tracking-widest text-[10px] px-3">
-                 Institutional Program
+                 {t('therapists.register_badge', 'Fitoterapevtlər üçün')}
               </Badge>
               <h1 className="text-4xl font-display font-bold tracking-tight text-[#1a1c1e]">
                  {t('therapists.register_title', 'Join Shafransa Professional Network.')}
               </h1>
               <p className="text-muted-foreground font-medium leading-relaxed">
-                 Apply to become a verified phytotherapist on our platform and connect with patients seeking restorative clinical care.
+                 {t('therapists.register_intro', 'Platformamızda təsdiqlənmiş fitoterapevt olmaq üçün müraciət edin və bitki mənşəli müalicə axtaran pasiyentlərlə əlaqə qurun.')}
               </p>
            </div>
 
            <div className="space-y-6 pt-6">
               {[
-                { icon: ShieldCheck, title: "Verified Status", desc: "Gain institutional credibility with our 'Verified' clinical badge." },
-                { icon: BrainCircuit, title: "Patient Network", desc: "Access a growing ecosystem of patients seeking botanical-integrated recovery." },
-                { icon: Activity, title: "Session Management", desc: "Manage your clinical slots and patient sessions through our intuitive dashboard." },
+                { icon: ShieldCheck, title: t('therapists.perk_verified_title', 'Təsdiqlənmiş status'), desc: t('therapists.perk_verified_desc', 'Profilinizdə «Təsdiqlənmiş» nişanı ilə pasiyentlərin etibarını qazanın.') },
+                { icon: BrainCircuit, title: t('therapists.perk_patients_title', 'Pasiyent şəbəkəsi'), desc: t('therapists.perk_patients_desc', 'Bitki mənşəli müalicə axtaran pasiyentlərə birbaşa çıxış əldə edin.') },
+                { icon: Activity, title: t('therapists.perk_sessions_title', 'Seansların idarəsi'), desc: t('therapists.perk_sessions_desc', 'İş saatlarınızı və seanslarınızı rahat paneldən idarə edin.') },
               ].map((item, idx) => (
                 <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-white border border-neutral-100 shadow-sm">
                    <div className="w-10 h-10 rounded-xl bg-primary/5 flex items-center justify-center flex-shrink-0">
@@ -118,7 +118,7 @@ export default function TherapistRegisterPage() {
                           <Input 
                              value={formData.fullName} 
                              onChange={(e) => setFormData({...formData, fullName: e.target.value})}
-                             placeholder="Dr. Specialist"
+                             placeholder={t('therapists.placeholder_fullname', 'Ad Soyad')}
                              required
                              className="h-12 bg-neutral-50/50 border-neutral-200"
                           />
@@ -161,36 +161,45 @@ export default function TherapistRegisterPage() {
 
                      <div className="grid sm:grid-cols-2 gap-5">
                         <div className="space-y-2">
-                           <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">{t('therapists.label_license', 'License Number')}</label>
-                           <Input 
-                              value={formData.licenseNumber} 
-                              onChange={(e) => setFormData({...formData, licenseNumber: e.target.value})}
-                              placeholder="e.g. AZ-FZ-0000"
-                              required
-                              className="h-12 bg-neutral-50/50 border-neutral-200"
-                           />
-                        </div>
-                        <div className="space-y-2">
-                           <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">{t('therapists.label_password', 'Password (for your account)')}</label>
+                           <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">{t('therapists.label_password', 'Şifrə (hesabınız üçün)')}</label>
                            <Input 
                               type="password"
                               value={formData.password} 
                               onChange={(e) => setFormData({...formData, password: e.target.value})}
                               placeholder="••••••••"
+                              minLength={8}
                               required
                               className="h-12 bg-neutral-50/50 border-neutral-200"
                            />
+                           <p className="text-[11px] text-muted-foreground">{t('auth.password_min_length_8', 'Şifrə ən azı 8 simvol olmalıdır.')}</p>
                         </div>
                      </div>
 
+                     {/* Qısa məlumat — profilin yuxarısında, adın altında göstərilir */}
+                     <div className="space-y-2 rounded-2xl border border-neutral-100 bg-neutral-50/40 p-5">
+                        <div className="flex items-baseline justify-between gap-3">
+                           <h3 className="text-sm font-bold text-[#1a1c1e]">{t('therapists.short_bio_title', 'Qısa məlumat')}</h3>
+                           <span className="text-[11px] tabular-nums text-muted-foreground">{formData.shortBio.length}/500</span>
+                        </div>
+                        <p className="text-xs text-muted-foreground">{t('therapists.short_bio_hint', 'Özünüz haqqında 1-3 cümlə. Profilinizin yuxarısında, adınızın altında göstəriləcək.')}</p>
+                        <textarea
+                           value={formData.shortBio}
+                           onChange={(e) => setFormData({...formData, shortBio: e.target.value.slice(0, 500)})}
+                           placeholder={t('therapists.short_bio_placeholder', 'məs. 10 illik təcrübəyə malik klinik fitoterapevtəm, həzm və immunitet problemləri üzrə ixtisaslaşıram.')}
+                           required
+                           maxLength={500}
+                           className="w-full min-h-[80px] p-4 rounded-xl bg-white border border-neutral-200 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm"
+                        />
+                     </div>
+
                      <div className="space-y-2">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">{t('therapists.label_description', 'Professional Bio / Clinical Approach')}</label>
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60">{t('therapists.label_about', 'Haqqında')}</label>
                         <textarea 
                            value={formData.bio} 
                            onChange={(e) => setFormData({...formData, bio: e.target.value})}
-                           placeholder={t('therapists.bio_placeholder', 'Detail your clinical experience and therapeutic approach...')}
+                           placeholder={t('therapists.about_placeholder', 'Təhsiliniz, təcrübəniz, iş üsullarınız və yanaşmanız haqqında ətraflı yazın...')}
                            required
-                           className="w-full min-h-[100px] p-4 rounded-xl bg-neutral-50/50 border border-neutral-200 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm focus:bg-white"
+                           className="w-full min-h-[140px] p-4 rounded-xl bg-neutral-50/50 border border-neutral-200 text-sm focus:ring-2 focus:ring-primary/20 outline-none transition-all shadow-sm focus:bg-white"
                         />
                      </div>
 
@@ -199,7 +208,7 @@ export default function TherapistRegisterPage() {
                           <CheckCircle2 className="w-5 h-5 text-emerald-500" />
                        </div>
                        <p className="text-[10px] font-bold text-muted-foreground leading-tight">
-                          By submitting, your profile will undergo a manual review process by our clinical board. Verification typically takes 48-72 hours.
+                          {t('therapists.review_notice', 'Müraciətiniz komandamız tərəfindən yoxlanılacaq. Təsdiq adətən 48-72 saat çəkir.')}
                        </p>
                     </div>
 

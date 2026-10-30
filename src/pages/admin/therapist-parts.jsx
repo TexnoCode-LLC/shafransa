@@ -217,9 +217,6 @@ export function TherapistDetailSheet({ open, onOpenChange, therapist, status, ap
           <Separator />
           <section>
             <h3 className="mb-1 text-sm font-semibold">Peşəkar məlumat</h3>
-            <InfoRow label="Lisenziya">
-              {therapist?.licenseNumber || <span className="text-amber-600">Göstərilməyib</span>}
-            </InfoRow>
             <InfoRow label="Onlayn seans">{therapist?.onlinePrice ? formatPrice(therapist.onlinePrice) : "—"}</InfoRow>
             <InfoRow label="Əyani seans">{therapist?.offlinePrice ? formatPrice(therapist.offlinePrice) : "—"}</InfoRow>
             <InfoRow label="Seans müddəti">{therapist?.sessionDurationInMinutes ? `${therapist.sessionDurationInMinutes} dəq` : "—"}</InfoRow>
@@ -228,6 +225,12 @@ export function TherapistDetailSheet({ open, onOpenChange, therapist, status, ap
           </section>
           <Separator />
           <section className="space-y-2">
+            {therapist?.shortBio?.trim() && (
+              <>
+                <h3 className="text-sm font-semibold">Qısa məlumat</h3>
+                <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">{therapist.shortBio.trim()}</p>
+              </>
+            )}
             <h3 className="text-sm font-semibold">Haqqında</h3>
             <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
               {therapist?.bio?.trim() || "Terapevt özü haqqında məlumat yazmayıb."}
