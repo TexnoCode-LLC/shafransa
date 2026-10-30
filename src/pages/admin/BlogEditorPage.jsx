@@ -74,6 +74,7 @@ function stateFromBlog(blog) {
           description: t?.description ?? "",
           seoTitle: t?.seoTitle ?? "",
           seoDescription: t?.seoDescription ?? "",
+          tags: t?.tags ?? [],
         },
       ]
     })
@@ -82,7 +83,6 @@ function stateFromBlog(blog) {
     author: blog?.author ?? "",
     videoUrl: blog?.videoUrl ?? "",
     category: blog?.category ?? "",
-    tags: blog?.tags ?? [],
     slug: blog?.slug ?? "",
     sources: (blog?.sources ?? []).map((s) => ({ title: s.title ?? "", url: s.url ?? "" })),
     translations,
@@ -95,13 +95,12 @@ const snapshot = (s) =>
     a: s.author,
     v: s.videoUrl,
     c: s.category,
-    tg: s.tags,
     sl: s.slug,
     src: s.sources.filter((x) => x.title.trim() || x.url.trim()),
     t: Object.fromEntries(
       Object.entries(s.translations).map(([k, t]) => [
         k,
-        [t.title, t.summary, isEmptyHtml(t.description) ? "" : t.description, t.seoTitle, t.seoDescription],
+        [t.title, t.summary, isEmptyHtml(t.description) ? "" : t.description, t.seoTitle, t.seoDescription, t.tags],
       ])
     ),
     g: [s.gallery.newFiles.length, s.gallery.removedUrls, s.gallery.order],
@@ -118,7 +117,7 @@ function validate(state) {
   if (!codes.some((c) => state.translations[c].title.trim())) add("az.title", "Ən azı bir dildə başlıq yazın.", "az")
   for (const code of codes) {
     const t = state.translations[code]
-    const hasContent = !isEmptyHtml(t.description) || t.summary.trim() || t.seoTitle.trim() || t.seoDescription.trim()
+    const hasContent = !isEmptyHtml(t.description) || t.summary.trim() || t.seoTitle.trim() || t.seoDescription.trim() || t.tags.length > 0
     if (!t.title.trim()) {
       // Başlıqsız dil backend-də silinir — yazılmış mətn səssizcə itməsin
       if (hasContent) add(`${code}.title`, "Bu dildə mətn var — başlıq yazın və ya mətni silin.", code)
@@ -296,6 +295,7 @@ function BlogEditor({ id }) {
         description: isEmptyHtml(t.description) ? "" : t.description,
         seoTitle: t.seoTitle.trim(),
         seoDescription: t.seoDescription.trim(),
+        tags: t.tags,
       }
     })
     const sources = state.sources
@@ -306,7 +306,6 @@ function BlogEditor({ id }) {
     // Yaradarkən yalnız başlıqlı dillər; redaktədə hamısı (başlığı boş dil silinir)
     form.append("translationJson", JSON.stringify(isEdit ? translations : translations.filter((t) => t.title)))
     form.append("isPublished", String(publish))
-    form.append("tagsJson", JSON.stringify(state.tags))
     form.append("sourcesJson", JSON.stringify(sources))
     if (!isEdit) {
       if (state.author.trim()) form.append("author", state.author.trim())
@@ -498,13 +497,18 @@ function BlogEditor({ id }) {
                 </Suspense>
                 <p className="text-xs text-muted-foreground">H2 — bölmə başlığı, H3 — alt başlıq. Şəkil düyməsi ilə mətnin istənilən yerinə şəkil əlavə edə bilərsiniz.</p>
               </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="blog-tags">Etiketlər ({lang.toUpperCase()})</Label>
+                <TagsInput key={lang} value={current.tags} onChange={(tags) => setTranslation({ tags })} />
+              </div>
             </CardContent>
           </Card>
 
           <Card>
             <CardContent className="grid gap-5 pt-6 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="blog-category">Kateqoriya</Label>
+                <Label htmlFor="blog-category">Kateqoriya (bütün dillər üçün)</Label>
                 <Select value={state.category || NO_CATEGORY} onValueChange={(v) => setState((prev) => ({ ...prev, category: v === NO_CATEGORY ? "" : v }))}>
                   <SelectTrigger id="blog-category">
                     <SelectValue placeholder="Kateqoriya seçin" />
@@ -519,10 +523,7 @@ function BlogEditor({ id }) {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="blog-tags">Etiketlər</Label>
-                <TagsInput value={state.tags} onChange={(tags) => setState((prev) => ({ ...prev, tags }))} />
-              </div>
+              <p className="self-end text-xs text-muted-foreground sm:pb-2">Kateqoriyanın adı saytda hər dildə avtomatik tərcümə olunur. Etiketlər isə hər dil üçün ayrıca yazılır — yuxarıdakı dil tablarında.</p>
             </CardContent>
           </Card>
 
@@ -753,9 +754,9 @@ function BlogEditor({ id }) {
             {current.summary.trim() && <p className="text-lg leading-relaxed text-muted-foreground">{current.summary}</p>}
             {coverUrl && <img src={coverUrl} alt="" className="aspect-[21/9] w-full rounded-xl object-cover" />}
             <div className="rich-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(current.description || "", { USE_PROFILES: { html: true } }) }} />
-            {state.tags.length > 0 && (
+            {current.tags.length > 0 && (
               <div className="flex flex-wrap gap-2 border-t pt-4">
-                {state.tags.map((tag) => (
+                {current.tags.map((tag) => (
                   <span key={tag} className="rounded-full bg-muted px-3 py-1 text-xs text-muted-foreground">#{tag}</span>
                 ))}
               </div>

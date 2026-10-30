@@ -35,6 +35,8 @@ export default function BlogDetailPage() {
       title: trans?.title || rawBlog.title,
       description: trans?.description || rawBlog.description,
       summary: trans ? trans.summary : rawBlog.summary,
+      // Etiketlər saytın dilində (hər dilin öz etiketləri)
+      tags: trans ? trans.tags || [] : rawBlog.tags || [],
       seoTitle: trans ? trans.seoTitle : rawBlog.seoTitle,
       seoDescription: trans ? trans.seoDescription : rawBlog.seoDescription,
     }
